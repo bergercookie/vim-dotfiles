@@ -271,3 +271,5 @@ Downsample
 Dotfiles
 submodule
 todo
+debugstring
+loaded_debugstring
