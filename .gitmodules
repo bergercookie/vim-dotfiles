@@ -171,13 +171,13 @@
 	url = https://github.com/dag/vim2hs
 [submodule ".vim/bundle/vimproc.vim"]
 	path = .vim/bundle/vimproc.vim
-    url = https://github.com/Shougo/vimproc.vim
+	url = https://github.com/Shougo/vimproc.vim
 [submodule ".vim/bundle/ghcmod-vim"]
 	path = .vim/bundle/ghcmod-vim
-    url = https://github.com/eagletmt/ghcmod-vim
+	url = https://github.com/eagletmt/ghcmod-vim
 [submodule ".vim/bundle/neco-ghc"]
 	path = .vim/bundle/neco-ghc
-    url = https://github.com/eagletmt/neco-ghc
+	url = https://github.com/eagletmt/neco-ghc
 
 [submodule ".vim/bundle/vim-hindent"]
 	path = .vim/bundle/vim-hindent
@@ -261,3 +261,6 @@
 [submodule ".vim/disBundle/indentLine"]
 	path = .vim/disBundle/indentLine
 	url = https://github.com/Yggdroot/indentLine
+[submodule ".vim/bundle/vim-clang"]
+	path = .vim/bundle/vim-clang
+	url = https://github.com/justmao945/vim-clang
