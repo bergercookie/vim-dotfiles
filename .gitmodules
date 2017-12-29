@@ -105,7 +105,7 @@
 	url = https://github.com/bergercookie/vim-snippets
 [submodule ".vim/bundle/vim-addon-mw-utils"]
 	path = .vim/bundle/vim-addon-mw-utils
-	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+	url = https://github.com/MarcWeber/vim-addon-mw-utils
 [submodule ".vim/bundle/tlib_vim"]
 	path = .vim/bundle/tlib_vim
 	url = https://github.com/tomtom/tlib_vim.git
@@ -258,3 +258,6 @@
 	path = .vim/bundle/vim-debugstring
 	url = git@github.com:bergercookie/vim-debugstring
 
+[submodule ".vim/disBundle/indentLine"]
+	path = .vim/disBundle/indentLine
+	url = https://github.com/Yggdroot/indentLine
