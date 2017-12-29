@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/nick/.vim'
+let g:netrw_dirhist_2='/Users/nick/dotfiles/.vim/bundle/molokai-master'
+let g:netrw_dirhist_3='/Users/nick/dotfiles/.vim/bundle/python_ifold-2.9'
+let g:netrw_dirhist_4='/Users/nick/src/Coursera/uwhpspc/.git'
+let g:netrw_dirhist_5='/Users/nick/src/Coursera/uwhpsc/.git'
+let g:netrw_dirhist_6='/Users/nick/Educational/NTUA/3ο Έτος/5ο εξάμηνο/Θερμικές Στροβιλομηχανές/Homework/paradwtea/thema_3'
+let g:netrw_dirhist_7='/Users/nick/dotfiles/.vim/bundle/.vim-anywhere'
