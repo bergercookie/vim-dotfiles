@@ -264,3 +264,9 @@
 [submodule ".vim/bundle/vim-clang"]
 	path = .vim/bundle/vim-clang
 	url = https://github.com/justmao945/vim-clang
+[submodule ".vim/bundle/vim-grep-operator"]
+	path = .vim/bundle/vim-grep-operator
+	url = https://github.com/inside/vim-grep-operator
+[submodule ".vim/bundle/vimdoc"]
+	path = .vim/bundle/vimdoc
+	url = https://github.com/google/vimdoc

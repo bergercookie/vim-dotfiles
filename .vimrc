@@ -1,12 +1,13 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Fri Apr 8 20:45:45 EEST 2016, Nikos Koukis
+" Fri Dec 29 12:51:00 EET 2017 - Nikos Koukis
 " This is the main vimrc file used both in my linux and mac machines.
 "  - Formmatting
 "  - Syntax
 "  - Automation procedures
 "  - Loading plugins
 "
-" See $VIMPATH/bundle for the plugins installed via pathogen
+" See $VIMPATH/bundle for the plugins installed via the pathogen runtimepath
+" manager
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -33,6 +34,8 @@ set shiftround " round indent to multiple of 'shiftwidth'
 set colorcolumn=80
 set textwidth=80 " Automatically break lines at X columns
 set nocp
+set hidden
+set noshowmode " Handled by airline
 
 " Cursor color
 " http://vim.wikia.com/wiki/Configuring_the_cursor
@@ -676,8 +679,7 @@ let g:lasttab = 1
 nnoremap <Leader>t- :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
-" Mutt configuration
-""""""""""""""""""""
+" Mutt configuration {{{
 " TODO autocompletion in vim for mutt mail composing
 " https://dev.mutt.org/trac/wiki/ConfigTricks
 
@@ -687,9 +689,11 @@ function! SetMuttConfig()
     call ActivateSpelling()
 endfunc
 
+" }}}
+
 autocmd Filetype tex call SetLatexConfig()
 function! SetLatexConfig()
-    :set tw=80
+    set textwidth=80
     call ActivateSpelling()
 endfunc
 
@@ -704,11 +708,12 @@ endfunc
 let g:Tex_GotoError = 0
 let g:Tex_ShowErrorContext = 0
 
-" vim-maximiser
+" vim-maximiser {{{
   let g:maximizer_set_default_mapping = 1
 nnoremap <silent><leader>tm :MaximizerToggle<CR>
 vnoremap <silent><leader>tm :MaximizerToggle<CR>gv
 inoremap <silent><leader>tm <C-o>:MaximizerToggle<CR>
+" }}}
 
 " open pdfs in vim - Rpdf
 command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
@@ -728,7 +733,6 @@ let g:rustfmt_autosave = 1
 " }}}
 
 " https://github.com/racer-rust/vim-racer
-set hidden
 let g:racer_cmd = "$HOME/.cargo/bin/racer"
 let g:racer_experimental_completer = 1 " Experimental
 au FileType rust nmap gd <Plug>(rust-def)
@@ -954,8 +958,9 @@ let g:tagbar_type_rst = {
 
 " }}}
 
-" undotree - like GUndo
+" undotree - like GUndo {{{
 nnoremap <leader>ut :UndotreeToggle<CR>
+" }}}
 
 " tmux-integration plugins {{{
 " Sat Dec 9 20:05:59 GMT 2017, Nikos Koukis
@@ -987,19 +992,18 @@ let g:SignatureMarkTextHLDynamic=1
 
 " }}}
 
-" vim-fugitive
+" vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
+" }}}
 
 " vim-autotags {{{
 " Didn't work in my case...
 " }}}
 
-
-
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
+
+" Wrappers for opening the quickfix window automatically after execution (e.g.,
+" grep, glog, ...)
 
