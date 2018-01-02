@@ -251,9 +251,6 @@
 [submodule ".vim/bundle/vim-vspec"]
 	path = .vim/bundle/vim-vspec
 	url = https://github.com/kana/vim-vspec
-[submodule ".vim/bundle/vim-virtualenv"]
-	path = .vim/bundle/vim-virtualenv
-	url = https://github.com/jmcantrell/vim-virtualenv
 [submodule ".vim/bundle/vim-debugstring"]
 	path = .vim/bundle/vim-debugstring
 	url = git@github.com:bergercookie/vim-debugstring
