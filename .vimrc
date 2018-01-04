@@ -20,7 +20,7 @@ set noswapfile
 set nocompatible
 set history=1000 " Store a ton of history (default is 20)
 set undolevels=1000
-set nu
+set number
 set relativenumber
 set showmatch
 set ruler
@@ -32,7 +32,6 @@ set showcmd
 set shiftround " round indent to multiple of 'shiftwidth'
 set colorcolumn=80
 set textwidth=80 " Automatically break lines at X columns
-set nocp
 set hidden
 set noshowmode " Handled by airline
 
@@ -86,7 +85,7 @@ augroup mrpt_indentation
 
 augroup END
 
-set cino+=(0
+set cinoptions+=(0
 ")  " This is here just to fix the colors from the open parenthesis
 
 augroup yaml_indentation
@@ -405,6 +404,7 @@ highlight link Flake8_PyFlake    WarningMsg
 " Syntastic python
 " available checkers are [pyflakes pylint]
 let g:syntastic_python_checkers=['flake8']
+let g:syntastic_vim_checkers = ['vint']
 let g:flake8_error_marker='EE'     " set error marker to 'EE'
 let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
 let g:syntastic_python_flake8_args='--ignore=W391,W291,W293,E303,
@@ -830,8 +830,8 @@ nnoremap <Leader>cM :call MessageCMake("
 
 function! MessageCpp(var)
     let l:debugStrPrior =  " << " . a:var . " << std::endl;"
-    let l:debugStr = "std::cout << \" " . a:var . ":\" " . l:debugStrPrior
-    :put=l:debugStr
+    let l:debug_str = "std::cout << \" " . a:var . ":\" " . l:debugStrPrior
+    :put=l:debug_str
 endfunc
 nnoremap <Leader>cP :call MessageCpp("
 
