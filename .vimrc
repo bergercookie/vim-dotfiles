@@ -17,7 +17,6 @@ set cursorline
 set clipboard=unnamedplus " Access the system clipboard
 set nobackup
 set noswapfile
-"set viminfo='100,<50,s10,h,%
 set nocompatible
 set history=1000 " Store a ton of history (default is 20)
 set undolevels=1000
@@ -1007,3 +1006,4 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 " Wrappers for opening the quickfix window automatically after execution (e.g.,
 " grep, glog, ...)
 
+set viminfo='100,<50,s10,h,n$HOME/.vim/files/info/viminfo
