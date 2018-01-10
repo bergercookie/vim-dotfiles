@@ -267,3 +267,6 @@
 [submodule ".vim/bundle/vimdoc"]
 	path = .vim/bundle/vimdoc
 	url = https://github.com/google/vimdoc
+[submodule ".vim/bundle/vader.vim"]
+	path = .vim/bundle/vader.vim
+	url = https://github.com/junegunn/vader.vim
