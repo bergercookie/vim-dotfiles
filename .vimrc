@@ -251,12 +251,19 @@ function! ChompedSystem( ... )
     return substitute(call('system', a:000), '\n\+$', '', '')
 endfunction
 
+function! GetGccVersion()
+    let l:gcc_ver = ChompedSystem(
+                \ "$(gcc --version | head -n 1 | rev | cut -d' ' -f1 | rev)")
+
+    return l:gcc_ver[0]
+endfunction
+
 
 " Who did this.
 """"""""""""""""
 function! WriteWhoDidThis()
     let l:name = "Nikos Koukis"
-    let l:curDate=ChompedSystem('date')
+    let l:curDate = ChompedSystem('date')
     let l:fullStr = l:curDate . ' - ' . l:name
     :put=l:fullStr
     :Commentary " take care of the comment type
@@ -402,7 +409,6 @@ highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 
 " Syntastic python
-" available checkers are [pyflakes pylint]
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_vim_checkers = ['vint']
 let g:flake8_error_marker='EE'     " set error marker to 'EE'
@@ -412,17 +418,30 @@ let g:syntastic_python_flake8_args='--ignore=W391,W291,W293,E303,
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
+let g:syntastic_loc_list_height = 3
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " Syntastic - LaTex
 let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
 
-let g:syntastic_cpp_checkers = ['ycm']
 
 " Syntastic - c=+11
-let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_c_compiler = 'gcc'
+let g:syntastic_c_no_default_include_dirs = 0
+let g:syntastic_c_auto_refresh_includes = 1
+let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
+
+let g:syntastic_cpp_checkers = ['clang_tidy', 'gcc', 'cpplint',]
+let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+let g:syntastic_cpp_no_default_include_dirs = 0
+let g:syntastic_cpp_auto_refresh_includes = 1
+let g:syntastic_cpp_check_header = 1
+
+let g:syntastic_cpp_cpplint_args = "--verbose=5"
+let g:syntastic_cpp_cpplint_exec = "cpplint"
+let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
 
 " latex project custom compilation
 map <leader><leader>t :set nocursorline<CR>
@@ -688,9 +707,9 @@ let g:Tex_ShowErrorContext = 0
 
 " vim-maximiser {{{
   let g:maximizer_set_default_mapping = 1
-nnoremap <silent><leader>tm :MaximizerToggle<CR>
-vnoremap <silent><leader>tm :MaximizerToggle<CR>gv
-inoremap <silent><leader>tm <C-o>:MaximizerToggle<CR>
+nnoremap <silent><leader>tz :MaximizerToggle<CR>
+vnoremap <silent><leader>tz :MaximizerToggle<CR>gv
+inoremap <silent><leader>tz <C-o>:MaximizerToggle<CR>
 " }}}
 
 autocmd VimLeavePre * cclose | lclose
@@ -716,7 +735,11 @@ au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 set tags+=./tags;,tags;/
 
-" " YCM doesn't work well with snippets
+" Sun 21 Jan 14:50:51 GMT 2018 - Nikos Koukis
+" Don't Use YCM. This plugin is bloated, demands too many configuration steps
+" YCM {{{
+" and when isn't as effective as it needs.
+"
 " let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 " let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 " let g:ycm_collect_identifiers_from_tags_files=1
@@ -724,6 +747,14 @@ set tags+=./tags;,tags;/
 " let g:ycm_confirm_extra_conf=0
 
 " let g:ycm_python_binary_path='python'
+" }}}
+
+" vim-clang {{{
+" let g:clang_c_options = '-std=gnu11'
+" let g:clang_cpp_options = '-std=c++11 -stdlib=libc++ -I/usr/include/c++'
+let g:clang_compilation_database = '/home/berger/mrpt_build/'
+
+" }}}
 
 "let g:SuperTabDefaultCompletionType = '<C-n>'
 
