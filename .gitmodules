@@ -267,3 +267,6 @@
 [submodule ".vim/bundle/vim-clang"]
 	path = .vim/bundle/vim-clang
 	url = https://github.com/justmao945/vim-clang
+[submodule ".vim/bundle/vim-emacscommandline"]
+	path = .vim/bundle/vim-emacscommandline
+	url = https://github.com/houtsnip/vim-emacscommandline
