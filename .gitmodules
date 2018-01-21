@@ -130,9 +130,6 @@
 [submodule ".vim/bundle/ansible-vim"]
 	path = .vim/bundle/ansible-vim
 	url = https://github.com/pearofducks/ansible-vim
-[submodule ".vim/bundle/YouCompleteMe"]
-	path = .vim/bundle/YouCompleteMe
-	url = https://github.com/Valloric/YouCompleteMe
 [submodule ".vim/bundle/writegood.vim"]
 	path = .vim/bundle/writegood.vim
 	url = https://github.com/davidbeckingsale/writegood.vim
@@ -258,9 +255,6 @@
 [submodule ".vim/disBundle/indentLine"]
 	path = .vim/disBundle/indentLine
 	url = https://github.com/Yggdroot/indentLine
-[submodule ".vim/bundle/vim-clang"]
-	path = .vim/bundle/vim-clang
-	url = https://github.com/justmao945/vim-clang
 [submodule ".vim/bundle/vim-grep-operator"]
 	path = .vim/bundle/vim-grep-operator
 	url = https://github.com/inside/vim-grep-operator

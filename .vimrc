@@ -157,7 +157,7 @@ vnoremap  <expr>  D        DVB_Duplicate()
 
 set sessionoptions-=options
 
-let g:pathogen_disabled = []
+let g:pathogen_disabled = ['YouCompleteMe']
 
 " OS-specific vim bundles {{{
 " http://stackoverflow.com/a/6847015/2843583
@@ -280,7 +280,7 @@ map <leader>TO :tabdo :TagbarClose<CR>
 
 " Statusline - Airline configuration at last {{{
 set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -408,7 +408,7 @@ let g:syntastic_vim_checkers = ['vint']
 let g:flake8_error_marker='EE'     " set error marker to 'EE'
 let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
 let g:syntastic_python_flake8_args='--ignore=W391,W291,W293,E303,
-            \E265,E261,E113,E501,W503'
+            \ E265,E261,E113,E501,W503'
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 1
@@ -417,6 +417,8 @@ let g:syntastic_check_on_wq = 0
 
 " Syntastic - LaTex
 let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
+
+let g:syntastic_cpp_checkers = ['ycm']
 
 " Syntastic - c=+11
 let g:syntastic_cpp_compiler = 'clang++'
@@ -627,30 +629,7 @@ vnoremap <leader>ts  :TrimSpaces<CR>
 " c++ code completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" http://vim.wikia.com/wiki/C%2B%2B_code_completion
-au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
-
-" configure tags - add additional tags here or comment out not-used ones
-" http://vim.wikia.com/wiki/C%2B%2B_code_completion
-"http://design.liberta.co.za/articles/code-completion-intellisense-for-cpp-in-vim-with-omnicppcomplete/
-set tags+=./tags
-set tags+=~/dotfiles/tags/mrpt.tags
-set tags+=~/dotfiles/tags/ros.tags
-set tags+=~/.local/tags/slamcore.tags
-
-map <leader>rt :!ctags -R --tag-relative . <CR>
-
-" OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 0 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 0 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 0 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+map <leader>rt :!ctags -R --fields=+l --tag-relative . <CR>
 set completeopt=menuone,menu,longest,preview
 
 " omni-completion - where to search ...
@@ -714,10 +693,6 @@ vnoremap <silent><leader>tm :MaximizerToggle<CR>gv
 inoremap <silent><leader>tm <C-o>:MaximizerToggle<CR>
 " }}}
 
-" open pdfs in vim - Rpdf
-command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
-command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> - |fmt -csw78
-
 autocmd VimLeavePre * cclose | lclose
 
 " vim-taskwarrior plugin configuration {{{
@@ -739,14 +714,16 @@ au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
-" YCM doesn't work well with snippets
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:ycm_collect_identifiers_from_tags_files=1
-let g:ycm_global_ycm_extra_conf="~/.ycm_extra_conf.py"
-let g:ycm_confirm_extra_conf=0
+set tags+=./tags;,tags;/
 
-let g:ycm_python_binary_path='python'
+" " YCM doesn't work well with snippets
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" let g:ycm_collect_identifiers_from_tags_files=1
+" let g:ycm_global_ycm_extra_conf="~/.ycm_extra_conf.py"
+" let g:ycm_confirm_extra_conf=0
+
+" let g:ycm_python_binary_path='python'
 
 "let g:SuperTabDefaultCompletionType = '<C-n>'
 
