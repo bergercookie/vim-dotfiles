@@ -270,3 +270,6 @@
 [submodule ".vim/bundle/vader.vim"]
 	path = .vim/bundle/vader.vim
 	url = https://github.com/junegunn/vader.vim
+[submodule ".vim/bundle/vim-test"]
+	path = .vim/bundle/vim-test
+	url = https://github.com/janko-m/vim-test
