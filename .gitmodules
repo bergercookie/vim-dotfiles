@@ -115,9 +115,6 @@
 [submodule ".vim/bundle/vim-repeat"]
 	path = .vim/bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat
-[submodule ".vim/bundle/cmake.vim"]
-	path = .vim/bundle/cmake.vim
-	url = https://github.com/jalcine/cmake.vim
 [submodule ".vim/bundle/vim-maximizer"]
 	path = .vim/bundle/vim-maximizer
 	url = https://github.com/szw/vim-maximizer.git
