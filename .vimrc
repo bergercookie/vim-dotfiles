@@ -64,7 +64,7 @@ augroup indentation
     set expandtab
 augroup END
 
-augroup mrpt_indentation
+augroup indentation_for_cpp
     autocmd!
     " mrpt uses tabs for indentation
     autocmd FileType cpp set tabstop=4
@@ -416,8 +416,8 @@ let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
 let g:syntastic_python_flake8_args='--ignore=W391,W291,W293,E303,
             \ E265,E261,E113,E501,W503'
 let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_loc_list_height = 3
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
@@ -749,13 +749,6 @@ set tags+=./tags;,tags;/
 " let g:ycm_python_binary_path='python'
 " }}}
 
-" vim-clang {{{
-" let g:clang_c_options = '-std=gnu11'
-" let g:clang_cpp_options = '-std=c++11 -stdlib=libc++ -I/usr/include/c++'
-let g:clang_compilation_database = '/home/berger/mrpt_build/'
-
-" }}}
-
 "let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -1015,3 +1008,6 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 " grep, glog, ...)
 
 set viminfo='100,<50,s10,h,n$HOME/.vim/files/info/viminfo
+
+let g:local_vimrc = '~/.vimrc.local'
+execute 'source ' . g:local_vimrc
