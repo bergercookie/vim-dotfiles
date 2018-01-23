@@ -221,9 +221,6 @@
 [submodule ".vim/bundle/auto-pairs"]
 	path = .vim/bundle/auto-pairs
 	url = git://github.com/jiangmiao/auto-pairs.git
-[submodule ".vim/bundle/YCM-Generator"]
-	path = .vim/bundle/YCM-Generator
-	url = https://github.com/rdnetto/YCM-Generator
 [submodule ".vim/bundle/vim-sort-motion"]
 	path = .vim/bundle/vim-sort-motion
 	url = https://github.com/christoomey/vim-sort-motion
