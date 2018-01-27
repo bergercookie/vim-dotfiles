@@ -11,7 +11,7 @@
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" General configuration {{{
+" Basic configuration {{{
 set cursorline
 " set cursorcolumn
 set clipboard=unnamedplus " Access the system clipboard
@@ -34,6 +34,7 @@ set colorcolumn=80
 set textwidth=80 " Automatically break lines at X columns
 set hidden
 set noshowmode " Handled by airline
+set viminfo='100,<50,s10,h,n$HOME/.vim/files/info/viminfo
 
 " Cursor color
 " http://vim.wikia.com/wiki/Configuring_the_cursor
@@ -47,6 +48,11 @@ set guicursor+=i:blinkwait10
 " Remap <leader> to comma
 let mapleader = ","
 nnoremap \ ,
+
+" use specific indentation rules per language
+filetype indent plugin on
+filetype indent on
+
 
 " }}}
 
@@ -150,16 +156,14 @@ nnoremap <C-w>- <ESC>:split<CR>
 
 " }}}
 
-
-
-" DragVisuals Configuration
+" DragVisuals Configuration {{{
 " Use the VISUAL LINES!
 vnoremap  <expr>  <LEFT>   DVB_Drag('left')
 vnoremap  <expr>  <RIGHT>  DVB_Drag('right')
 vnoremap  <expr>  <DOWN>   DVB_Drag('down')
 vnoremap  <expr>  <UP>     DVB_Drag('up')
 vnoremap  <expr>  D        DVB_Duplicate()
-
+" }}}
 
 " Pathongen package manager {{{
 
@@ -169,29 +173,23 @@ let g:pathogen_disabled = ['YouCompleteMe']
 
 " OS-specific vim bundles {{{
 " http://stackoverflow.com/a/6847015/2843583
-let os = substitute(system('uname'), "\n", "", "")
+let g:os = substitute(system('uname'), "\n", "", "")
 " OSX {{{
-if os == "Darwin"
+if g:os ==# "Darwin"
     " Disable YCM
     " http://stackoverflow.com/questions/4261785/temporarily-disable-some-plugins-using-pathogen-in-vim
     call add(g:pathogen_disabled, 'YouCompleteMe')
     " }}}
     " Linux {{{
-elseif os == "Linux"
+elseif g:os ==# "Linux"
     " nothing here yet."
 endif
 " }}}
 " }}}
 
-
 call pathogen#infect()
 call pathogen#helptags()
-
 " }}}
-
-" use specific indentation rules per language
-filetype indent plugin on
-filetype indent on
 
 " Folding in markers for vim {{{
 augroup filetype_vim
@@ -266,9 +264,28 @@ function! GetGccVersion()
     return l:gcc_ver[0]
 endfunction
 
+function! MakeTmpFile()
+    let $a = system('mktemp --suffix ".markdown"')
+    :tabnew $a
+endfunc
+nnoremap <leader>mk :call MakeTmpFile()<CR>
 
-" Who did this.
-""""""""""""""""
+" Open URLs in your browser
+function! HandleURL()
+    let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+    echo s:uri
+    if s:uri != ""
+        silent exec "!xdg-open '".s:uri."'"
+    else
+        echo "No URI found in line."
+    endif
+endfunction
+map <leader>u :call HandleURL()<CR>
+
+
+
+" Who did this. {{{
+
 function! WriteWhoDidThis()
     let l:name = "Nikos Koukis"
     let l:curDate = ChompedSystem('date')
@@ -278,6 +295,8 @@ function! WriteWhoDidThis()
 endfunc
 
 nnoremap <F12> :call WriteWhoDidThis()<CR>
+
+" }}}
 
 " Tabularize Configuration
 nnoremap <leader>tt :Tabularize /
@@ -348,7 +367,6 @@ nnoremap <silent><leader>/ :noh<return><CR>
 
 
 " Fri Jun 19 15:53:20 EEST 2015, Nikos Koukis
-" Courtesy of tpope, sensible.vim
 if !&scrolloff
 	set scrolloff=1
 endif
@@ -364,17 +382,8 @@ endif
 set backspace=indent,eol,start
 set complete-=i
 
-""""""""""""""""""
-" Matlab Editing "
-""""""""""""""""""
+" TODO: I don't know why I source this manually...
 source $VIMRUNTIME/macros/matchit.vim
-
-"""""""""""""""""""
-" Various Commmands
-"""""""""""""""""""
-
-" doesn't work by default for some reason
-nnoremap ag :ascii<CR>
 
 " vim_markdown {{{
 let g:vim_markdown_folding_disabled=1
@@ -386,10 +395,11 @@ map <F5> :!markdown README.md > a.html && open a.html <CR>
 set pastetoggle=<F2> " Super useful.
 
 
-" NERDTREE - Comeback
+" NERDTREE {{{
 map  <leader><leader>n :NERDTree <CR>
-nnoremap <Leader>d :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
-nnoremap <Leader>D :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
+nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
+nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
+" }}}
 
 let g:pydoc_open_cmd = 'split'
 
@@ -406,7 +416,8 @@ highlight link Flake8_Complexity WarningMsg
 highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 
-" Syntastic python
+" Syntastic {{{
+" Syntastic python {{{
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_vim_checkers = ['vint']
 let g:flake8_error_marker='EE'     " set error marker to 'EE'
@@ -419,40 +430,39 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_loc_list_height = 3
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+" }}}
 
-" Syntastic - LaTex
+" Syntastic - LaTex {{{
 let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
+" }}}
 
 
-" Syntastic - c=+11
+" Syntastic - C {{{
 let g:syntastic_c_compiler = 'gcc'
 let g:syntastic_c_no_default_include_dirs = 0
 let g:syntastic_c_auto_refresh_includes = 1
 let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
+" }}}
 
+" Syntastic - C++11 {{{
 let g:syntastic_cpp_checkers = ['clang_tidy', 'gcc', 'cpplint',]
 let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 let g:syntastic_cpp_no_default_include_dirs = 0
 let g:syntastic_cpp_auto_refresh_includes = 1
 let g:syntastic_cpp_check_header = 1
-
 let g:syntastic_cpp_cpplint_args = "--verbose=5"
 let g:syntastic_cpp_cpplint_exec = "cpplint"
 let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
-
-" latex project custom compilation
-map <leader><leader>t :set nocursorline<CR>
-                    \ :set nocursorcolumn<CR>
-map <leader><leader>s :!./makeLatex.py 1&>/dev/null&<CR>
-map <eader><leader>σ :!./makeLatex.py 1&>/dev/null&<CR>
-map <leader><leader>a :!./makeLatex.py<CR>
-map <leader><leader>α :!./makeLatex.py<CR>
+" }}}
+" }}}
 
 let g:Tex_CompileRule_pdf = 'xelatex $*'
 
 "DEPRECATED - Show the current filename
-map <leader>2 :echo @%<CR>
+nnoremap <leader>2 :echo @%<CR>
+vnoremap <leader>2 :echo @%<CR>
+
 " Convert slashes to backslashes for Windows.
 " http://vim.wikia.com/wiki/VimTip600
 if has('win32')
@@ -544,29 +554,28 @@ augroup END
 
 " }}}
 
-" Greek Support
-""""""""""""""""
+" Greek Support  {{{
 " courtesy of vkoukis
 set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
 
+" use CTRL + 6 when in insert mode to switch to the language specified by the
+" keymap whenever you get into insert mode automatically
+" set keymap=greek_utf-8
+set keymap=
+set iminsert=0
+set imsearch=-1
 
-" Wed Jun 24 18:10:15 EEST 2015, Nikos Koukis
-nnoremap ,α <leader>a
-nnoremap ,ψψ <leader>cc
-vnoremap ,ψψ <leader>cc
 
 " arrange lines - up to 80 characters
 vnoremap γ; gq
+" }}}
 
 " use %% for accessing files in the path of the current buffer
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
-autocmd FileType cpp map <buffer> <leader>cp :call Cpplint()<CR>
-"autocmd BufWritePost *.h,*.cpp call Cpplint()
-
 " https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message
 " git commit configuration
-autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd Filetype gitcommit setlocal spell textwidth=72 colorcolumn=80
 
 " toogle spelling
 nnoremap <Leader>sp <ESC>:call ActivateSpelling()<CR>
@@ -611,26 +620,6 @@ command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q
 "set list
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
 
-" DEPRECATED - Use vim-trailing-whitespace
-" " Highlight extra whitespaces - persistent even when set  before colorscheme
-" autocmd colorscheme * highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-" highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-
-" " Show spaces used for indenting (so you use only tabs for indenting).
-" match ExtraWhitespace /^\t*\zs \+/
-" " Show trailing whitespace:
-" match ExtraWhitespace /\s\+$/
-" function! ShowSpaces(...)
-"   let @/='\v(\s+$)|( +\ze\t)'
-"   let oldhlsearch=&hlsearch
-"   if !a:0
-"     let &hlsearch=!&hlsearch
-"   else
-"     let &hlsearch=a:1
-"   end
-"   return oldhlsearch
-" endfunction
-
 function! TrimSpaces() range
   let oldhlsearch=ShowSpaces(1)
   execute a:firstline.",".a:lastline."substitute ///gec"
@@ -643,8 +632,7 @@ nnoremap <leader>ss  :ShowSpaces 1<CR>
 nnoremap <leader>ts  m`:TrimSpaces<CR>``
 vnoremap <leader>ts  :TrimSpaces<CR>
 
-" c++ code completion
-"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" C++ code completion {{{
 
 map <leader>rt :!ctags -R --fields=+l --tag-relative . <CR>
 set completeopt=menuone,menu,longest,preview
@@ -659,11 +647,13 @@ nnoremap <leader><C-n> :tabm +1<CR>
 nnoremap <leader><leader><C-p> :tabm 0<CR>
 nnoremap <leader><leader><C-n> :tabm 99<CR>
 
-" Jedi vim configuration
+" }}}
+
+" jedi-vim {{{
 let g:jedi#popup_select_first = 1
 let g:jedi#show_call_signatures = "1"
 let g:jedi#documentation_command = "K"
-
+" }}}
 
 " Redraw the screen
 nnoremap <leader><leader>r :redraw!<CR>
@@ -699,9 +689,10 @@ function! ActivateSpelling()
     :Americanize
 endfunc
 
-" vim-latex configuration
+" vim-latex configuration {{{
 let g:Tex_GotoError = 0
 let g:Tex_ShowErrorContext = 0
+" }}}
 
 " vim-maximiser {{{
   let g:maximizer_set_default_mapping = 1
@@ -723,13 +714,19 @@ let g:rustfmt_autosave = 1
 
 " }}}
 
+" vim-racer {{{
 " https://github.com/racer-rust/vim-racer
 let g:racer_cmd = "$HOME/.cargo/bin/racer"
 let g:racer_experimental_completer = 1 " Experimental
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+augroup rust_aucommands
+	au FileType rust nmap gd <Plug>(rust-def)
+	au FileType rust nmap gs <Plug>(rust-def-split)
+	au FileType rust nmap gx <Plug>(rust-def-vertical)
+	au FileType rust nmap <leader>gd <Plug>(rust-doc)
+augroup END
+
+" }}}
 
 set tags+=./tags;,tags;/
 
@@ -747,39 +744,18 @@ set tags+=./tags;,tags;/
 " let g:ycm_python_binary_path='python'
 " }}}
 
-"let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" SuperTab - {{{
+let g:SuperTabDefaultCompletionType = "<c-n>"
+" }}}
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-" DEPRECATED
+" vim-geeknote - DEPRECATED don't use it {{{
 "
 " vim-geeknote configuration
-" Just don't use it...
-
-function! MakeTmpFile()
-    let $a = system('mktemp --suffix ".markdown"')
-    :tabnew $a
-endfunc
-nnoremap <leader>mk :call MakeTmpFile()<CR>
-
-
-" Open URLs in your browser
-function! HandleURL()
-    let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
-    echo s:uri
-    if s:uri != ""
-        silent exec "!xdg-open '".s:uri."'"
-    else
-        echo "No URI found in line."
-    endif
-endfunction
-map <leader>u :call HandleURL()<CR>
+" seriously, just don't use it...
+" }}}
 
 " bullets.vim - Markdown plugin for correct indentation of bullet lists
 " https://github.com/dkarter/bullets.vi://github.com/dkarter/bullets.vim
@@ -820,23 +796,7 @@ let g:hindent_on_save = 1
 let g:hindet_indent_size = 2
 let g:hindent_line_length = 80
 
-" Fucntions for Writing debug messages {{{
-function! MessageCMake(var)
-    let l:cmakeVar = "message(\"" . a:var . ": ${" . a:var . "}\")"
-    :put=l:cmakeVar
-endfunc
-nnoremap <Leader>cM :call MessageCMake("
-
-function! MessageCpp(var)
-    let l:debugStrPrior =  " << " . a:var . " << std::endl;"
-    let l:debug_str = "std::cout << \" " . a:var . ":\" " . l:debugStrPrior
-    :put=l:debug_str
-endfunc
-nnoremap <Leader>cP :call MessageCpp("
-
-" }}}
-
-" Goyo - Distraction free writing in vim _{{{
+" Goyo - Distraction free writing in vim - Ugh! {{{
 " https://github.com/junegunn/goyo.vim
 " Type :Goyo
 " }}}
@@ -964,48 +924,36 @@ nnoremap <leader>ut :UndotreeToggle<CR>
 " Sat Dec 9 20:05:59 GMT 2017, Nikos Koukis
 " tmux-completer - Never actually worked..
 
-" vim-tmux-navigator
+" vim-tmux-navigator {{{
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_save_on_switch = 1
+" }}}
 
-" vim-tmux-runner
+" vim-tmux-runner {{{
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
 
 nmap <leader>tr :VtrSendLinesToRunner<CR>
 vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
-"
+" }}}
 " }}}
 
 
-" vim-signature {{{
+" vim-signature - Wow, so useful of a plugin{{{
 let g:SignatureMarkTextHLDynamic=1
-
-" " Using Marks
-" nnoremap <leader>k :marks<CR>
-" vnoremap <leader>k <ESC>:marks<CR>
-" inoremap <leader>k <ESC>:marks<CR>
-
 " }}}
 
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
 " }}}
 
-" vim-autotags {{{
-" Didn't work in my case...
+" vim-autotags  " Didn't work in my case... {{{
 " }}}
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
-
-" Wrappers for opening the quickfix window automatically after execution (e.g.,
-" grep, glog, ...)
-
-set viminfo='100,<50,s10,h,n$HOME/.vim/files/info/viminfo
 
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
