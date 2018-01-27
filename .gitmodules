@@ -176,9 +176,6 @@
 [submodule ".vim/bundle/vim-gtest"]
 	path = .vim/bundle/vim-gtest
 	url = https://github.com/alepez/vim-gtest
-[submodule ".vim/bundle/goyo.vim"]
-	path = .vim/bundle/goyo.vim
-	url = https://github.com/junegunn/goyo.vim
 [submodule ".vim/bundle/vim-commentary"]
 	path = .vim/bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary
