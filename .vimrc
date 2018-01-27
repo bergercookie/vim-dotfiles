@@ -74,16 +74,24 @@ augroup indentation_for_cpp
     autocmd FileType cpp set softtabstop=0
     autocmd FileType cpp set autoindent " indent at the same level of the previous line
     autocmd FileType cpp set noexpandtab
-
-    autocmd FileType cpp nmap <Leader>C :ClangFormatAutoToggle<CR>
-    autocmd FileType cpp let g:clang_format#command = "/usr/bin/clang-format-3.8"
-    autocmd FileType cpp let g:clang_format#detect_style_file = 1
-    autocmd FileType cpp let g:clang_format#auto_format_on_insert_leave = 0
-    autocmd FileType cpp let g:clang_format#auto_format = 0
-    autocmd FileType cpp let g:clang_format#auto_formatexpr = 0
     autocmd FileType cpp set textwidth=0 " Do not automatically break lines
 
 augroup END
+
+augroup cpp_tools
+    autocmd!
+    autocmd FileType cpp nnoremap <Leader>C :ClangFormatAutoToggle<CR>
+augroup END
+
+" clang_format {{{
+let g:clang_format#command = "/usr/bin/clang-format-3.8"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format_on_insert_leave = 0
+let g:clang_format#auto_format = 0
+let g:clang_format#auto_formatexpr = 0
+" }}}
+
+
 
 set cinoptions+=(0
 ")  " This is here just to fix the colors from the open parenthesis
@@ -368,23 +376,13 @@ source $VIMRUNTIME/macros/matchit.vim
 " doesn't work by default for some reason
 nnoremap ag :ascii<CR>
 
-" markdown support
-"""""""""""""""""""
+" vim_markdown {{{
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
 map <F5> :!markdown README.md > a.html && open a.html <CR>
+" }}}
 
-" automatic folding off
-"""""""""""""""""""""""
-set foldmethod=indent
-set foldlevel=20
-
-" Arduino Configuration
-"map <leader><leader>u :ArduinoVerify <CR>
-"map <leader><leader>y :ArduinoUpload <CR>
-
-"map <leader>c :w !pbcopy<CR><CR>
 set pastetoggle=<F2> " Super useful.
 
 
