@@ -418,7 +418,7 @@ highlight link Flake8_PyFlake    WarningMsg
 
 " Syntastic {{{
 " Syntastic python {{{
-let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
 let g:syntastic_vim_checkers = ['vint']
 let g:flake8_error_marker='EE'     " set error marker to 'EE'
 let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
