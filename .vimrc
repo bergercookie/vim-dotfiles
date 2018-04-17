@@ -432,6 +432,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " }}}
 
+" Python mappings {{{
+let b:python_pdb_s='import pdb; pdb.set_trace()'
+autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
+" }}}
+
 " Syntastic - LaTex {{{
 let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
 " }}}
@@ -813,6 +818,7 @@ let g:hindent_line_length = 80
 
 " commentary.vim {{{
 " https://github.com/tpope/vim-commentaryhttps://github.com/tpope/vim-commentary
+autocmd Filetype cpp set commentstring=//\ %s
 " }}}
 
 " vim-eunoch {{{
