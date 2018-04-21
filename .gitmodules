@@ -221,9 +221,6 @@
 [submodule ".vim/bundle/vim-exchange"]
 	path = .vim/bundle/vim-exchange
 	url = https://github.com/tommcdo/vim-exchange
-[submodule ".vim/bundle/calendar.vim"]
-	path = .vim/bundle/calendar.vim
-	url = https://github.com/itchyny/calendar.vim
 [submodule ".vim/bundle/vim-markdown-folding"]
 	path = .vim/bundle/vim-markdown-folding
 	url = https://github.com/nelstrom/vim-markdown-folding
