@@ -417,13 +417,13 @@ highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 
 " Syntastic {{{
-" Syntastic python {{{
+" Syntastic - python {{{
 let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
-let g:syntastic_vim_checkers = ['vint']
-let g:flake8_error_marker='EE'     " set error marker to 'EE'
-let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
-let g:syntastic_python_flake8_args='--ignore=W391,W291,W293,E303,
-            \ E265,E261,E113,E501,W503'
+let g:flake8_error_marker = 'EE'     " set error marker to 'EE'
+let g:flake8_warning_marker = 'WW'   " set warning marker to 'WW'
+let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
+      \E113,E501,W503'
+let g:syntastic_python_mypy_args = '--quick-and-dirty'
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -436,9 +436,44 @@ let g:syntastic_check_on_wq = 0
 let b:python_pdb_s='import pdb; pdb.set_trace()'
 autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
 " }}}
+" Syntastic - vim {{{
+let g:syntastic_vim_checkers = ['vint']
+" }}}
+
+" Syntastic - rst {{{
+let g:syntastic_rst_checkers= ['proselint']
+" }}}
+
+" Syntastic - html {{{
+let g:syntastic_html_checkers= ['proselint']
+" }}}
+" Syntastic - text {{{
+let g:syntastic_text_checkers= ['proselint']
+" }}}
+" Syntastic - nroff {{{
+let g:syntastic_nroff_checkers= ['proselint']
+" }}}
+" Syntastic - xhtml {{{
+let g:syntastic_xhtml_checkers= ['proselint']
+" }}}
+" Syntastic - texinfo {{{
+let g:syntastic_texinfo_checkers= ['proselint']
+" }}}
+" Syntastic - asciidoc {{{
+let g:syntastic_asciidoc_checkers= ['proselint']
+" }}}
+" Syntastic - markdown {{{
+let g:syntastic_markdown_checkers= ['proselint']
+" }}}
+" Syntastic - popd {{{
+let g:syntastic_popd_checkers= ['proselint']
+" }}}
+" Syntastic - help {{{
+let g:syntastic_help_checkers= ['proselint']
+" }}}
 
 " Syntastic - LaTex {{{
-let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
+let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
 " }}}
 
 
