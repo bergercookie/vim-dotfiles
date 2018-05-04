@@ -7,9 +7,6 @@
 [submodule ".vim/bundle/jellybeans.vim"]
 	path = .vim/bundle/jellybeans.vim
 	url = https://github.com/nanotech/jellybeans.vim
-[submodule ".vim/bundle/nerdtree"]
-	path = .vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree
 [submodule ".vim/bundle/powerline"]
 	path = .vim/bundle/powerline
 	url = https://github.com/powerline/powerline
