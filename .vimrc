@@ -169,7 +169,7 @@ vnoremap  <expr>  D        DVB_Duplicate()
 
 set sessionoptions-=options
 
-let g:pathogen_disabled = ['YouCompleteMe']
+let g:pathogen_disabled = []
 
 " OS-specific vim bundles {{{
 " http://stackoverflow.com/a/6847015/2843583
@@ -178,9 +178,9 @@ let g:os = substitute(system('uname'), "\n", "", "")
 if g:os ==# "Darwin"
     " Disable YCM
     " http://stackoverflow.com/questions/4261785/temporarily-disable-some-plugins-using-pathogen-in-vim
-    call add(g:pathogen_disabled, 'YouCompleteMe')
-    " }}}
-    " Linux {{{
+    " call add(g:pathogen_disabled, 'YouCompleteMe')
+" }}}
+" Linux {{{
 elseif g:os ==# "Linux"
     " nothing here yet."
 endif
@@ -381,9 +381,6 @@ endif
 
 set backspace=indent,eol,start
 set complete-=i
-
-" TODO: I don't know why I source this manually...
-source $VIMRUNTIME/macros/matchit.vim
 
 " vim_markdown {{{
 let g:vim_markdown_folding_disabled=1
@@ -991,6 +988,19 @@ let g:SignatureMarkTextHLDynamic=1
 " }}}
 
 " vim-autotags  " Didn't work in my case... {{{
+" }}}
+
+" vim-matchup {{{
+
+let g:matchup_transmute_enabled = 1
+let g:matchup_matchparen_status_offscreen = 0
+let g:matchup_delim_stopline = 1500 " generally
+let g:matchup_matchparen_stopline = 200  " for match highlighting only
+" let g:matchup_matchparen_status_offscreen = 1
+augroup matchup_matchparen_highlight
+    autocmd!
+    autocmd ColorScheme * hi MatchParen cterm=none ctermbg=none ctermfg=magenta
+augroup END
 " }}}
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
