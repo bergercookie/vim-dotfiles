@@ -252,3 +252,6 @@
 [submodule ".vim/bundle/vim-emacscommandline"]
 	path = .vim/bundle/vim-emacscommandline
 	url = https://github.com/houtsnip/vim-emacscommandline
+[submodule ".vim/bundle/vim-matchup"]
+	path = .vim/bundle/vim-matchup
+	url = https://github.com/andymass/vim-matchup
