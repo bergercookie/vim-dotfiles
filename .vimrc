@@ -169,7 +169,7 @@ vnoremap  <expr>  D        DVB_Duplicate()
 
 set sessionoptions-=options
 
-let g:pathogen_disabled = ['YouCompleteMe']
+let g:pathogen_disabled = []
 
 " OS-specific vim bundles {{{
 " http://stackoverflow.com/a/6847015/2843583
@@ -178,9 +178,9 @@ let g:os = substitute(system('uname'), "\n", "", "")
 if g:os ==# "Darwin"
     " Disable YCM
     " http://stackoverflow.com/questions/4261785/temporarily-disable-some-plugins-using-pathogen-in-vim
-    call add(g:pathogen_disabled, 'YouCompleteMe')
-    " }}}
-    " Linux {{{
+    " call add(g:pathogen_disabled, 'YouCompleteMe')
+" }}}
+" Linux {{{
 elseif g:os ==# "Linux"
     " nothing here yet."
 endif
@@ -382,9 +382,6 @@ endif
 set backspace=indent,eol,start
 set complete-=i
 
-" TODO: I don't know why I source this manually...
-source $VIMRUNTIME/macros/matchit.vim
-
 " vim_markdown {{{
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
@@ -417,13 +414,13 @@ highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 
 " Syntastic {{{
-" Syntastic python {{{
+" Syntastic - python {{{
 let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
-let g:syntastic_vim_checkers = ['vint']
-let g:flake8_error_marker='EE'     " set error marker to 'EE'
-let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
-let g:syntastic_python_flake8_args='--ignore=W391,W291,W293,E303,
-            \ E265,E261,E113,E501,W503'
+let g:flake8_error_marker = 'EE'     " set error marker to 'EE'
+let g:flake8_warning_marker = 'WW'   " set warning marker to 'WW'
+let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
+      \E113,E501,W503'
+let g:syntastic_python_mypy_args = '--quick-and-dirty'
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -436,9 +433,44 @@ let g:syntastic_check_on_wq = 0
 let b:python_pdb_s='import pdb; pdb.set_trace()'
 autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
 " }}}
+" Syntastic - vim {{{
+let g:syntastic_vim_checkers = ['vint']
+" }}}
+
+" Syntastic - rst {{{
+let g:syntastic_rst_checkers= ['proselint']
+" }}}
+
+" Syntastic - html {{{
+let g:syntastic_html_checkers= ['proselint']
+" }}}
+" Syntastic - text {{{
+let g:syntastic_text_checkers= ['proselint']
+" }}}
+" Syntastic - nroff {{{
+let g:syntastic_nroff_checkers= ['proselint']
+" }}}
+" Syntastic - xhtml {{{
+let g:syntastic_xhtml_checkers= ['proselint']
+" }}}
+" Syntastic - texinfo {{{
+let g:syntastic_texinfo_checkers= ['proselint']
+" }}}
+" Syntastic - asciidoc {{{
+let g:syntastic_asciidoc_checkers= ['proselint']
+" }}}
+" Syntastic - markdown {{{
+let g:syntastic_markdown_checkers= ['proselint']
+" }}}
+" Syntastic - popd {{{
+let g:syntastic_popd_checkers= ['proselint']
+" }}}
+" Syntastic - help {{{
+let g:syntastic_help_checkers= ['proselint']
+" }}}
 
 " Syntastic - LaTex {{{
-let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
+let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
 " }}}
 
 
@@ -956,6 +988,19 @@ let g:SignatureMarkTextHLDynamic=1
 " }}}
 
 " vim-autotags  " Didn't work in my case... {{{
+" }}}
+
+" vim-matchup {{{
+
+let g:matchup_transmute_enabled = 1
+let g:matchup_matchparen_status_offscreen = 0
+let g:matchup_delim_stopline = 1500 " generally
+let g:matchup_matchparen_stopline = 200  " for match highlighting only
+" let g:matchup_matchparen_status_offscreen = 1
+augroup matchup_matchparen_highlight
+    autocmd!
+    autocmd ColorScheme * hi MatchParen cterm=none ctermbg=none ctermfg=magenta
+augroup END
 " }}}
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
