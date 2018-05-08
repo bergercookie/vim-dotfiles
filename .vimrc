@@ -158,6 +158,7 @@ nnoremap <C-w>- <ESC>:split<CR>
 
 " DragVisuals Configuration {{{
 " Use the VISUAL LINES!
+" TODO - Plugin isn't set up correctly
 vnoremap  <expr>  <LEFT>   DVB_Drag('left')
 vnoremap  <expr>  <RIGHT>  DVB_Drag('right')
 vnoremap  <expr>  <DOWN>   DVB_Drag('down')
@@ -496,7 +497,7 @@ let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
 
 let g:Tex_CompileRule_pdf = 'xelatex $*'
 
-"DEPRECATED - Show the current filename
+" Show the current filename
 nnoremap <leader>2 :echo @%<CR>
 vnoremap <leader>2 :echo @%<CR>
 
@@ -555,7 +556,10 @@ set runtimepath^=$bundle/ctrlp.vim
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*/\.git/*
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_map='<C-s>'
-
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex',
+  \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
+  \ }
 " The maximum number of files to scan, set to 0 for no limit:
 let g:ctrlp_max_files=0
 
@@ -839,8 +843,12 @@ let g:hindent_line_length = 80
 " }}}
 
 " Terminus {{{
-" Adding minor important capabilities to vim
+" Adding minor important capabilities to vim (mouse support, terminal-agnostic
+" mouse cursor)
+"
 " https://github.com/wincent/terminus
+"
+" let g:TerminusNormalCursorShape=1
 " }}}
 
 " Focus reporting {{{
@@ -851,6 +859,7 @@ let g:hindent_line_length = 80
 " commentary.vim {{{
 " https://github.com/tpope/vim-commentaryhttps://github.com/tpope/vim-commentary
 autocmd Filetype cpp set commentstring=//\ %s
+autocmd Filetype cmake set commentstring=#\ %s
 " }}}
 
 " vim-eunoch {{{
@@ -980,9 +989,20 @@ vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
 
 
 " vim-signature - Wow, so useful of a plugin{{{
+" https://github.com/kshenoy/vim-signature
+"
 let g:SignatureMarkTextHLDynamic=1
 " }}}
+" vim-projectionist {{{
+nnoremap <leader>zz :A<CR>
+nnoremap <leader>zv :AV<CR>
+nnoremap <leader>zs :AS<CR>
+nnoremap <leader>zt :AT<CR>
+" }}}
 
+" vim-dispatch {{{
+nnoremap <Leader>m :Dispatch! make -C build<CR>
+" }}}
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
 " }}}
@@ -996,11 +1016,14 @@ let g:matchup_transmute_enabled = 1
 let g:matchup_matchparen_status_offscreen = 0
 let g:matchup_delim_stopline = 1500 " generally
 let g:matchup_matchparen_stopline = 200  " for match highlighting only
-" let g:matchup_matchparen_status_offscreen = 1
-augroup matchup_matchparen_highlight
-    autocmd!
-    autocmd ColorScheme * hi MatchParen cterm=none ctermbg=none ctermfg=magenta
-augroup END
+let g:matchup_matchparen_status_offscreen = 0
+hi MatchParen cterm=none ctermbg=none ctermfg=magenta
+" }}}
+
+" vim-scriptease - Scripts/Utilities for vim plugin development {{{
+" https://github.com/tpope/vim-scriptease
+"
+" use :Scriptnames instead of :scriptnames
 " }}}
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
