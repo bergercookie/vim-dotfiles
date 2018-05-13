@@ -1141,7 +1141,8 @@ highlight MatchParen cterm=none ctermbg=none ctermfg=magenta
 " }}}
 
 " vim-far {{{
-set g:far#source = 'agnvim'
+" use :Far kalimera kalinuxta \.cpp \.h
+let g:far#source = 'agnvim'
 " }}}
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
