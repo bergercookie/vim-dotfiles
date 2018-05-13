@@ -255,7 +255,7 @@ Plug 'https://github.com/tomtom/tlib_vim.git'
 Plug 'https://github.com/bergercookie/vim-snippets'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils'
 Plug 'https://github.com/tomtom/tlib_vim.git'
-Plug 'https://github.com/davidhalter/jedi-vim.git'
+" Plug 'https://github.com/davidhalter/jedi-vim.git'
 Plug 'https://github.com/hynek/vim-python-pep8-indent.git'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/szw/vim-maximizer.git'
@@ -308,6 +308,28 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 Plug 'https://github.com/brooth/far.vim'
 " Plug 'https://github.com/airodactyl/neovim-ranger'
 Plug 'https://github.com/bfredl/nvim-miniyank'
+Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
+Plug 'https://github.com/roxma/vim-tmux-clipboard'
+Plug 'https://github.com/bfredl/nvim-ipy'
+Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
+Plug 'https://github.com/mhinz/vim-janah'
+
+" Totally useless... just open another horizontal tmux pane
+" Plug 'https://github.com/Lenovsky/nuake/'
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
@@ -340,6 +362,7 @@ colorscheme molokai
 "colorscheme revolutions
 "colorscheme reloaded
 "
+" autocmd ColorScheme janah highlight Normal ctermbg=235 | colorscheme janah
 " }}}
 
 " source $MYVIMRC reloads the saved $MYVIMRC
@@ -509,7 +532,6 @@ set complete-=i
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
-map <F5> :!markdown README.md > a.html && open a.html <CR>
 " }}}
 
 set pastetoggle=<F2> " Super useful.
@@ -818,10 +840,13 @@ let g:jedi#documentation_command = "K"
 " Decide on the python version that neovim uses so that jedi-vim uses
 " that accordingly
 if has('nvim')
-    if len(glob('/usr/lib/python2*/site-packages/neovim/__init__.py', 1))
+    let pip2Res = ChompedSystem("pip2 freeze | grep neovim")
+    let pip3Res = ChompedSystem("pip3 freeze | grep neovim")
+
+    if pip2Res =~ "neovim"
         let g:python_host_prog="/usr/bin/python2"
     endif
-    if len(glob('/usr/lib/python3*/site-packages/neovim/__init__.py', 1))
+    if pip3Res =~ "neovim"
         let g:python3_host_prog="/usr/bin/python3"
     endif
 endif
@@ -1099,6 +1124,7 @@ nnoremap <leader>ut :UndotreeToggle<CR>
 " tmux-integration plugins {{{
 " Sat Dec 9 20:05:59 GMT 2017, Nikos Koukis
 " tmux-completer - Never actually worked..
+" }}}
 
 " vim-tmux-navigator {{{
 " Disable tmux navigator when zooming the Vim pane
@@ -1113,7 +1139,6 @@ let g:VtrAppendNewline = 1
 
 nmap <leader>tr :VtrSendLinesToRunner<CR>
 vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
-" }}}
 " }}}
 
 
@@ -1162,6 +1187,62 @@ let g:miniyank_maxitems = 20
 " map <Leader>l <Plug>(miniyank-toline)
 " map <Leader>b <Plug>(miniyank-toblock)
 
+" }}}
+
+" nvim-ipy {{{
+let g:nvim_ipy_perform_mappings = 0
+let g:ipy_set_ft = 1
+nmap <leader>il <Plug>(IPy-Run)
+nmap <leader>ic <Plug>(IPy-RunCell)
+nmap <leader>ir <Plug>(IPy-Complete)
+nmap <leader>i? <Plug>(IPy-WordObjInfo)
+nmap <leader>ii <Plug>(IPy-Interrupt)
+nmap <leader>it <Plug>(IPy-Interrupt)
+
+let g:ipy_celldef = ['^##', '^##']
+
+" }}}
+
+" deoplete.nvim {{{
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+" disable autocomplete by default
+let b:deoplete_disable_auto_complete=0
+let g:deoplete_disable_auto_complete=0
+" call deoplete#custom#buffer_option('auto_complete', v:false)
+
+" if !exists('g:deoplete#omni#input_patterns')
+"     let g:deoplete#omni#input_patterns = {}
+" endif
+
+" Disable the candidates in Comment/String syntaxes.
+call deoplete#custom#source('_',
+            \ 'disabled_syntaxes', ['Comment', 'String'])
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+let g:deoplete#sources#jedi#extra_path = '$HOME/.local/lib/python3.5/site-packages/'
+let g:res = ""
+if has('python3')
+    let g:res = ChompedSystem('python3 -m site --user-site')
+elseif has('python2')
+    let g:res = ChompedSystem('python2 -m site --user-site')
+end
+let g:deoplete#sources#jedi#extra_path = [g:res]
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#enable_cache = 1
+
+" set sources
+" let g:deoplete#sources = {}
+" let g:deoplete#sources.cpp = ['LanguageClient']
+" let g:deoplete#sources.python = ['LanguageClient']
+" let g:deoplete#sources.python3 = ['LanguageClient']
+" let g:deoplete#sources.rust = ['LanguageClient']
+" let g:deoplete#sources.c = ['LanguageClient']
+" let g:deoplete#sources.vim = ['vim']
 " }}}
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
