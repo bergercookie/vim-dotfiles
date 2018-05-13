@@ -6,8 +6,8 @@
 "  - Automation procedures
 "  - Loading plugins
 "
-" See $VIMPATH/bundle for the plugins installed via the pathogen runtimepath
-" manager
+"  For plugin configuration I use vim-plug - see the Plug '...' lines for the
+"  plugins in use.
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -306,6 +306,8 @@ Plug 'https://github.com/houtsnip/vim-emacscommandline'
 Plug 'https://github.com/andymass/vim-matchup'
 Plug 'git@github.com:bergercookie/vim-debugstring'
 Plug 'https://github.com/brooth/far.vim'
+" Plug 'https://github.com/airodactyl/neovim-ranger'
+Plug 'https://github.com/bfredl/nvim-miniyank'
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
@@ -513,11 +515,11 @@ map <F5> :!markdown README.md > a.html && open a.html <CR>
 set pastetoggle=<F2> " Super useful.
 
 
-" NERDTREE {{{
-map  <leader><leader>n :NERDTree <CR>
-nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
-nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
-" }}}
+" " NERDTREE - DEPRECATED {{{
+" map  <leader><leader>n :NERDTree <CR>
+" nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
+" nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
+" " }}}
 
 let g:pydoc_open_cmd = 'split'
 
@@ -1141,9 +1143,27 @@ highlight MatchParen cterm=none ctermbg=none ctermfg=magenta
 " }}}
 
 " vim-far {{{
+"
+" https://github.com/brooth/far.vim/issues/18
 " use :Far kalimera kalinuxta \.cpp \.h
 let g:far#source = 'agnvim'
 " }}}
+
+" nvim-miniyank {{{
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+map <leader>p <Plug>(miniyank-startput)
+map <leader>P <Plug>(miniyank-startPut)
+" cycle backwards with g-
+map <leader>n <Plug>(miniyank-cycle)
+let g:miniyank_maxitems = 20
+
+" map <Leader>c <Plug>(miniyank-tochar)
+" map <Leader>l <Plug>(miniyank-toline)
+" map <Leader>b <Plug>(miniyank-toblock)
+
+" }}}
+
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
