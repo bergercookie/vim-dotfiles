@@ -6,8 +6,8 @@
 "  - Automation procedures
 "  - Loading plugins
 "
-" See $VIMPATH/bundle for the plugins installed via the pathogen runtimepath
-" manager
+"  For plugin configuration I use vim-plug - see the Plug '...' lines for the
+"  plugins in use.
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -26,7 +26,9 @@ set showmatch
 set ruler
 set noerrorbells " don't beep
 set mouse=a " enable the mouse
-set ttymouse=xterm2 " enable dragging of the split border
+if !has('nvim')
+    set ttymouse=xterm2
+endif
 set ignorecase
 set showcmd
 set shiftround " round indent to multiple of 'shiftwidth'
@@ -35,6 +37,9 @@ set textwidth=80 " Automatically break lines at X columns
 set hidden
 set noshowmode " Handled by airline
 set viminfo='100,<50,s10,h,n$HOME/.vim/files/info/viminfo
+if !has('nvim')
+    set viminfo+=!  " Compatible viminfo file in both vim and neovim
+endif
 
 " Cursor color
 " http://vim.wikia.com/wiki/Configuring_the_cursor
@@ -166,30 +171,173 @@ vnoremap  <expr>  <UP>     DVB_Drag('up')
 vnoremap  <expr>  D        DVB_Duplicate()
 " }}}
 
-" Pathongen package manager {{{
+" " Pathongen package manager - DEPRECATED {{{
 
-set sessionoptions-=options
 
-let g:pathogen_disabled = []
+" " Vim sessions default to capturing all global options, which includes the
+" " 'runtimepath' that pathogen.vim manipulates. This can cause other problems
+" " too, so I recommend turning that behavior off
+" set sessionoptions-=options
 
-" OS-specific vim bundles {{{
-" http://stackoverflow.com/a/6847015/2843583
-let g:os = substitute(system('uname'), "\n", "", "")
-" OSX {{{
-if g:os ==# "Darwin"
-    " Disable YCM
-    " http://stackoverflow.com/questions/4261785/temporarily-disable-some-plugins-using-pathogen-in-vim
-    " call add(g:pathogen_disabled, 'YouCompleteMe')
-" }}}
-" Linux {{{
-elseif g:os ==# "Linux"
-    " nothing here yet."
+" let g:pathogen_disabled = []
+
+" " OS-specific vim bundles {{{
+" " http://stackoverflow.com/a/6847015/2843583
+" let g:os = substitute(system('uname'), "\n", "", "")
+" " OSX {{{
+" if g:os ==# "Darwin"
+"     " Disable YCM
+"     " http://stackoverflow.com/questions/4261785/temporarily-disable-some-plugins-using-pathogen-in-vim
+"     " call add(g:pathogen_disabled, 'YouCompleteMe')
+" " }}}
+" " Linux {{{
+" elseif g:os ==# "Linux"
+"     " nothing here yet."
+" endif
+" " }}}
+" " }}}
+
+" call pathogen#infect()
+" call pathogen#helptags()
+" " }}}
+
+" vim-plug package manager {{{
+
+
+" How to delete a plugin?
+"
+" 1. Delete or comment out Plug commands for the plugins you want to remove.
+" 2. Reload vimrc (:source ~/.vimrc) or restart Vim
+" 3. Run :PlugClean. It will detect and remove undeclared plugins.
+
+
+" Automate the installation of vim-plug
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-" }}}
-" }}}
 
-call pathogen#infect()
-call pathogen#helptags()
+call plug#begin()
+Plug 'junegunn/vim-plug'
+Plug 'https://github.com/ctrlpvim/ctrlp.vim'
+Plug 'https://github.com/Yggdroot/indentLine'
+Plug 'https://github.com/nanotech/jellybeans.vim'
+Plug 'https://github.com/powerline/powerline'
+Plug 'https://github.com/ervandew/supertab'
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/tpope/vim-abolish'
+Plug 'https://github.com/vim-airline/vim-airline-themes'
+Plug 'https://github.com/nelstrom/vim-americanize'
+Plug 'https://github.com/PeterRincker/vim-argumentative'
+Plug 'https://github.com/funorpain/vim-cpplint'
+Plug 'https://github.com/nvie/vim-flake8'
+Plug 'https://github.com/vim-scripts/Hardy'
+Plug 'https://github.com/nathanaelkane/vim-indent-guides'
+Plug 'https://github.com/tpope/vim-obsession'
+Plug 'https://github.com/tmux-plugins/vim-tmux-focus-events'
+Plug 'https://github.com/tmux-plugins/vim-tmux'
+Plug 'https://github.com/wesQ3/vim-windowswap'
+Plug 'https://github.com/vimperator/vimperator.vim'
+Plug 'https://github.com/tpope/vim-speeddating'
+Plug 'https://github.com/scrooloose/syntastic'
+Plug 'https://github.com/godlygeek/tabular'
+Plug 'https://github.com/majutsushi/tagbar'
+Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'https://github.com/sudar/vim-arduino-syntax'
+Plug 'https://github.com/terryma/vim-expand-region'
+Plug 'https://github.com/vim-latex/vim-latex'
+Plug 'https://github.com/plasticboy/vim-markdown'
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/justmao945/vim-clang'
+Plug 'https://github.com/tpope/vim-dispatch'
+Plug 'https://github.com/tomtom/tlib_vim.git'
+Plug 'https://github.com/bergercookie/vim-snippets'
+Plug 'https://github.com/MarcWeber/vim-addon-mw-utils'
+Plug 'https://github.com/tomtom/tlib_vim.git'
+" Plug 'https://github.com/davidhalter/jedi-vim.git'
+Plug 'https://github.com/hynek/vim-python-pep8-indent.git'
+Plug 'https://github.com/tpope/vim-repeat'
+Plug 'https://github.com/szw/vim-maximizer.git'
+Plug 'https://github.com/xolox/vim-misc'
+Plug 'https://github.com/pearofducks/ansible-vim'
+Plug 'https://github.com/davidbeckingsale/writegood.vim'
+Plug 'https://github.com/SirVer/ultisnips'
+Plug 'https://github.com/rust-lang/rust.vim'
+Plug 'https://github.com/racer-rust/vim-racer'
+Plug 'https://github.com/mattn/webapi-vim'
+Plug 'https://github.com/rhysd/vim-clang-format'
+Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
+Plug 'https://github.com/dkarter/bullets.vim'
+Plug 'https://github.com/Chiel92/vim-autoformat'
+Plug 'https://github.com/kana/vim-operator-user'
+Plug 'https://github.com/itchyny/vim-haskell-indent'
+Plug 'https://github.com/dag/vim2hs'
+Plug 'https://github.com/Shougo/vimproc.vim', {'do': 'make'}
+Plug 'https://github.com/eagletmt/ghcmod-vim'
+Plug 'https://github.com/eagletmt/neco-ghc'
+Plug 'https://github.com/alx741/vim-hindent'
+Plug 'https://github.com/alepez/vim-gtest'
+Plug 'https://github.com/tpope/vim-commentary'
+Plug 'https://github.com/mbbill/undotree/'
+Plug 'https://github.com/wincent/terminus'
+Plug 'https://github.com/tpope/vim-eunuch'
+Plug 'https://github.com/tpope/vim-unimpaired'
+Plug 'https://github.com/ciaranm/detectindent'
+Plug 'https://github.com/kshenoy/vim-signature'
+Plug 'https://github.com/mhinz/vim-startify'
+Plug 'https://github.com/bronson/vim-trailing-whitespace'
+Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'https://github.com/tpope/vim-projectionist'
+Plug 'https://github.com/tpope/vim-scriptease'
+Plug 'git://github.com/jiangmiao/auto-pairs.git'
+Plug 'https://github.com/christoomey/vim-sort-motion'
+Plug 'https://github.com/tommcdo/vim-exchange'
+Plug 'https://github.com/nelstrom/vim-markdown-folding'
+Plug 'https://github.com/christoomey/vim-tmux-navigator'
+Plug 'https://github.com/christoomey/vim-tmux-runner'
+Plug 'https://github.com/kana/vim-vspec'
+Plug 'https://github.com/Yggdroot/indentLine'
+Plug 'https://github.com/inside/vim-grep-operator'
+Plug 'https://github.com/google/vimdoc'
+Plug 'https://github.com/junegunn/vader.vim'
+Plug 'https://github.com/janko-m/vim-test'
+Plug 'https://github.com/houtsnip/vim-emacscommandline'
+Plug 'https://github.com/andymass/vim-matchup'
+Plug 'git@github.com:bergercookie/vim-debugstring'
+Plug 'https://github.com/brooth/far.vim'
+" Plug 'https://github.com/airodactyl/neovim-ranger'
+Plug 'https://github.com/bfredl/nvim-miniyank'
+Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
+Plug 'https://github.com/roxma/vim-tmux-clipboard'
+Plug 'https://github.com/bfredl/nvim-ipy'
+Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
+
+if has('nvim')
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'bash install.sh',
+                \ }
+endif
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
+Plug 'https://github.com/mhinz/vim-janah'
+
+" Totally useless... just open another horizontal tmux pane
+" Plug 'https://github.com/Lenovsky/nuake/'
+
+" Automatically executes filetype plugin indent on and syntax enable. You can
+" revert the settings after the call. e.g. filetype indent off, syntax off, etc
+call plug#end()
 " }}}
 
 " Folding in markers for vim {{{
@@ -218,6 +366,7 @@ colorscheme molokai
 "colorscheme revolutions
 "colorscheme reloaded
 "
+" autocmd ColorScheme janah highlight Normal ctermbg=235 | colorscheme janah
 " }}}
 
 " source $MYVIMRC reloads the saved $MYVIMRC
@@ -243,8 +392,8 @@ nnoremap <c-r> <nop>
 
 
 " Quick exit command
-noremap <Leader>e :quit<CR> " Quit current window
-noremap <Leader>E :qa!<CR> "Quit all windows
+nnoremap <Leader>e :quit<CR> " Quit current window
+nnoremap <Leader>E :qa!<CR> "Quit all windows
 
 " easier moving of code blocks
 vnoremap < <gv
@@ -387,17 +536,16 @@ set complete-=i
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
-map <F5> :!markdown README.md > a.html && open a.html <CR>
 " }}}
 
 set pastetoggle=<F2> " Super useful.
 
 
-" NERDTREE {{{
-map  <leader><leader>n :NERDTree <CR>
-nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
-nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
-" }}}
+" " NERDTREE - DEPRECATED {{{
+" map  <leader><leader>n :NERDTree <CR>
+" nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
+" nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
+" " }}}
 
 let g:pydoc_open_cmd = 'split'
 
@@ -479,11 +627,12 @@ let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
 let g:syntastic_c_compiler = 'gcc'
 let g:syntastic_c_no_default_include_dirs = 0
 let g:syntastic_c_auto_refresh_includes = 1
-let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
+" let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
+let g:syntastic_c_checkers = ['gcc', ]
 " }}}
 
 " Syntastic - C++11 {{{
-let g:syntastic_cpp_checkers = ['clang_tidy', 'gcc', 'cpplint',]
+let g:syntastic_cpp_checkers = ['gcc', 'cpplint',]
 let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 let g:syntastic_cpp_no_default_include_dirs = 0
@@ -694,6 +843,20 @@ nnoremap <leader><leader><C-n> :tabm 99<CR>
 let g:jedi#popup_select_first = 1
 let g:jedi#show_call_signatures = "1"
 let g:jedi#documentation_command = "K"
+
+" Decide on the python version that neovim uses so that jedi-vim uses
+" that accordingly
+if has('nvim')
+    let pip2Res = ChompedSystem("pip2 freeze | grep neovim")
+    let pip3Res = ChompedSystem("pip3 freeze | grep neovim")
+
+    if pip2Res =~ "neovim"
+        let g:python_host_prog="/usr/bin/python2"
+    endif
+    if pip3Res =~ "neovim"
+        let g:python3_host_prog="/usr/bin/python3"
+    endif
+endif
 " }}}
 
 " Redraw the screen
@@ -744,10 +907,9 @@ inoremap <silent><leader>tz <C-o>:MaximizerToggle<CR>
 
 autocmd VimLeavePre * cclose | lclose
 
-" vim-taskwarrior plugin configuration {{{
+" vim-taskwarrior plugin configuration - DEPRECATED{{{
 " https://github.com/blindFS/vim-taskwarrior
 let g:task_rc_override = 'rc.defaultwidth=0' " line-wrapping
-
 " }}}
 
 " Rust configuration {{{
@@ -789,8 +951,10 @@ set tags+=./tags;,tags;/
 let g:SuperTabDefaultCompletionType = "<c-n>"
 " }}}
 
+" UltiSnips {{{
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+" }}}
 
 " vim-geeknote - DEPRECATED don't use it {{{
 "
@@ -809,16 +973,18 @@ noremap <leader>af :Autoformat<CR>
 let g:formatter_yapf_style = 'pep8'
 
 
-" vimproc.vim
+" vimproc.vim {{{
 " You need to run **make** prior to running this
 " https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim
+" }}}
 
 
-" vim2hs - Haskell multipurpose plugin
+" vim2hs - Haskell multipurpose plugin {{{
 " https://github.com/dag/vim2hs
 let g:haskell_conceal_wide = 1
 let g:haskell_tabular = 1
 let g:hpaste_author = 'Nikos Koukis - bergercookie'
+" }}}
 
 " " Easy-Align {{{
 " " https://github.com/junegunn/vim-easy-align
@@ -970,6 +1136,7 @@ nnoremap <leader>ut :UndotreeToggle<CR>
 " tmux-integration plugins {{{
 " Sat Dec 9 20:05:59 GMT 2017, Nikos Koukis
 " tmux-completer - Never actually worked..
+" }}}
 
 " vim-tmux-navigator {{{
 " Disable tmux navigator when zooming the Vim pane
@@ -984,7 +1151,6 @@ let g:VtrAppendNewline = 1
 
 nmap <leader>tr :VtrSendLinesToRunner<CR>
 vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
-" }}}
 " }}}
 
 
@@ -1027,6 +1193,88 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 
 " cppman configuration {{{
 
+" }}}
+
+" vim-debugstring {{{
+"
+" }}}
+
+" vim-far {{{
+"
+" https://github.com/brooth/far.vim/issues/18
+" use :Far kalimera kalinuxta \.cpp \.h
+let g:far#source = 'agnvim'
+" }}}
+
+" nvim-miniyank {{{
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+map <leader>p <Plug>(miniyank-startput)
+map <leader>P <Plug>(miniyank-startPut)
+" cycle backwards with g-
+map <leader>n <Plug>(miniyank-cycle)
+let g:miniyank_maxitems = 20
+
+" map <Leader>c <Plug>(miniyank-tochar)
+" map <Leader>l <Plug>(miniyank-toline)
+" map <Leader>b <Plug>(miniyank-toblock)
+
+" }}}
+
+" nvim-ipy {{{
+let g:nvim_ipy_perform_mappings = 0
+let g:ipy_set_ft = 1
+nmap <leader>il <Plug>(IPy-Run)
+nmap <leader>ic <Plug>(IPy-RunCell)
+nmap <leader>ir <Plug>(IPy-Complete)
+nmap <leader>i? <Plug>(IPy-WordObjInfo)
+nmap <leader>ii <Plug>(IPy-Interrupt)
+nmap <leader>it <Plug>(IPy-Interrupt)
+
+let g:ipy_celldef = ['^##', '^##']
+
+" }}}
+
+" deoplete.nvim {{{
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+" disable autocomplete by default
+let b:deoplete_disable_auto_complete=0
+let g:deoplete_disable_auto_complete=0
+" call deoplete#custom#buffer_option('auto_complete', v:false)
+
+" if !exists('g:deoplete#omni#input_patterns')
+"     let g:deoplete#omni#input_patterns = {}
+" endif
+
+" Disable the candidates in Comment/String syntaxes.
+call deoplete#custom#source('_',
+            \ 'disabled_syntaxes', ['Comment', 'String'])
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+let g:deoplete#sources#jedi#extra_path = '$HOME/.local/lib/python3.5/site-packages/'
+let g:res = ""
+if has('python3')
+    let g:res = ChompedSystem('python3 -m site --user-site')
+elseif has('python2')
+    let g:res = ChompedSystem('python2 -m site --user-site')
+end
+let g:deoplete#sources#jedi#extra_path = [g:res]
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#enable_cache = 1
+
+" set sources
+" let g:deoplete#sources = {}
+" let g:deoplete#sources.cpp = ['LanguageClient']
+" let g:deoplete#sources.python = ['LanguageClient']
+" let g:deoplete#sources.python3 = ['LanguageClient']
+" let g:deoplete#sources.rust = ['LanguageClient']
+" let g:deoplete#sources.c = ['LanguageClient']
+" let g:deoplete#sources.vim = ['vim']
 " }}}
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively

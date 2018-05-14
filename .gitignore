@@ -2,3 +2,9 @@
 .vim/files/info/*
 .vim/spell/
 tags
+
+.mypy_cache/
+.vim/.netrwhist
+.vim/autoload/plug.vim
+.vim/plugged/
+
