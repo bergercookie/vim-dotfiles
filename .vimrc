@@ -1016,7 +1016,6 @@ let g:matchup_transmute_enabled = 1
 let g:matchup_matchparen_status_offscreen = 0
 let g:matchup_delim_stopline = 1500 " generally
 let g:matchup_matchparen_stopline = 200  " for match highlighting only
-let g:matchup_matchparen_status_offscreen = 0
 hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " }}}
 
@@ -1026,8 +1025,14 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " use :Scriptnames instead of :scriptnames
 " }}}
 
+" cppman configuration {{{
+
+" }}}
+
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
+
+
