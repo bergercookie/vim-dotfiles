@@ -232,7 +232,6 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/nelstrom/vim-americanize'
 Plug 'https://github.com/PeterRincker/vim-argumentative'
 Plug 'https://github.com/funorpain/vim-cpplint'
-Plug 'https://github.com/nvie/vim-flake8'
 Plug 'https://github.com/vim-scripts/Hardy'
 Plug 'https://github.com/nathanaelkane/vim-indent-guides'
 Plug 'https://github.com/tpope/vim-obsession'
@@ -250,13 +249,12 @@ Plug 'https://github.com/terryma/vim-expand-region'
 Plug 'https://github.com/vim-latex/vim-latex'
 Plug 'https://github.com/plasticboy/vim-markdown'
 Plug 'https://github.com/tpope/vim-fugitive'
-Plug 'https://github.com/justmao945/vim-clang'
+Plug 'https://github.com/rhysd/vim-clang-format'
 Plug 'https://github.com/tpope/vim-dispatch'
 Plug 'https://github.com/tomtom/tlib_vim.git'
 Plug 'https://github.com/bergercookie/vim-snippets'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils'
 Plug 'https://github.com/tomtom/tlib_vim.git'
-" Plug 'https://github.com/davidhalter/jedi-vim.git'
 Plug 'https://github.com/hynek/vim-python-pep8-indent.git'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/szw/vim-maximizer.git'
@@ -267,7 +265,6 @@ Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/mattn/webapi-vim'
-Plug 'https://github.com/rhysd/vim-clang-format'
 Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
 Plug 'https://github.com/dkarter/bullets.vim'
 Plug 'https://github.com/Chiel92/vim-autoformat'
@@ -292,7 +289,6 @@ Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/tpope/vim-projectionist'
 Plug 'https://github.com/tpope/vim-scriptease'
 Plug 'git://github.com/jiangmiao/auto-pairs.git'
-Plug 'https://github.com/christoomey/vim-sort-motion'
 Plug 'https://github.com/tommcdo/vim-exchange'
 Plug 'https://github.com/nelstrom/vim-markdown-folding'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
@@ -307,7 +303,11 @@ Plug 'https://github.com/houtsnip/vim-emacscommandline'
 Plug 'https://github.com/andymass/vim-matchup'
 Plug 'git@github.com:bergercookie/vim-debugstring'
 Plug 'https://github.com/brooth/far.vim'
-" Plug 'https://github.com/airodactyl/neovim-ranger'
+" Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
+" Plug 'https://github.com/davidhalter/jedi-vim.git'
+" Plug 'https://github.com/nvie/vim-flake8'
+" Plug 'https://github.com/christoomey/vim-sort-motion'
+" Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
 Plug 'https://github.com/bfredl/nvim-miniyank'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'https://github.com/roxma/vim-tmux-clipboard'
@@ -320,6 +320,10 @@ if has('nvim')
                 \ 'do': 'bash install.sh',
                 \ }
 endif
+
+" Multi-entry selection UI. FZF
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
@@ -549,27 +553,27 @@ set pastetoggle=<F2> " Super useful.
 
 let g:pydoc_open_cmd = 'split'
 
-" Python Syntax Support - as basic as possible
-" flake8
-let g:flake8_quickfix_height=3
-"autocmd BufWritePost *.py call Flake8() " Call Flake8 every time you run python
-autocmd FileType python map <buffer> <leader><leader>f :call Flake8()<CR>
+" " Python Syntax Support - as basic as possible - flake8 - Deprecated in favor of pyls {{{
+" let g:flake8_quickfix_height=3
+" let g:flake8_error_marker = 'EE'     " set error marker to 'EE'
+" let g:flake8_warning_marker = 'WW'   " set warning marker to 'WW'
 
-" to use colors defined in the colorscheme
-highlight link Flake8_Error      Error
-highlight link Flake8_Warning    WarningMsg
-highlight link Flake8_Complexity WarningMsg
-highlight link Flake8_Naming     WarningMsg
-highlight link Flake8_PyFlake    WarningMsg
+" " to use colors defined in the colorscheme
+" highlight link Flake8_Error      Error
+" highlight link Flake8_Warning    WarningMsg
+" highlight link Flake8_Complexity WarningMsg
+" highlight link Flake8_Naming     WarningMsg
+" highlight link Flake8_PyFlake    WarningMsg
+" " }}}
 
 " Syntastic {{{
 " Syntastic - python {{{
-let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
-let g:flake8_error_marker = 'EE'     " set error marker to 'EE'
-let g:flake8_warning_marker = 'WW'   " set warning marker to 'WW'
-let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
-      \E113,E501,W503'
-let g:syntastic_python_mypy_args = '--quick-and-dirty'
+
+" let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
+" let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
+"       \E113,E501,W503'
+" let g:syntastic_python_mypy_args = '--quick-and-dirty'
+
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -1235,6 +1239,29 @@ let g:ipy_celldef = ['^##', '^##']
 
 " }}}
 
+" LanguageClient-neovim {{{
+
+" Python Language Server - pyls
+" https://github.com/palantir/python-language-server
+
+let g:LanguageClient_serverCommands = {
+            \ 'sh': ['bash-language-server', 'start'],
+            \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+            \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+            \ 'python': ['pyls'],
+            \ }
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+let g:LanguageClient_settingsPath = '/home/berger/.config/nvim/settings.json'
+set completefunc=LanguageClient#complete
+set formatexpr=LanguageClient_textDocument_rangeFormatting()
+" }}}
+
 " deoplete.nvim {{{
 
 " Use deoplete.
@@ -1242,8 +1269,8 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 " disable autocomplete by default
-let b:deoplete_disable_auto_complete=0
-let g:deoplete_disable_auto_complete=0
+" let b:deoplete_disable_auto_complete=1
+" let g:deoplete_disable_auto_complete=1
 " call deoplete#custom#buffer_option('auto_complete', v:false)
 
 " if !exists('g:deoplete#omni#input_patterns')
@@ -1274,8 +1301,10 @@ let g:deoplete#sources#jedi#enable_cache = 1
 " let g:deoplete#sources.python3 = ['LanguageClient']
 " let g:deoplete#sources.rust = ['LanguageClient']
 " let g:deoplete#sources.c = ['LanguageClient']
+" let g:deoplete#sources.sh = ['LanguageClient']
 " let g:deoplete#sources.vim = ['vim']
 " }}}
+
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
