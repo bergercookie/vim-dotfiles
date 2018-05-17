@@ -252,7 +252,6 @@ Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/rhysd/vim-clang-format'
 Plug 'https://github.com/tpope/vim-dispatch'
 Plug 'https://github.com/tomtom/tlib_vim.git'
-Plug 'https://github.com/bergercookie/vim-snippets'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils'
 Plug 'https://github.com/tomtom/tlib_vim.git'
 Plug 'https://github.com/hynek/vim-python-pep8-indent.git'
@@ -300,14 +299,7 @@ Plug 'https://github.com/google/vimdoc'
 Plug 'https://github.com/junegunn/vader.vim'
 Plug 'https://github.com/janko-m/vim-test'
 Plug 'https://github.com/andymass/vim-matchup'
-Plug 'git@github.com:bergercookie/vim-debugstring'
 Plug 'https://github.com/brooth/far.vim'
-" Plug 'https://github.com/houtsnip/vim-emacscommandline'
-" Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
-" Plug 'https://github.com/davidhalter/jedi-vim.git'
-" Plug 'https://github.com/nvie/vim-flake8'
-" Plug 'https://github.com/christoomey/vim-sort-motion'
-" Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
 Plug 'https://github.com/bfredl/nvim-miniyank'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'https://github.com/roxma/vim-tmux-clipboard'
@@ -334,7 +326,22 @@ else
 endif
 
 Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
-Plug 'https://github.com/mhinz/vim-janah'
+Plug 'https://github.com/mhinz/vim-janah' " colorscheme
+
+
+" DEPRECATED plugins
+" Plug 'https://github.com/houtsnip/vim-emacscommandline'
+" Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
+" Plug 'https://github.com/davidhalter/jedi-vim.git'
+" Plug 'https://github.com/nvie/vim-flake8'
+" Plug 'https://github.com/christoomey/vim-sort-motion'
+" Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
+
+" Own versions - update them periodically
+Plug 'git@github.com:bergercookie/vim-snippets'
+
+" Own plugins
+Plug 'git@github.com:bergercookie/vim-debugstring'
 
 " Totally useless... just open another horizontal tmux pane
 " Plug 'https://github.com/Lenovsky/nuake/'
@@ -958,6 +965,10 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " UltiSnips {{{
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 " }}}
 
 " vim-geeknote - DEPRECATED don't use it {{{
@@ -1206,8 +1217,9 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " vim-far {{{
 "
 " https://github.com/brooth/far.vim/issues/18
-" use :Far kalimera kalinuxta \.cpp \.h
-let g:far#source = 'agnvim'
+"
+" use :Far kalimera kalinuxta \.cpp FOR ag
+" let g:far#source = 'agnvim'
 " }}}
 
 " nvim-miniyank {{{
@@ -1245,7 +1257,6 @@ let g:ipy_celldef = ['^##', '^##']
 " https://github.com/palantir/python-language-server
 
 let g:LanguageClient_serverCommands = {
-            \ 'sh': ['bash-language-server', 'start'],
             \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
             \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
             \ 'python': ['pyls'],
@@ -1268,11 +1279,6 @@ set completefunc=LanguageClient#complete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
-" disable autocomplete by default
-" let b:deoplete_disable_auto_complete=1
-" let g:deoplete_disable_auto_complete=1
-" call deoplete#custom#buffer_option('auto_complete', v:false)
-
 " if !exists('g:deoplete#omni#input_patterns')
 "     let g:deoplete#omni#input_patterns = {}
 " endif
@@ -1294,15 +1300,6 @@ let g:deoplete#sources#jedi#extra_path = [g:res]
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#enable_cache = 1
 
-" set sources
-" let g:deoplete#sources = {}
-" let g:deoplete#sources.cpp = ['LanguageClient']
-" let g:deoplete#sources.python = ['LanguageClient']
-" let g:deoplete#sources.python3 = ['LanguageClient']
-" let g:deoplete#sources.rust = ['LanguageClient']
-" let g:deoplete#sources.c = ['LanguageClient']
-" let g:deoplete#sources.sh = ['LanguageClient']
-" let g:deoplete#sources.vim = ['vim']
 " }}}
 
 
