@@ -299,10 +299,10 @@ Plug 'https://github.com/inside/vim-grep-operator'
 Plug 'https://github.com/google/vimdoc'
 Plug 'https://github.com/junegunn/vader.vim'
 Plug 'https://github.com/janko-m/vim-test'
-Plug 'https://github.com/houtsnip/vim-emacscommandline'
 Plug 'https://github.com/andymass/vim-matchup'
 Plug 'git@github.com:bergercookie/vim-debugstring'
 Plug 'https://github.com/brooth/far.vim'
+" Plug 'https://github.com/houtsnip/vim-emacscommandline'
 " Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
 " Plug 'https://github.com/davidhalter/jedi-vim.git'
 " Plug 'https://github.com/nvie/vim-flake8'
@@ -1254,12 +1254,12 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> gR :call LanguageClient#textDocument_rename()<CR>
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
 let g:LanguageClient_settingsPath = '/home/berger/.config/nvim/settings.json'
 set completefunc=LanguageClient#complete
-set formatexpr=LanguageClient_textDocument_rangeFormatting()
+" set formatexpr=LanguageClient_textDocument_rangeFormatting()
 " }}}
 
 " deoplete.nvim {{{
