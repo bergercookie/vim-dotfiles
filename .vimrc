@@ -643,7 +643,7 @@ let g:syntastic_c_checkers = ['gcc', ]
 " }}}
 
 " Syntastic - C++11 {{{
-let g:syntastic_cpp_checkers = ['gcc', 'cpplint',]
+let g:syntastic_cpp_checkers = ['gcc', 'cpplint', 'cppcheck']
 let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 let g:syntastic_cpp_no_default_include_dirs = 0
