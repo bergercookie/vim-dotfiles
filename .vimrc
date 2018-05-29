@@ -1302,6 +1302,12 @@ let g:deoplete#sources#jedi#enable_cache = 1
 
 " }}}
 
+" vim-markdown {{{
+
+let g:vim_markdown_conceal = 0
+
+" }}}
+
 
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
