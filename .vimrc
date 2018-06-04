@@ -257,7 +257,6 @@ Plug 'https://github.com/tomtom/tlib_vim.git'
 Plug 'https://github.com/hynek/vim-python-pep8-indent.git'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/szw/vim-maximizer.git'
-Plug 'https://github.com/xolox/vim-misc'
 Plug 'https://github.com/pearofducks/ansible-vim'
 Plug 'https://github.com/davidbeckingsale/writegood.vim'
 Plug 'https://github.com/SirVer/ultisnips'
@@ -305,6 +304,8 @@ Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'https://github.com/roxma/vim-tmux-clipboard'
 Plug 'https://github.com/bfredl/nvim-ipy'
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
+Plug 'https://github.com/xolox/vim-misc'
+Plug 'https://github.com/xolox/vim-notes'
 
 if has('nvim')
     Plug 'autozimu/LanguageClient-neovim', {
@@ -1308,7 +1309,27 @@ let g:vim_markdown_conceal = 0
 
 " }}}
 
+" vim-projectionist {{{
+nnoremap <leader>zz :A<CR>
+nnoremap <leader>zs :AS<CR>
+nnoremap <leader>zv :AV<CR>
+nnoremap <leader>zt :AT<CR>
+" }}}
 
+" vim-notes {{{
+
+let g:notes_directories = ['~/MEGA/notes']
+let g:notes_suffix = ".md"
+let g:notes_unicode_enabled = 1
+
+let g:notes_conceal_bold = 0
+let g:notes_conceal_italics = 0
+let g:notes_conceal_code = 0
+
+autocmd filetype notes set nofoldenable    " disable folding
+
+"
+" }}}
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
