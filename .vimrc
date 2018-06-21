@@ -36,7 +36,7 @@ set colorcolumn=80
 set textwidth=80 " Automatically break lines at X columns
 set hidden
 set noshowmode " Handled by airline
-set viminfo='100,<50,s10,h,n$HOME/.vim/files/info/viminfo
+set viminfo='100,<50,s10,h,n$HOME/.viminfo
 if !has('nvim')
     set viminfo+=!  " Compatible viminfo file in both vim and neovim
 endif
@@ -1325,6 +1325,7 @@ let g:notes_unicode_enabled = 1
 let g:notes_conceal_bold = 0
 let g:notes_conceal_italics = 0
 let g:notes_conceal_code = 0
+let g:notes_conceal_url = 0
 
 autocmd filetype notes set nofoldenable    " disable folding
 
