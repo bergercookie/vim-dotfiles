@@ -304,6 +304,7 @@ Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'https://github.com/roxma/vim-tmux-clipboard'
 Plug 'https://github.com/bfredl/nvim-ipy'
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
+Plug 'sebastianmarkow/deoplete-rust'
 Plug 'https://github.com/xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-notes'
 
@@ -937,17 +938,17 @@ autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . 
 
 " }}}
 
-" vim-racer {{{
-" https://github.com/racer-rust/vim-racer
-let g:racer_cmd = "$HOME/.cargo/bin/racer"
-let g:racer_experimental_completer = 1 " Experimental
+" vim-racer - DEPRECATED, use deoplete-rust {{{
+" " https://github.com/racer-rust/vim-racer
+" let g:racer_cmd = "which racer"
+" let g:racer_experimental_completer = 1 " Experimental
 
-augroup rust_aucommands
-	au FileType rust nmap gd <Plug>(rust-def)
-	au FileType rust nmap gs <Plug>(rust-def-split)
-	au FileType rust nmap gx <Plug>(rust-def-vertical)
-	au FileType rust nmap <leader>gd <Plug>(rust-doc)
-augroup END
+" augroup rust_aucommands
+" 	au FileType rust nmap gd <Plug>(rust-def)
+" 	au FileType rust nmap gs <Plug>(rust-def-split)
+" 	au FileType rust nmap gx <Plug>(rust-def-vertical)
+" 	au FileType rust nmap <leader>gd <Plug>(rust-doc)
+" augroup END
 
 " }}}
 
@@ -1323,6 +1324,15 @@ end
 let g:deoplete#sources#jedi#extra_path = [g:res]
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#enable_cache = 1
+
+" }}}
+
+" deoplete-rust {{{
+
+let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
+let g:deoplete#sources#rust#show_duplicates=0
+let g:deoplete#sources#rust#documentation_max_height=20
+let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
 
 " }}}
 
