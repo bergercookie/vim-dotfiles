@@ -328,6 +328,7 @@ endif
 
 Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
 Plug 'https://github.com/mhinz/vim-janah' " colorscheme
+Plug 'https://github.com/josuegaleas/jay'
 
 
 " DEPRECATED plugins
@@ -634,7 +635,6 @@ let g:syntastic_help_checkers= ['proselint']
 let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
 " }}}
 
-
 " Syntastic - C {{{
 let g:syntastic_c_compiler = 'gcc'
 let g:syntastic_c_no_default_include_dirs = 0
@@ -834,9 +834,13 @@ nnoremap <leader>ss  :ShowSpaces 1<CR>
 nnoremap <leader>ts  m`:TrimSpaces<CR>``
 vnoremap <leader>ts  :TrimSpaces<CR>
 
-" C++ code completion {{{
+" Generate ctags
+map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
 
-map <leader>rt :!ctags -R --fields=+l --tag-relative . <CR>
+autocmd FileType cpp map <leader>rt :!ctags -R --c++-kinds=+p --fields=+liaS --extra=+q --tag-relative . <CR>
+autocmd FileType rust map <leader>rt :!rusty-tags vi <CR>
+
+" C++ code completion {{{
 set completeopt=menuone,menu,longest,preview
 
 " omni-completion - where to search ...
@@ -926,6 +930,10 @@ let g:task_rc_override = 'rc.defaultwidth=0' " line-wrapping
 
 " Rust configuration {{{
 let g:rustfmt_autosave = 1
+
+" Use rusty-ctags to produce a tags file for vim
+autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
+autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 
 " }}}
 
@@ -1142,6 +1150,21 @@ let g:tagbar_type_rst = {
     \ },
     \ 'sort': 0,
 \ }
+
+" ctags support for rust
+let g:tagbar_type_rust = {
+   \ 'ctagstype' : 'rust',
+   \ 'kinds' : [
+       \'T:types,type definitions',
+       \'f:functions,function definitions',
+       \'g:enum,enumeration names',
+       \'s:structure names',
+       \'m:modules,module names',
+       \'c:consts,static constants',
+       \'t:traits',
+       \'i:impls,trait implementations',
+   \]
+   \}
 
 " }}}
 
