@@ -1,3 +1,4 @@
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fri Dec 29 12:51:00 EET 2017 - Nikos Koukis
 " This is the main vimrc file used both in my linux and mac machines.
@@ -272,6 +273,7 @@ Plug 'https://github.com/dag/vim2hs'
 Plug 'https://github.com/Shougo/vimproc.vim', {'do': 'make'}
 Plug 'https://github.com/eagletmt/ghcmod-vim'
 Plug 'https://github.com/eagletmt/neco-ghc'
+Plug 'https://github.com/Shougo/neco-vim'
 Plug 'https://github.com/alx741/vim-hindent'
 Plug 'https://github.com/alepez/vim-gtest'
 Plug 'https://github.com/tpope/vim-commentary'
@@ -305,6 +307,8 @@ Plug 'https://github.com/roxma/vim-tmux-clipboard'
 Plug 'https://github.com/bfredl/nvim-ipy'
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'sebastianmarkow/deoplete-rust'
+" Plug 'zchee/deoplete-clang'
+" Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
 Plug 'https://github.com/xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-notes'
 
@@ -632,6 +636,11 @@ let g:syntastic_popd_checkers= ['proselint']
 let g:syntastic_help_checkers= ['proselint']
 " }}}
 
+" Syntastic - rust {{{
+" Use cargo it's much better than rustc for projects that cargo manages
+let g:syntastic_rust_checkers= ['cargo']
+" }}}
+
 " Syntastic - LaTex {{{
 let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
 " }}}
@@ -840,6 +849,7 @@ map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
 
 autocmd FileType cpp map <leader>rt :!ctags -R --c++-kinds=+p --fields=+liaS --extra=+q --tag-relative . <CR>
 autocmd FileType rust map <leader>rt :!rusty-tags vi <CR>
+autocmd FileType rust setlocal colorcolumn=99
 
 " C++ code completion {{{
 set completeopt=menuone,menu,longest,preview
@@ -1281,12 +1291,12 @@ let g:ipy_celldef = ['^##', '^##']
 " Python Language Server - pyls
 " https://github.com/palantir/python-language-server
 
-let g:LanguageClient_serverCommands = {
-            \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-            \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-            \ 'python': ['pyls'],
-            \ }
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" let g:LanguageClient_serverCommands = {
+"       \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+"       \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+"       \ 'python': ['pyls'],
+"       \ }
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
 nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
@@ -1308,9 +1318,9 @@ let g:deoplete#enable_smart_case = 1
 "     let g:deoplete#omni#input_patterns = {}
 " endif
 
-" Disable the candidates in Comment/String syntaxes.
+" Disable the candidates in String syntaxes.
 call deoplete#custom#source('_',
-            \ 'disabled_syntaxes', ['Comment', 'String'])
+            \ 'disabled_syntaxes', ['String'])
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -1334,6 +1344,13 @@ let g:deoplete#sources#rust#show_duplicates=0
 let g:deoplete#sources#rust#documentation_max_height=20
 let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
 
+" }}}
+
+" deoplete-clang - DO NOT USE - No need to use this, tags support is enough {{{
+" let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-7/lib/libclang.so.1'
+" let g:deoplete#sources#clang#clang_header='/usr/include/llvm-7/llvm/'
+" let g:deoplete#sources#clang#std={'c': 'c11', 'cpp': 'c++1z', 'objc': 'c11', 'objcpp': 'c++1z'}
+" g:deoplete#sources#clang#clang_complete_database='.'
 " }}}
 
 " vim-markdown {{{
@@ -1369,5 +1386,4 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
-
 
