@@ -1,4 +1,3 @@
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fri Dec 29 12:51:00 EET 2017 - Nikos Koukis
 " This is the main vimrc file used both in my linux and mac machines.
@@ -236,8 +235,6 @@ Plug 'https://github.com/funorpain/vim-cpplint'
 Plug 'https://github.com/vim-scripts/Hardy'
 Plug 'https://github.com/nathanaelkane/vim-indent-guides'
 Plug 'https://github.com/tpope/vim-obsession'
-Plug 'https://github.com/tmux-plugins/vim-tmux-focus-events'
-Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/wesQ3/vim-windowswap'
 Plug 'https://github.com/vimperator/vimperator.vim'
 Plug 'https://github.com/tpope/vim-speeddating'
@@ -291,8 +288,11 @@ Plug 'https://github.com/tpope/vim-scriptease'
 Plug 'git://github.com/jiangmiao/auto-pairs.git'
 Plug 'https://github.com/tommcdo/vim-exchange'
 Plug 'https://github.com/nelstrom/vim-markdown-folding'
+Plug 'https://github.com/tmux-plugins/vim-tmux-focus-events'
+Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
-Plug 'https://github.com/christoomey/vim-tmux-runner'
+Plug 'https://github.com/roxma/vim-tmux-clipboard'
+Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
 Plug 'https://github.com/kana/vim-vspec'
 Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/inside/vim-grep-operator'
@@ -303,7 +303,6 @@ Plug 'https://github.com/andymass/vim-matchup'
 Plug 'https://github.com/brooth/far.vim'
 Plug 'https://github.com/bfredl/nvim-miniyank'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
-Plug 'https://github.com/roxma/vim-tmux-clipboard'
 Plug 'https://github.com/bfredl/nvim-ipy'
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'sebastianmarkow/deoplete-rust'
@@ -330,11 +329,8 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-
-Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
 Plug 'https://github.com/mhinz/vim-janah' " colorscheme
 Plug 'https://github.com/josuegaleas/jay'
-
 
 " DEPRECATED plugins
 " Plug 'https://github.com/houtsnip/vim-emacscommandline'
@@ -343,6 +339,7 @@ Plug 'https://github.com/josuegaleas/jay'
 " Plug 'https://github.com/nvie/vim-flake8'
 " Plug 'https://github.com/christoomey/vim-sort-motion'
 " Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
+" Plug 'https://github.com/itchyny/calendar.vim' - Good, but not good enough
 
 " Own versions - update them periodically
 Plug 'git@github.com:bergercookie/vim-snippets'
@@ -1186,6 +1183,11 @@ nnoremap <leader>ut :UndotreeToggle<CR>
 " tmux-integration plugins {{{
 " Sat Dec 9 20:05:59 GMT 2017, Nikos Koukis
 " tmux-completer - Never actually worked..
+
+augroup tmux_config
+    autocmd! FileType tmux setlocal foldmethod=marker
+augroup END
+
 " }}}
 
 " vim-tmux-navigator {{{
@@ -1194,14 +1196,14 @@ let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_save_on_switch = 1
 " }}}
 
-" vim-tmux-runner {{{
-let g:VtrStripLeadingWhitespace = 0
-let g:VtrClearEmptyLines = 0
-let g:VtrAppendNewline = 1
+" " vim-tmux-runner - DEPRECATED {{{
+" let g:VtrStripLeadingWhitespace = 0
+" let g:VtrClearEmptyLines = 0
+" let g:VtrAppendNewline = 1
 
-nmap <leader>tr :VtrSendLinesToRunner<CR>
-vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
-" }}}
+" nmap <leader>tr :VtrSendLinesToRunner<CR>
+" vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
+" " }}}
 
 
 " vim-signature - Wow, so useful of a plugin{{{
