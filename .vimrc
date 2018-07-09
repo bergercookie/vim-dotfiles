@@ -859,7 +859,7 @@ set complete=.,w,b,u,t,i,kspell
 nnoremap <leader><C-p> :tabm -1<CR>
 nnoremap <leader><C-n> :tabm +1<CR>
 nnoremap <leader><leader><C-p> :tabm 0<CR>
-nnoremap <leader><leader><C-n> :tabm 99<CR>
+nnoremap <leader><leader><C-n> :tabm<CR>
 
 " }}}
 
