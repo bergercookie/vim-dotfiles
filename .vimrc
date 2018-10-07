@@ -303,13 +303,14 @@ Plug 'https://github.com/andymass/vim-matchup'
 Plug 'https://github.com/brooth/far.vim'
 Plug 'https://github.com/bfredl/nvim-miniyank'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
-Plug 'https://github.com/bfredl/nvim-ipy'
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'sebastianmarkow/deoplete-rust'
-" Plug 'zchee/deoplete-clang'
+" Plug 'https://github.com/bfredl/nvim-ipy'
+Plug 'zchee/deoplete-clang'
 " Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
 Plug 'https://github.com/xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-notes'
+Plug 'https://github.com/Shougo/neoinclude.vim'
 
 if has('nvim')
     Plug 'autozimu/LanguageClient-neovim', {
@@ -331,6 +332,8 @@ else
 endif
 Plug 'https://github.com/mhinz/vim-janah' " colorscheme
 Plug 'https://github.com/josuegaleas/jay'
+
+Plug 'arakashic/chromatica.nvim'
 
 " DEPRECATED plugins
 " Plug 'https://github.com/houtsnip/vim-emacscommandline'
@@ -937,7 +940,10 @@ let g:task_rc_override = 'rc.defaultwidth=0' " line-wrapping
 " }}}
 
 " Rust configuration {{{
+let g:rustfmt_command = 'cargo fmt -- '
+" let g:rustfmt_options = '-f'
 let g:rustfmt_autosave = 1
+let g:rustfmt_fail_silently = 0
 
 " Use rusty-ctags to produce a tags file for vim
 autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
@@ -1189,6 +1195,10 @@ augroup tmux_config
 augroup END
 
 " }}}
+"
+augroup conf_config
+    autocmd! FileType conf setlocal foldmethod=marker
+augroup END
 
 " vim-tmux-navigator {{{
 " Disable tmux navigator when zooming the Vim pane
@@ -1299,14 +1309,14 @@ let g:ipy_celldef = ['^##', '^##']
 "       \ 'python': ['pyls'],
 "       \ }
 " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> gR :call LanguageClient#textDocument_rename()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+" nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
+" nnoremap <silent> gR :call LanguageClient#textDocument_rename()<CR>
 
-let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-let g:LanguageClient_settingsPath = '/home/berger/.config/nvim/settings.json'
-set completefunc=LanguageClient#complete
+" let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+" let g:LanguageClient_settingsPath = '/home/berger/.config/nvim/settings.json'
+" set completefunc=LanguageClient#complete
 " set formatexpr=LanguageClient_textDocument_rangeFormatting()
 " }}}
 
@@ -1348,11 +1358,18 @@ let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
 
 " }}}
 
-" deoplete-clang - DO NOT USE - No need to use this, tags support is enough {{{
-" let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-7/lib/libclang.so.1'
-" let g:deoplete#sources#clang#clang_header='/usr/include/llvm-7/llvm/'
-" let g:deoplete#sources#clang#std={'c': 'c11', 'cpp': 'c++1z', 'objc': 'c11', 'objcpp': 'c++1z'}
-" g:deoplete#sources#clang#clang_complete_database='.'
+" deoplete-clang {{{
+let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-6.0/lib/libclang.so.1'
+let g:deoplete#sources#clang#clang_header='/usr/lib/llvm-6.0/lib/clang/'
+let g:deoplete#sources#clang#std={'c': 'c11', 'cpp': 'c++1z', 'objc': 'c11', 'objcpp': 'c++1z'}
+let g:deoplete#sources#clang#clang_complete_database='.'
+" }}}
+
+" neoinclude {{{
+if !exists('g:neoinclude#exts')
+	let g:neoinclude#exts = {}
+endif
+let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
 " }}}
 
 " vim-markdown {{{
@@ -1389,3 +1406,10 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
 
+" nvim-chromatica {{{
+
+let g:chromatica#libclang_path='/usr/lib/libclang.so'
+let g:chromatica#enable_at_startup=1
+let g:chromatica#highlight_feature_level=1
+
+" }}}
