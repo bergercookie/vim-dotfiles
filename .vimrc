@@ -50,6 +50,7 @@ set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
+
 " Remap <leader> to comma
 let mapleader = ","
 nnoremap \ ,
@@ -311,7 +312,18 @@ Plug 'zchee/deoplete-clang'
 Plug 'https://github.com/xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-notes'
 Plug 'https://github.com/Shougo/neoinclude.vim'
+Plug 'https://github.com/AndrewRadev/undoquit.vim'
+Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'rust' ]}
+Plug 'chrisbra/csv.vim'
+Plug 'CoatiSoftware/vim-sourcetrail'
+Plug 'https://github.com/mhinz/vim-janah' " colorscheme
+Plug 'https://github.com/josuegaleas/jay'
+Plug 'arakashic/chromatica.nvim'
+Plug 'https://github.com/junegunn/vim-peekaboo'
+Plug 'https://github.com/tpope/vim-rsi'
+Plug 'https://github.com/Yilin-Yang/vim-markbar'
 
+" LanguageClient
 if has('nvim')
     Plug 'autozimu/LanguageClient-neovim', {
                 \ 'branch': 'next',
@@ -323,6 +335,7 @@ endif
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" deoplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 else
@@ -330,10 +343,6 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'https://github.com/mhinz/vim-janah' " colorscheme
-Plug 'https://github.com/josuegaleas/jay'
-
-Plug 'arakashic/chromatica.nvim'
 
 " DEPRECATED plugins
 " Plug 'https://github.com/houtsnip/vim-emacscommandline'
@@ -343,6 +352,8 @@ Plug 'arakashic/chromatica.nvim'
 " Plug 'https://github.com/christoomey/vim-sort-motion'
 " Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
 " Plug 'https://github.com/itchyny/calendar.vim' - Good, but not good enough
+
+Plug 'https://github.com/jwilm/i3-vim-focus'
 
 " Own versions - update them periodically
 Plug 'git@github.com:bergercookie/vim-snippets'
@@ -583,7 +594,7 @@ let g:pydoc_open_cmd = 'split'
 " Syntastic {{{
 " Syntastic - python {{{
 
-" let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
+let g:syntastic_python_checkers=['flake8', 'pylint3']
 " let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
 "       \E113,E501,W503'
 " let g:syntastic_python_mypy_args = '--quick-and-dirty'
@@ -674,16 +685,8 @@ vnoremap <leader>2 :echo @%<CR>
 
 " Convert slashes to backslashes for Windows.
 " http://vim.wikia.com/wiki/VimTip600
-if has('win32')
-  nmap ,cs :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
-  nmap ,cl :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
-
-  " This will copy the path in 8.3 short format, for DOS and Windows 9x
-  nmap <leader>c8 :let @+=substitute(expand("%:p:8"), "/", "\\", "g")<CR>
-else
-  nmap <leader>cs :let @+=expand("%")<CR>
-  nmap <leader>cl :let @+=expand("%:p")<CR>
-endif
+nnoremap <leader>cp :let @+=expand("%")<CR>
+nnoremap <leader>cl :let @+=expand("%:p")<CR>
 
 if has("gui_running")
     " GUI is running or is about to start.
@@ -718,6 +721,7 @@ autocmd VimEnter * so $HOME/.vim/own_scripts/abbreviations.vim
 " http://vim.wikia.com/wiki/Highlight_all_search_pattern_matches
 nnoremap <leader>hw :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 
+" ctrlp {{{
 " Sat Apr 9 15:55:15 EEST 2016, Nikos Koukis
 " ctrlp is back!!
 " https://github.com/ctrlpvim/ctrlp.vim
@@ -733,13 +737,19 @@ let g:ctrlp_custom_ignore = {
   \ }
 " The maximum number of files to scan, set to 0 for no limit:
 let g:ctrlp_max_files=0
-
+let g:ctrlp_switch_buffer = 'Et'
+let g:ctrlp_working_path_mode = 0
 " mappings
 nnoremap <leader>pp :CtrlP<CR>
 nnoremap <leader>pf :CtrlPBuffer<CR>
 nnoremap <leader>pm :CtrlPMRU<CR>
 " Search through your tags!
 nnoremap <leader>pt :CtrlPTag<CR>
+" }}}
+
+" vim-startify {{{
+let g:startify_change_to_dir = 0
+" }}}
 
 " Thu Apr 14 22:10:19 EEST 2016, Nikos Koukis
 " indentLine
@@ -846,9 +856,16 @@ vnoremap <leader>ts  :TrimSpaces<CR>
 
 " Generate ctags
 map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
-
 autocmd FileType cpp map <leader>rt :!ctags -R --c++-kinds=+p --fields=+liaS --extra=+q --tag-relative . <CR>
 autocmd FileType rust map <leader>rt :!rusty-tags vi <CR>
+
+" guten-tags - ctags managing plugin {{{
+let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
+
+" I may be adding to this list in the local vimrc file
+let g:gutentags_ctags_extra_args = ["/usr/include"]
+" }}}
+
 autocmd FileType rust setlocal colorcolumn=99
 
 " C++ code completion {{{
@@ -1180,6 +1197,11 @@ let g:tagbar_type_rust = {
    \]
    \}
 
+" Open tag in new tab
+nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
+
+" Use <C-curly closing bracket> to preview that tag
+
 " }}}
 
 " undotree - like GUndo {{{
@@ -1298,7 +1320,7 @@ let g:ipy_celldef = ['^##', '^##']
 
 " }}}
 
-" LanguageClient-neovim {{{
+" LanguageClient-neovim - Don't seem to run that well {{{
 
 " Python Language Server - pyls
 " https://github.com/palantir/python-language-server
@@ -1359,8 +1381,8 @@ let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
 " }}}
 
 " deoplete-clang {{{
-let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-6.0/lib/libclang.so.1'
-let g:deoplete#sources#clang#clang_header='/usr/lib/llvm-6.0/lib/clang/'
+let g:deoplete#sources#clang#libclang_path='/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header='/usr/lib/libclang_include'
 let g:deoplete#sources#clang#std={'c': 'c11', 'cpp': 'c++1z', 'objc': 'c11', 'objcpp': 'c++1z'}
 let g:deoplete#sources#clang#clang_complete_database='.'
 " }}}
@@ -1403,13 +1425,40 @@ autocmd filetype notes set nofoldenable    " disable folding
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
-let g:local_vimrc = '~/.vimrc.local'
-execute 'source ' . g:local_vimrc
-
 " nvim-chromatica {{{
 
+nnoremap <leader>cs :ChromaticaStart<CR>
+nnoremap <leader>cS :ChromaticaStop<CR>
 let g:chromatica#libclang_path='/usr/lib/libclang.so'
 let g:chromatica#enable_at_startup=1
 let g:chromatica#highlight_feature_level=1
 
+" i3-vim-focus {{{
+" TODO - fix it
+
+map gwl :call Focus('right', 'l')<CR>
+map gwh :call Focus('left', 'h')<CR>
+map gwk :call Focus('up', 'k')<CR>
+map gwj :call Focus('down', 'j')<CR>
+
 " }}}
+
+" undoquit {{{
+let g:undoquit_mapping = '<Leader>uq'
+" }}}
+
+" vim-sourcetrail {{{
+
+nnoremap <leader>l :SourcetrailActivateToken<CR>
+
+" }}}
+
+" vim-peekaboo - Show contents of registers on "/@/CTRL-R {{{
+"
+" }}}
+
+" machine-local configuration
+let g:local_vimrc = '~/.vimrc.local'
+execute 'source ' . g:local_vimrc
+
+
