@@ -318,7 +318,6 @@ Plug 'https://github.com/josuegaleas/jay'
 Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/tpope/vim-rsi'
-Plug 'https://github.com/Yilin-Yang/vim-markbar'
 Plug 'w0rp/ale'
 
 " LanguageClient
@@ -353,6 +352,7 @@ endif
 " Plug 'https://github.com/scrooloose/syntastic'
 " Plug 'https://github.com/bfredl/nvim-ipy'
 " Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
+" Plug 'https://github.com/Yilin-Yang/vim-markbar'
 
 Plug 'https://github.com/jwilm/i3-vim-focus'
 
@@ -1294,7 +1294,8 @@ nnoremap <leader>zt :AT<CR>
 " }}}
 
 " vim-dispatch {{{
-nnoremap <Leader>m :Dispatch! make -C build<CR>
+nnoremap <Leader>m :Make -C build<CR>
+nnoremap <Leader><Leader>m :Make! -C build<CR>
 " }}}
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
@@ -1476,6 +1477,8 @@ let g:chromatica#libclang_path='/usr/lib/libclang.so'
 let g:chromatica#enable_at_startup=1
 let g:chromatica#highlight_feature_level=1
 
+" }}}
+
 " i3-vim-focus {{{
 " TODO - fix it
 
@@ -1498,6 +1501,15 @@ nnoremap <leader>l :SourcetrailActivateToken<CR>
 
 " vim-peekaboo - Show contents of registers on "/@/CTRL-R {{{
 "
+" }}}
+"
+" vim-markbar - vim-peekaboo but for the marks - Nah, not worth it {{{
+
+" " open/close markbar mappings
+" map <Leader>mb  <Plug>ToggleMarkbar
+" map <Leader>mo <Plug>OpenMarkbar
+" map <Leader>mc <Plug>CloseMarkbar
+" let g:markbar_enable_peekaboo = 0
 " }}}
 
 " machine-local configuration
