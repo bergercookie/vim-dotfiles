@@ -239,7 +239,6 @@ Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/wesQ3/vim-windowswap'
 Plug 'https://github.com/vimperator/vimperator.vim'
 Plug 'https://github.com/tpope/vim-speeddating'
-Plug 'https://github.com/scrooloose/syntastic'
 Plug 'https://github.com/godlygeek/tabular'
 Plug 'https://github.com/majutsushi/tagbar'
 Plug 'https://github.com/vim-airline/vim-airline'
@@ -306,9 +305,7 @@ Plug 'https://github.com/bfredl/nvim-miniyank'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'sebastianmarkow/deoplete-rust'
-" Plug 'https://github.com/bfredl/nvim-ipy'
 Plug 'zchee/deoplete-clang'
-" Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
 Plug 'https://github.com/xolox/vim-misc'
 Plug 'https://github.com/xolox/vim-notes'
 Plug 'https://github.com/Shougo/neoinclude.vim'
@@ -322,6 +319,7 @@ Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/tpope/vim-rsi'
 Plug 'https://github.com/Yilin-Yang/vim-markbar'
+Plug 'w0rp/ale'
 
 " LanguageClient
 if has('nvim')
@@ -345,13 +343,16 @@ else
 endif
 
 " DEPRECATED plugins
-" Plug 'https://github.com/houtsnip/vim-emacscommandline'
+" Plug 'https://github.com/houtsnip/vim-emacscommandline' - vim-rsi is much better
 " Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
 " Plug 'https://github.com/davidhalter/jedi-vim.git'
 " Plug 'https://github.com/nvie/vim-flake8'
 " Plug 'https://github.com/christoomey/vim-sort-motion'
 " Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
 " Plug 'https://github.com/itchyny/calendar.vim' - Good, but not good enough
+" Plug 'https://github.com/scrooloose/syntastic'
+" Plug 'https://github.com/bfredl/nvim-ipy'
+" Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
 
 Plug 'https://github.com/jwilm/i3-vim-focus'
 
@@ -501,16 +502,12 @@ let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline_theme='dark' " https://github.com/vim-airline/vim-airline/wiki/Screenshots
 let g:airline_highlighting_cache = 0
+let g:airline#extensions#ale#enabled = 1
 
 " " highlight current tab
 " hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
 " hi TabLine ctermfg=Black ctermbg=Green
 " hi TabLineSel ctermfg=LightBlue
-
-
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
 " }}}
 
@@ -591,91 +588,140 @@ let g:pydoc_open_cmd = 'split'
 " highlight link Flake8_PyFlake    WarningMsg
 " " }}}
 
-" Syntastic {{{
-" Syntastic - python {{{
-
-let g:syntastic_python_checkers=['flake8', 'pylint3']
-" let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
-"       \E113,E501,W503'
-" let g:syntastic_python_mypy_args = '--quick-and-dirty'
-
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_loc_list_height = 3
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" }}}
-
 " Python mappings {{{
 let b:python_pdb_s='import pdb; pdb.set_trace()'
 autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
 " }}}
-" Syntastic - vim {{{
-let g:syntastic_vim_checkers = ['vint']
+
+" " Syntastic Configuration - Syntastic is dead {{{
+" " Syntastic - python {{{
+
+" let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
+" let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
+"       \E113,E501,W503'
+" let g:syntastic_python_mypy_args = '--quick-and-dirty'
+
+" let g:syntastic_aggregate_errors = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_loc_list_height = 3
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
+" " }}}
+
+" " Syntastic - vim {{{
+" let g:syntastic_vim_checkers = ['vint']
+" " }}}
+
+" " Syntastic - rst {{{
+" let g:syntastic_rst_checkers= ['proselint']
+" " }}}
+
+" " Syntastic - html {{{
+" let g:syntastic_html_checkers= ['proselint']
+" " }}}
+" " Syntastic - text {{{
+" let g:syntastic_text_checkers= ['proselint']
+" " }}}
+" " Syntastic - nroff {{{
+" let g:syntastic_nroff_checkers= ['proselint']
+" " }}}
+" " Syntastic - xhtml {{{
+" let g:syntastic_xhtml_checkers= ['proselint']
+" " }}}
+" " Syntastic - texinfo {{{
+" let g:syntastic_texinfo_checkers= ['proselint']
+" " }}}
+" " Syntastic - asciidoc {{{
+" let g:syntastic_asciidoc_checkers= ['proselint']
+" " }}}
+" " Syntastic - markdown {{{
+" let g:syntastic_markdown_checkers= ['proselint']
+" " }}}
+" " Syntastic - popd {{{
+" let g:syntastic_popd_checkers= ['proselint']
+" " }}}
+" " Syntastic - help {{{
+" let g:syntastic_help_checkers= ['proselint']
+" " }}}
+
+" " Syntastic - rust {{{
+" " Use cargo it's much better than rustc for projects that cargo manages
+" let g:syntastic_rust_checkers= ['cargo']
+" " }}}
+
+" " Syntastic - LaTex {{{
+" let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
+" " }}}
+
+" " Syntastic - C {{{
+" let g:syntastic_c_compiler = 'gcc'
+" let g:syntastic_c_no_default_include_dirs = 0
+" let g:syntastic_c_auto_refresh_includes = 1
+" " let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
+" let g:syntastic_c_checkers = ['gcc', ]
+" " }}}
+
+" " Syntastic - C++11 {{{
+" let g:syntastic_cpp_checkers = ['gcc', 'cpplint', 'cppcheck']
+" let g:syntastic_cpp_compiler = 'g++'
+" let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+" let g:syntastic_cpp_no_default_include_dirs = 0
+" let g:syntastic_cpp_auto_refresh_includes = 1
+" let g:syntastic_cpp_check_header = 1
+" let g:syntastic_cpp_cpplint_args = "--verbose=5"
+" let g:syntastic_cpp_cpplint_exec = "cpplint"
+" let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
+" " }}}
+"
+" map <leader>sc :SyntasticCheck<CR>
+"
+" " }}}
+
+" Ale - Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration  {{{
+" https://github.com/w0rp/ale#usage
+"
+" Run it manually
+map <leader>sc :ALELint<CR>
+"
+" let b:ale_fixers = ['prettier', 'eslint'] # TODO - order by order of run
+" let g:ale_fix_on_save = 1
+" let g:ale_completion_enabled = 1
+let g:ale_sign_column_always = 1
+" TODO Test :ALEGoToDefinition
+" TODO Test :ALEFindReferences
+" TODO Test :ALEHover
+" TODO Test :ALESymbolSearch
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" use compile_commands.json
+let g:ale_c_parse_compile_commands = 1
+let g:ale_c_build_dir_names = ['build', 'build_rel', 'obj']
+" let g:ale_c_build_dir = 'build'
+" let b:ale_c_parse_makefile = 1
+" let g:ale_lint_on_text_changed = 'never'
+" You can disable this option too if you don't want linters to run on opening a
+" file
+" let g:ale_lint_on_enter = 0
+autocmd FileType cpp let b:ale_linters = [
+            \ 'cppcheck', 'clang', 'clangd', 'gcc',
+            \ 'clang-check', 'clang-tidy', 'clang-format',
+            \ 'flawfinder', 'ccls']
+let g:ale_c_cppcheck_options='--enable=style --project=./compile_commands.json'
+autocmd FileType python let b:ale_linters = ['flake8', 'pylint']
+autocmd FileType vim let b:ale_linters = ['vint']
+autocmd FileType cmake let b:ale_linters = ['cmakelint']
+
+" navigate between errors
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 " }}}
 
-" Syntastic - rst {{{
-let g:syntastic_rst_checkers= ['proselint']
-" }}}
 
-" Syntastic - html {{{
-let g:syntastic_html_checkers= ['proselint']
-" }}}
-" Syntastic - text {{{
-let g:syntastic_text_checkers= ['proselint']
-" }}}
-" Syntastic - nroff {{{
-let g:syntastic_nroff_checkers= ['proselint']
-" }}}
-" Syntastic - xhtml {{{
-let g:syntastic_xhtml_checkers= ['proselint']
-" }}}
-" Syntastic - texinfo {{{
-let g:syntastic_texinfo_checkers= ['proselint']
-" }}}
-" Syntastic - asciidoc {{{
-let g:syntastic_asciidoc_checkers= ['proselint']
-" }}}
-" Syntastic - markdown {{{
-let g:syntastic_markdown_checkers= ['proselint']
-" }}}
-" Syntastic - popd {{{
-let g:syntastic_popd_checkers= ['proselint']
-" }}}
-" Syntastic - help {{{
-let g:syntastic_help_checkers= ['proselint']
-" }}}
-
-" Syntastic - rust {{{
-" Use cargo it's much better than rustc for projects that cargo manages
-let g:syntastic_rust_checkers= ['cargo']
-" }}}
-
-" Syntastic - LaTex {{{
-let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
-" }}}
-
-" Syntastic - C {{{
-let g:syntastic_c_compiler = 'gcc'
-let g:syntastic_c_no_default_include_dirs = 0
-let g:syntastic_c_auto_refresh_includes = 1
-" let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
-let g:syntastic_c_checkers = ['gcc', ]
-" }}}
-
-" Syntastic - C++11 {{{
-let g:syntastic_cpp_checkers = ['gcc', 'cpplint', 'cppcheck']
-let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-let g:syntastic_cpp_no_default_include_dirs = 0
-let g:syntastic_cpp_auto_refresh_includes = 1
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_cpplint_args = "--verbose=5"
-let g:syntastic_cpp_cpplint_exec = "cpplint"
-let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
-" }}}
-" }}}
 
 let g:Tex_CompileRule_pdf = 'xelatex $*'
 
@@ -709,9 +755,6 @@ set wildignorecase
 " bash like autocompletion
 set wildmode=longest,list
 
-" Wed Apr 6 10:01:54 EEST 2016, Nikos Koukis
-" different indentation for cpp code (also changed the .c, .cpp snippets
-map <leader>sc :SyntasticCheck<CR>
 
 " Fri Apr 8 20:18:54 EEST 2016, Nikos Koukis
 autocmd VimEnter * so $HOME/.vim/own_scripts/abbreviations.vim
