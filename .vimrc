@@ -719,6 +719,9 @@ autocmd FileType cmake let b:ale_linters = ['cmakelint']
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
+" Enable hovering
+" Doesn't work in terminal vim
+" g:ale_set_balloons = 1
 " }}}
 
 
