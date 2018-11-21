@@ -224,7 +224,6 @@ Plug 'https://github.com/tpope/vim-abolish'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/nelstrom/vim-americanize'
 Plug 'https://github.com/PeterRincker/vim-argumentative'
-Plug 'https://github.com/funorpain/vim-cpplint'
 Plug 'https://github.com/vim-scripts/Hardy'
 Plug 'https://github.com/nathanaelkane/vim-indent-guides'
 Plug 'https://github.com/tpope/vim-obsession'
@@ -675,20 +674,34 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 1
+" You can disable this option too if you don't want linters to run on opening a
+" file
+" let g:ale_lint_on_enter = 0
+
+" Ale - CPP configuration {{{
 " use compile_commands.json
 let g:ale_c_parse_compile_commands = 1
 let g:ale_c_build_dir_names = ['build', 'build_rel', 'obj']
 " let g:ale_c_build_dir = 'build'
 " let b:ale_c_parse_makefile = 1
-" let g:ale_lint_on_text_changed = 'never'
-" You can disable this option too if you don't want linters to run on opening a
-" file
-" let g:ale_lint_on_enter = 0
+
 autocmd FileType cpp let b:ale_linters = [
             \ 'cppcheck', 'clang', 'clangd', 'gcc',
             \ 'clang-check', 'clang-tidy', 'clang-format',
             \ 'flawfinder', 'ccls']
-let g:ale_c_cppcheck_options='--enable=style --project=./compile_commands.json'
+let g:ale_cpp_cppcheck_options='--enable=all --project=./compile_commands.json'
+let g:ale_cpp_clang_options='-std=c++14 -Wall -I/usr/include -I/usr/local/include -I/usr/local/include/eigen3'
+let g:ale_cpp_gcc_options='-std=c++14 -Wall -I/usr/include/ -I/usr/local/include/ -I/usr/local/include/eigen3'
+
+" }}}
+
+" {{{
+command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
+autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
+" }}}
+
 autocmd FileType python let b:ale_linters = ['flake8', 'pylint']
 autocmd FileType vim let b:ale_linters = ['vint']
 autocmd FileType cmake let b:ale_linters = ['cmakelint']
@@ -1262,8 +1275,8 @@ nnoremap <leader>zs :AS<CR>
 nnoremap <leader>zt :AT<CR>
 " }}}
 " vim-dispatch {{{
-nnoremap <Leader>m :Make -C build<CR>
-nnoremap <Leader><Leader>m :Make! -C build<CR>
+nnoremap <Leader>m :Make -C build -j7<CR>
+nnoremap <Leader><Leader>m :Make! -C build -j7<CR>
 " }}}
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
