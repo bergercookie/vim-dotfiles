@@ -61,7 +61,6 @@ filetype indent on
 
 
 " }}}
-
 " Indentation Related Settings {{{
 set smarttab
 
@@ -139,7 +138,6 @@ augroup md_options
 augroup END
 " }}}
 
-
 nnoremap <C-\> <C-t>
 
 " Tab handling {{{
@@ -161,8 +159,7 @@ nnoremap <C-w>\| <ESC>:vsplit<CR>
 nnoremap <C-w>- <ESC>:split<CR>
 
 " }}}
-
-" DragVisuals Configuration {{{
+" DragVisuals Configuration - CURRENTLY UNUSED {{{
 " Use the VISUAL LINES!
 " TODO - Plugin isn't set up correctly
 vnoremap  <expr>  <LEFT>   DVB_Drag('left')
@@ -171,10 +168,7 @@ vnoremap  <expr>  <DOWN>   DVB_Drag('down')
 vnoremap  <expr>  <UP>     DVB_Drag('up')
 vnoremap  <expr>  D        DVB_Duplicate()
 " }}}
-
-" " Pathongen package manager - DEPRECATED {{{
-
-
+" Pathongen package manager - DEPRECATED {{{
 " " Vim sessions default to capturing all global options, which includes the
 " " 'runtimepath' that pathogen.vim manipulates. This can cause other problems
 " " too, so I recommend turning that behavior off
@@ -197,11 +191,9 @@ vnoremap  <expr>  D        DVB_Duplicate()
 " endif
 " " }}}
 " " }}}
-
 " call pathogen#infect()
 " call pathogen#helptags()
 " " }}}
-
 " vim-plug package manager {{{
 
 
@@ -319,7 +311,6 @@ Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/tpope/vim-rsi'
 Plug 'w0rp/ale'
-
 " LanguageClient
 if has('nvim')
     Plug 'autozimu/LanguageClient-neovim', {
@@ -327,11 +318,9 @@ if has('nvim')
                 \ 'do': 'bash install.sh',
                 \ }
 endif
-
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
 " deoplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
@@ -340,6 +329,18 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+Plug 'https://github.com/jwilm/i3-vim-focus'
+
+" taskwiki + dependencies
+Plug 'https://github.com/tbabej/taskwiki'
+Plug 'https://github.com/vimwiki/vimwiki', {'branch': 'dev'}
+Plug 'https://github.com/powerman/vim-plugin-AnsiEsc'
+Plug 'https://github.com/farseer90718/vim-taskwarrior'
+
+" own + maintained version's
+Plug 'git@github.com:bergercookie/vim-snippets'
+Plug 'git@github.com:bergercookie/vim-debugstring'
+
 
 " DEPRECATED plugins
 " Plug 'https://github.com/houtsnip/vim-emacscommandline' - vim-rsi is much better
@@ -354,14 +355,6 @@ endif
 " Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
 " Plug 'https://github.com/Yilin-Yang/vim-markbar'
 
-Plug 'https://github.com/jwilm/i3-vim-focus'
-
-" Own versions - update them periodically
-Plug 'git@github.com:bergercookie/vim-snippets'
-
-" Own plugins
-Plug 'git@github.com:bergercookie/vim-debugstring'
-
 " Totally useless... just open another horizontal tmux pane
 " Plug 'https://github.com/Lenovsky/nuake/'
 
@@ -369,7 +362,6 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
 call plug#end()
 " }}}
-
 " Folding in markers for vim {{{
 augroup filetype_vim
     autocmd! FileType vim setlocal foldmethod=marker
@@ -429,6 +421,7 @@ nnoremap <Leader>E :qa!<CR> "Quit all windows
 vnoremap < <gv
 vnoremap > >gv
 
+" fun: left/right-strip a string {{{
 " https://vi.stackexchange.com/questions/2867/how-do-you-chomp-a-string-in-vim
 function! Chomp(string)
     return substitute(a:string, '\n\+$', '', '')
@@ -436,21 +429,26 @@ endfunction
 function! ChompedSystem( ... )
     return substitute(call('system', a:000), '\n\+$', '', '')
 endfunction
+" }}}
 
+" fun: Get Gcc version {{{
 function! GetGccVersion()
     let l:gcc_ver = ChompedSystem(
                 \ "$(gcc --version | head -n 1 | rev | cut -d' ' -f1 | rev)")
 
     return l:gcc_ver[0]
 endfunction
+" }}}
 
+" fun: Make and jump to temporary files {{{
 function! MakeTmpFile()
     let $a = system('mktemp --suffix ".markdown"')
     :tabnew $a
 endfunc
 nnoremap <leader>mk :call MakeTmpFile()<CR>
+" }}}
 
-" Open URLs in your browser
+" fun: Open URLs in your browser {{{
 function! HandleURL()
     let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
     echo s:uri
@@ -460,12 +458,9 @@ function! HandleURL()
         echo "No URI found in line."
     endif
 endfunction
-map <leader>u :call HandleURL()<CR>
-
-
-
-" Who did this. {{{
-
+map <leader>uu :call HandleURL()<CR>
+" }}}
+" fun: Who did this. {{{
 function! WriteWhoDidThis()
     let l:name = "Nikos Koukis"
     let l:curDate = ChompedSystem('date')
@@ -475,23 +470,20 @@ function! WriteWhoDidThis()
 endfunc
 
 nnoremap <F12> :call WriteWhoDidThis()<CR>
-
 " }}}
-
-" Tabularize Configuration
-nnoremap <leader>tt :Tabularize /
-vnoremap <leader>tt :Tabularize /
-autocmd VimEnter * AddTabularPattern 1=    /^[^=]*\zs=
-autocmd VimEnter * AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
-
-" Tagbar"
+" Tagbar {{{
 nnoremap <leader>to :TagbarToggle<CR>
 " Start with tagbar disabled, and open tagbar at all the vim buffers afterwards
 map <leader>To :tabdo :Tagbar<CR>
 map <leader>TO :tabdo :TagbarClose<CR>
-
 " autocmd BufWinEnter * Tagbar
-
+" }}}
+" Tabularize {{{
+nnoremap <leader>tt :Tabularize /
+vnoremap <leader>tt :Tabularize /
+autocmd VimEnter * AddTabularPattern 1=    /^[^=]*\zs=
+autocmd VimEnter * AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
+" }}}
 " Statusline - Airline configuration at last {{{
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 0
@@ -510,8 +502,6 @@ let g:airline#extensions#ale#enabled = 1
 " hi TabLineSel ctermfg=LightBlue
 
 " }}}
-
-
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
@@ -540,9 +530,6 @@ set hlsearch
 " Clear highlights
 nnoremap <silent><leader>/ :noh<return><CR>
 
-
-
-" Fri Jun 19 15:53:20 EEST 2015, Nikos Koukis
 if !&scrolloff
 	set scrolloff=1
 endif
@@ -557,24 +544,18 @@ endif
 
 set backspace=indent,eol,start
 set complete-=i
+set pastetoggle=<F2> " Super useful.
 
 " vim_markdown {{{
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
 " }}}
-
-set pastetoggle=<F2> " Super useful.
-
-
 " " NERDTREE - DEPRECATED {{{
 " map  <leader><leader>n :NERDTree <CR>
 " nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
 " nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
 " " }}}
-
-let g:pydoc_open_cmd = 'split'
-
 " " Python Syntax Support - as basic as possible - flake8 - Deprecated in favor of pyls {{{
 " let g:flake8_quickfix_height=3
 " let g:flake8_error_marker = 'EE'     " set error marker to 'EE'
@@ -587,12 +568,10 @@ let g:pydoc_open_cmd = 'split'
 " highlight link Flake8_Naming     WarningMsg
 " highlight link Flake8_PyFlake    WarningMsg
 " " }}}
-
 " Python mappings {{{
 let b:python_pdb_s='import pdb; pdb.set_trace()'
 autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
 " }}}
-
 " " Syntastic Configuration - Syntastic is dead {{{
 " " Syntastic - python {{{
 
@@ -678,7 +657,6 @@ autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
 " map <leader>sc :SyntasticCheck<CR>
 "
 " " }}}
-
 " Ale - Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration  {{{
 " https://github.com/w0rp/ale#usage
 "
@@ -723,8 +701,6 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " Doesn't work in terminal vim
 " g:ale_set_balloons = 1
 " }}}
-
-
 
 let g:Tex_CompileRule_pdf = 'xelatex $*'
 
@@ -792,24 +768,21 @@ nnoremap <leader>pm :CtrlPMRU<CR>
 " Search through your tags!
 nnoremap <leader>pt :CtrlPTag<CR>
 " }}}
-
 " vim-startify {{{
 let g:startify_change_to_dir = 0
 " }}}
-
-" Thu Apr 14 22:10:19 EEST 2016, Nikos Koukis
-" indentLine
-
-" Sat Apr 16 16:19:44 EEST 2016, Nikos Koukis
-" vim-titlecase
+" indentLine {{{
+"
+" }}}
+" vim-titlecase {{{
 " $VIMPATH/plugin/titlecase.vim
+" }}}
+" vim-visual-star-search - use */# on visual selection {{{
+"
+" }}}
 
-" Sun Apr 17 10:40:49 EEST 2016, Nikos Koukis
-" vim-visual-star-search - use */# on visual selection
-
-" Sun Apr 17 20:59:23 EEST 2016, Nikos Koukis
-" Installed vim-husk for vim command line emacs-like mappings
-" https://github.com/vim-utils/vim-husk
+" vim-husk https://github.com/vim-utils/vim-husk - vim command line emacs-like mappings DEPRECATED{{{
+" }}}
 
 " C-n, C-p to browse the cmdline history in a filtered way
 cnoremap <C-p> <Up>
@@ -904,16 +877,13 @@ vnoremap <leader>ts  :TrimSpaces<CR>
 map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
 autocmd FileType cpp map <leader>rt :!ctags -R --c++-kinds=+p --fields=+liaS --extra=+q --tag-relative . <CR>
 autocmd FileType rust map <leader>rt :!rusty-tags vi <CR>
+autocmd FileType rust setlocal colorcolumn=99
 
 " guten-tags - ctags managing plugin {{{
 let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
-
 " I may be adding to this list in the local vimrc file
 let g:gutentags_ctags_extra_args = ["/usr/include"]
 " }}}
-
-autocmd FileType rust setlocal colorcolumn=99
-
 " C++ code completion {{{
 set completeopt=menuone,menu,longest,preview
 
@@ -928,7 +898,6 @@ nnoremap <leader><leader><C-p> :tabm 0<CR>
 nnoremap <leader><leader><C-n> :tabm<CR>
 
 " }}}
-
 " jedi-vim {{{
 let g:jedi#popup_select_first = 1
 let g:jedi#show_call_signatures = "1"
@@ -948,7 +917,6 @@ if has('nvim')
     endif
 endif
 " }}}
-
 " Redraw the screen
 nnoremap <leader><leader>r :redraw!<CR>
 
@@ -997,7 +965,7 @@ inoremap <silent><leader>tz <C-o>:MaximizerToggle<CR>
 
 autocmd VimLeavePre * cclose | lclose
 
-" vim-taskwarrior plugin configuration - DEPRECATED{{{
+" vim-taskwarrior plugin configuration - Needed by taskwiki {{{
 " https://github.com/blindFS/vim-taskwarrior
 let g:task_rc_override = 'rc.defaultwidth=0' " line-wrapping
 " }}}
@@ -1282,8 +1250,6 @@ let g:tmux_navigator_save_on_switch = 1
 " nmap <leader>tr :VtrSendLinesToRunner<CR>
 " vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
 " " }}}
-
-
 " vim-signature - Wow, so useful of a plugin{{{
 " https://github.com/kshenoy/vim-signature
 "
@@ -1295,7 +1261,6 @@ nnoremap <leader>zv :AV<CR>
 nnoremap <leader>zs :AS<CR>
 nnoremap <leader>zt :AT<CR>
 " }}}
-
 " vim-dispatch {{{
 nnoremap <Leader>m :Make -C build<CR>
 nnoremap <Leader><Leader>m :Make! -C build<CR>
@@ -1303,10 +1268,8 @@ nnoremap <Leader><Leader>m :Make! -C build<CR>
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
 " }}}
-
 " vim-autotags  " Didn't work in my case... {{{
 " }}}
-
 " vim-matchup {{{
 
 let g:matchup_transmute_enabled = 1
@@ -1315,21 +1278,17 @@ let g:matchup_delim_stopline = 1500 " generally
 let g:matchup_matchparen_stopline = 200  " for match highlighting only
 hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " }}}
-
 " vim-scriptease - Scripts/Utilities for vim plugin development {{{
 " https://github.com/tpope/vim-scriptease
 "
 " use :Scriptnames instead of :scriptnames
 " }}}
-
 " cppman configuration {{{
 
 " }}}
-
 " vim-debugstring {{{
 "
 " }}}
-
 " vim-far {{{
 "
 " https://github.com/brooth/far.vim/issues/18
@@ -1337,7 +1296,6 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " use :Far kalimera kalinuxta \.cpp FOR ag
 " let g:far#source = 'agnvim'
 " }}}
-
 " nvim-miniyank {{{
 map p <Plug>(miniyank-autoput)
 map P <Plug>(miniyank-autoPut)
@@ -1352,7 +1310,6 @@ let g:miniyank_maxitems = 20
 " map <Leader>b <Plug>(miniyank-toblock)
 
 " }}}
-
 " nvim-ipy {{{
 let g:nvim_ipy_perform_mappings = 0
 let g:ipy_set_ft = 1
@@ -1366,7 +1323,6 @@ nmap <leader>it <Plug>(IPy-Interrupt)
 let g:ipy_celldef = ['^##', '^##']
 
 " }}}
-
 " LanguageClient-neovim - Don't seem to run that well {{{
 
 " Python Language Server - pyls
@@ -1388,7 +1344,6 @@ let g:ipy_celldef = ['^##', '^##']
 " set completefunc=LanguageClient#complete
 " set formatexpr=LanguageClient_textDocument_rangeFormatting()
 " }}}
-
 " deoplete.nvim {{{
 
 " Use deoplete.
@@ -1417,7 +1372,6 @@ let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#enable_cache = 1
 
 " }}}
-
 " deoplete-rust {{{
 
 let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
@@ -1426,27 +1380,23 @@ let g:deoplete#sources#rust#documentation_max_height=20
 let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
 
 " }}}
-
 " deoplete-clang {{{
 let g:deoplete#sources#clang#libclang_path='/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header='/usr/lib/libclang_include'
 let g:deoplete#sources#clang#std={'c': 'c11', 'cpp': 'c++1z', 'objc': 'c11', 'objcpp': 'c++1z'}
 let g:deoplete#sources#clang#clang_complete_database='.'
 " }}}
-
 " neoinclude {{{
 if !exists('g:neoinclude#exts')
 	let g:neoinclude#exts = {}
 endif
 let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
 " }}}
-
 " vim-markdown {{{
 
 let g:vim_markdown_conceal = 0
 
 " }}}
-
 " vim-projectionist {{{
 nnoremap <leader>zz :A<CR>
 nnoremap <leader>zs :AS<CR>
@@ -1454,6 +1404,46 @@ nnoremap <leader>zv :AV<CR>
 nnoremap <leader>zt :AT<CR>
 " }}}
 
+" https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
+" nvim-chromatica {{{
+
+nnoremap <leader>cs :ChromaticaStart<CR>
+nnoremap <leader>cS :ChromaticaStop<CR>
+let g:chromatica#libclang_path='/usr/lib/libclang.so'
+let g:chromatica#enable_at_startup=1
+let g:chromatica#highlight_feature_level=1
+" let g:chromatica#responsive_mode=1
+" }}}
+" i3-vim-focus {{{
+" TODO - fix it
+
+map gwl :call Focus('right', 'l')<CR>
+map gwh :call Focus('left', 'h')<CR>
+map gwk :call Focus('up', 'k')<CR>
+map gwj :call Focus('down', 'j')<CR>
+
+" }}}
+" undoquit {{{
+let g:undoquit_mapping = '<Leader>uq'
+" }}}
+" vim-sourcetrail {{{
+
+nnoremap <leader>l :SourcetrailActivateToken<CR>
+
+" }}}
+" vim-peekaboo - Show contents of registers on "/@/CTRL-R {{{
+"
+" }}}
+" vim-markbar - vim-peekaboo but for the marks - Nah, not worth it {{{
+
+" " open/close markbar mappings
+" map <Leader>mb  <Plug>ToggleMarkbar
+" map <Leader>mo <Plug>OpenMarkbar
+" map <Leader>mc <Plug>CloseMarkbar
+" let g:markbar_enable_peekaboo = 0
+" }}}
 " vim-notes {{{
 
 let g:notes_directories = ['~/MEGA/notes']
@@ -1469,50 +1459,9 @@ autocmd filetype notes set nofoldenable    " disable folding
 
 "
 " }}}
-" https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
-command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
-" nvim-chromatica {{{
-
-nnoremap <leader>cs :ChromaticaStart<CR>
-nnoremap <leader>cS :ChromaticaStop<CR>
-let g:chromatica#libclang_path='/usr/lib/libclang.so'
-let g:chromatica#enable_at_startup=1
-let g:chromatica#highlight_feature_level=1
-" let g:chromatica#responsive_mode=1
-" }}}
-
-" i3-vim-focus {{{
-" TODO - fix it
-
-map gwl :call Focus('right', 'l')<CR>
-map gwh :call Focus('left', 'h')<CR>
-map gwk :call Focus('up', 'k')<CR>
-map gwj :call Focus('down', 'j')<CR>
-
-" }}}
-
-" undoquit {{{
-let g:undoquit_mapping = '<Leader>uq'
-" }}}
-
-" vim-sourcetrail {{{
-
-nnoremap <leader>l :SourcetrailActivateToken<CR>
-
-" }}}
-
-" vim-peekaboo - Show contents of registers on "/@/CTRL-R {{{
-"
-" }}}
-"
-" vim-markbar - vim-peekaboo but for the marks - Nah, not worth it {{{
-
-" " open/close markbar mappings
-" map <Leader>mb  <Plug>ToggleMarkbar
-" map <Leader>mo <Plug>OpenMarkbar
-" map <Leader>mc <Plug>CloseMarkbar
-" let g:markbar_enable_peekaboo = 0
+" vimwiki {{{
+nmap <Leader>vw <Plug>VimwikiIndex
 " }}}
 
 " machine-local configuration
