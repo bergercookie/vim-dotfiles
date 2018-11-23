@@ -353,6 +353,7 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 " Plug 'https://github.com/bfredl/nvim-ipy'
 " Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
 " Plug 'https://github.com/Yilin-Yang/vim-markbar'
+" Plug 'https://github.com/bergercookie/vim-ros' " Works only with py2 - this SUCKS
 
 " Totally useless... just open another horizontal tmux pane
 " Plug 'https://github.com/Lenovsky/nuake/'
@@ -1512,3 +1513,7 @@ let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
 
 
+" vim-ros {{{
+let g:ros_build_system = "catkin-tools"
+let g:ros_catkin_make_options = '-j7 -DCMAKE_BUILD_TYPE=Debug'
+" }}}
