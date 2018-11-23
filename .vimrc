@@ -1459,9 +1459,39 @@ autocmd filetype notes set nofoldenable    " disable folding
 
 "
 " }}}
-
 " vimwiki {{{
 nmap <Leader>vw <Plug>VimwikiIndex
+
+let g:vimwiki_folding=''
+let g:vimwiki_hl_headers = 1
+let g:vimwiki_use_mouse = 1
+" Toggle Filetype - two different mappings {{{
+autocmd filetype vimwiki nmap <leader>cf :set filetype=<CR>
+autocmd filetype vimwiki nmap <leader>cF :set filetype=vimwiki<CR>
+" Go to some random link
+autocmd filetype vimwiki cmap vwg :VimwikiGoto 
+
+" }}}
+" }}}
+" taskwiki {{{
+autocmd filetype vimwiki cmap tws :TaskWikiStart<CR>
+autocmd filetype vimwiki cmap twS :TaskWikiStop<CR>
+autocmd filetype vimwiki cmap twd :TaskWikiDelete<CR>
+
+" MakeDiarySections function - use taskwiki viewports {{{
+function! MakeDiarySections()
+    let l:date_str = strftime('%Y-%m-%d')
+    let l:header = "= " . l:date_str . " ="
+    put!=l:header
+
+    let l:home = "== " . "home | project:home due:" . l:date_str . " =="
+    put=l:home
+    " Make it more generic, perhaps have the caller give you these strings
+    let l:work = "== " . "work | project:slamcore due:" . l:date_str . " =="
+    put=l:work
+endfunc
+" }}}
+
 " }}}
 
 " machine-local configuration
