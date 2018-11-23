@@ -228,7 +228,6 @@ endif
 call plug#begin()
 Plug 'junegunn/vim-plug'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/nanotech/jellybeans.vim'
 Plug 'https://github.com/powerline/powerline'
 Plug 'https://github.com/ervandew/supertab'
@@ -1080,7 +1079,7 @@ let g:hpaste_author = 'Nikos Koukis - bergercookie'
 
 " }}}
 " indentLine {{{
-let g:indentLine_enabled = 0
+let g:indentLine_enabled = 1
 "
 " }}}
 
