@@ -159,14 +159,26 @@ nnoremap <C-w>\| <ESC>:vsplit<CR>
 nnoremap <C-w>- <ESC>:split<CR>
 
 " }}}
+" Nerdtree - DEPRECATED {{{
+" map  <leader><leader>n :NERDTree <CR>
+" nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
+" nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
+" " }}}
+" vim-husk https://github.com/vim-utils/vim-husk - vim command line emacs-like mappings DEPRECATED{{{
+" }}}
+" vim-geeknote - DEPRECATED don't use it {{{
+"
+" vim-geeknote configuration
+" seriously, just don't use it...
+" }}}
 " DragVisuals Configuration - CURRENTLY UNUSED {{{
 " Use the VISUAL LINES!
 " TODO - Plugin isn't set up correctly
-vnoremap  <expr>  <LEFT>   DVB_Drag('left')
-vnoremap  <expr>  <RIGHT>  DVB_Drag('right')
-vnoremap  <expr>  <DOWN>   DVB_Drag('down')
-vnoremap  <expr>  <UP>     DVB_Drag('up')
-vnoremap  <expr>  D        DVB_Duplicate()
+" vnoremap  <expr>  <LEFT>   DVB_Drag('left')
+" vnoremap  <expr>  <RIGHT>  DVB_Drag('right')
+" vnoremap  <expr>  <DOWN>   DVB_Drag('down')
+" vnoremap  <expr>  <UP>     DVB_Drag('up')
+" vnoremap  <expr>  D        DVB_Duplicate()
 " }}}
 " Pathongen package manager - DEPRECATED {{{
 " " Vim sessions default to capturing all global options, which includes the
@@ -194,6 +206,7 @@ vnoremap  <expr>  D        DVB_Duplicate()
 " call pathogen#infect()
 " call pathogen#helptags()
 " " }}}
+
 " vim-plug package manager {{{
 
 
@@ -225,7 +238,6 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/nelstrom/vim-americanize'
 Plug 'https://github.com/PeterRincker/vim-argumentative'
 Plug 'https://github.com/vim-scripts/Hardy'
-Plug 'https://github.com/nathanaelkane/vim-indent-guides'
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/wesQ3/vim-windowswap'
 Plug 'https://github.com/vimperator/vimperator.vim'
@@ -256,13 +268,12 @@ Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
 Plug 'https://github.com/dkarter/bullets.vim'
 Plug 'https://github.com/Chiel92/vim-autoformat'
 Plug 'https://github.com/kana/vim-operator-user'
-Plug 'https://github.com/itchyny/vim-haskell-indent'
-Plug 'https://github.com/dag/vim2hs'
 Plug 'https://github.com/Shougo/vimproc.vim', {'do': 'make'}
+Plug 'https://github.com/dag/vim2hs'
 Plug 'https://github.com/eagletmt/ghcmod-vim'
 Plug 'https://github.com/eagletmt/neco-ghc'
 Plug 'https://github.com/Shougo/neco-vim'
-Plug 'https://github.com/alx741/vim-hindent'
+Plug 'https://github.com/itchyny/vim-haskell-indent'
 Plug 'https://github.com/alepez/vim-gtest'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/mbbill/undotree/'
@@ -342,6 +353,8 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 
 
 " DEPRECATED plugins
+" Plug 'https://github.com/nathanaelkane/vim-indent-guides'
+" Plug 'https://github.com/alx741/vim-hindent' - For haskell indenting - I already have one
 " Plug 'https://github.com/houtsnip/vim-emacscommandline' - vim-rsi is much better
 " Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
 " Plug 'https://github.com/davidhalter/jedi-vim.git'
@@ -551,11 +564,6 @@ let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
 " }}}
-" " NERDTREE - DEPRECATED {{{
-" map  <leader><leader>n :NERDTree <CR>
-" nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
-" nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
-" " }}}
 " " Python Syntax Support - as basic as possible - flake8 - Deprecated in favor of pyls {{{
 " let g:flake8_quickfix_height=3
 " let g:flake8_error_marker = 'EE'     " set error marker to 'EE'
@@ -785,17 +793,11 @@ nnoremap <leader>pt :CtrlPTag<CR>
 " vim-startify {{{
 let g:startify_change_to_dir = 0
 " }}}
-" indentLine {{{
-"
-" }}}
 " vim-titlecase {{{
 " $VIMPATH/plugin/titlecase.vim
 " }}}
 " vim-visual-star-search - use */# on visual selection {{{
 "
-" }}}
-
-" vim-husk https://github.com/vim-utils/vim-husk - vim command line emacs-like mappings DEPRECATED{{{
 " }}}
 
 " C-n, C-p to browse the cmdline history in a filtered way
@@ -1025,11 +1027,9 @@ set tags+=./tags;,tags;/
 
 " let g:ycm_python_binary_path='python'
 " }}}
-
 " SuperTab - {{{
 let g:SuperTabDefaultCompletionType = "<c-n>"
 " }}}
-
 " UltiSnips {{{
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -1038,37 +1038,27 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " }}}
-
-" vim-geeknote - DEPRECATED don't use it {{{
-"
-" vim-geeknote configuration
-" seriously, just don't use it...
-" }}}
-
-" bullets.vim - Markdown plugin for correct indentation of bullet lists
+" bullets.vim - Markdown plugin for correct indentation of bullet lists {{{
+" TODO - Do I need this?
 " https://github.com/dkarter/bullets.vi://github.com/dkarter/bullets.vim
 " Use C-d/C-t for indenting outwards/inwards
 " In visual: :RenumberSelection
-
-" vim-autoformat
+" }}}
+" vim-autoformat {{{
 " https://github.com/Chiel92/vim-autoformat
 noremap <leader>af :Autoformat<CR>
 let g:formatter_yapf_style = 'pep8'
-
-
+" }}}
 " vimproc.vim {{{
 " You need to run **make** prior to running this
 " https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim
 " }}}
-
-
 " vim2hs - Haskell multipurpose plugin {{{
 " https://github.com/dag/vim2hs
 let g:haskell_conceal_wide = 1
 let g:haskell_tabular = 1
 let g:hpaste_author = 'Nikos Koukis - bergercookie'
 " }}}
-
 " " Easy-Align {{{
 " " https://github.com/junegunn/vim-easy-align
 " " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -1076,15 +1066,30 @@ let g:hpaste_author = 'Nikos Koukis - bergercookie'
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 " nnoremap ga <Plug>(EasyAlign)
 " }}}
+" vim-indent-guides - See indentLine instead DEPRECATED{{{
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_start_level = 2
+" let g:indent_guides_guide_size = 1
 
-" vim-indent-guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
+" let g:hindent_on_save = 1
+" let g:hindet_indent_size = 2
+" let g:hindent_line_length = 120
+" let g:indent_guides_auto_colors = 1
+" hi IndentGuidesOdd  ctermbg=black
+" hi IndentGuidesEven ctermbg=darkgrey
 
-let g:hindent_on_save = 1
-let g:hindet_indent_size = 2
-let g:hindent_line_length = 80
+" }}}
+" indentLine {{{
+let g:indentLine_enabled = 0
+"
+" }}}
+
+augroup conf_config
+    autocmd! FileType conf setlocal foldmethod=marker
+augroup END
+" https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
 
 " Goyo - Distraction free writing in vim - Ugh! {{{
 " https://github.com/junegunn/goyo.vim
@@ -1228,8 +1233,6 @@ let g:tagbar_type_rust = {
 " Open tag in new tab
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 
-" Use <C-curly closing bracket> to preview that tag
-
 " }}}
 
 " undotree - like GUndo {{{
@@ -1246,9 +1249,6 @@ augroup END
 
 " }}}
 "
-augroup conf_config
-    autocmd! FileType conf setlocal foldmethod=marker
-augroup END
 
 " vim-tmux-navigator {{{
 " Disable tmux navigator when zooming the Vim pane
@@ -1417,10 +1417,6 @@ nnoremap <leader>zs :AS<CR>
 nnoremap <leader>zv :AV<CR>
 nnoremap <leader>zt :AT<CR>
 " }}}
-
-" https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
-command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
 " nvim-chromatica {{{
 
 nnoremap <leader>cs :ChromaticaStart<CR>
@@ -1484,14 +1480,11 @@ autocmd filetype vimwiki nmap <leader>cf :set filetype=<CR>
 autocmd filetype vimwiki nmap <leader>cF :set filetype=vimwiki<CR>
 " Go to some random link
 autocmd filetype vimwiki cmap vwg :VimwikiGoto 
+autocmd filetype vimwiki call AutoPairsToggle()
 
 " }}}
 " }}}
 " taskwiki {{{
-autocmd filetype vimwiki cmap tws :TaskWikiStart<CR>
-autocmd filetype vimwiki cmap twS :TaskWikiStop<CR>
-autocmd filetype vimwiki cmap twd :TaskWikiDelete<CR>
-
 " MakeDiarySections function - use taskwiki viewports {{{
 function! MakeDiarySections()
     let l:date_str = strftime('%Y-%m-%d')
@@ -1505,7 +1498,6 @@ function! MakeDiarySections()
     put=l:work
 endfunc
 " }}}
-
 " }}}
 
 " machine-local configuration
