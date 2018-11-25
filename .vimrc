@@ -159,46 +159,59 @@ nnoremap <C-w>\| <ESC>:vsplit<CR>
 nnoremap <C-w>- <ESC>:split<CR>
 
 " }}}
-" Nerdtree - DEPRECATED {{{
-" map  <leader><leader>n :NERDTree <CR>
-" nnoremap <Leader>n :let NERDTreeQuitOnOpen = 1<bar>NERDTreeToggle<CR>
-" nnoremap <Leader>N :let NERDTreeQuitOnOpen = 0<bar>NERDTreeToggle<CR>
+
+" deprecated plugins configuration {{{
+" " vim-tmux-runner - deprecated {{{
+" let g:vtrstripleadingwhitespace = 0
+" let g:vtrclearemptylines = 0
+" let g:vtrappendnewline = 1
+
+" nmap <leader>tr :vtrsendlinestorunner<cr>
+" vmap <leader>tr <esc>:vtrsendlinestorunner<cr>
 " " }}}
-" vim-husk https://github.com/vim-utils/vim-husk - vim command line emacs-like mappings DEPRECATED{{{
+" vim-autotags  didn't work in my case - see gutentags instead deprecated  {{{
 " }}}
-" vim-geeknote - DEPRECATED don't use it {{{
+" nerdtree - deprecated {{{
+" map  <leader><leader>n :nerdtree <cr>
+" nnoremap <leader>n :let nerdtreequitonopen = 1<bar>nerdtreetoggle<cr>
+" nnoremap <leader>n :let nerdtreequitonopen = 0<bar>nerdtreetoggle<cr>
+" " }}}
+" vim-husk https://github.com/vim-utils/vim-husk - vim command line emacs-like mappings deprecated{{{
+" }}}
+" vim-geeknote - don't use it deprecated {{{
 "
 " vim-geeknote configuration
+" you may  think of using it again, huh?
 " seriously, just don't use it...
 " }}}
-" DragVisuals Configuration - CURRENTLY UNUSED {{{
-" Use the VISUAL LINES!
-" TODO - Plugin isn't set up correctly
-" vnoremap  <expr>  <LEFT>   DVB_Drag('left')
-" vnoremap  <expr>  <RIGHT>  DVB_Drag('right')
-" vnoremap  <expr>  <DOWN>   DVB_Drag('down')
-" vnoremap  <expr>  <UP>     DVB_Drag('up')
-" vnoremap  <expr>  D        DVB_Duplicate()
+" dragvisuals configuration - currently unused {{{
+" use the visual lines!
+" todo - plugin isn't set up correctly
+" vnoremap  <expr>  <left>   dvb_drag('left')
+" vnoremap  <expr>  <right>  dvb_drag('right')
+" vnoremap  <expr>  <down>   dvb_drag('down')
+" vnoremap  <expr>  <up>     dvb_drag('up')
+" vnoremap  <expr>  d        dvb_duplicate()
 " }}}
-" Pathongen package manager - DEPRECATED {{{
-" " Vim sessions default to capturing all global options, which includes the
-" " 'runtimepath' that pathogen.vim manipulates. This can cause other problems
-" " too, so I recommend turning that behavior off
+" pathongen package manager - deprecated {{{
+" " vim sessions default to capturing all global options, which includes the
+" " 'runtimepath' that pathogen.vim manipulates. this can cause other problems
+" " too, so i recommend turning that behavior off
 " set sessionoptions-=options
 
 " let g:pathogen_disabled = []
 
-" " OS-specific vim bundles {{{
+" " os-specific vim bundles {{{
 " " http://stackoverflow.com/a/6847015/2843583
 " let g:os = substitute(system('uname'), "\n", "", "")
-" " OSX {{{
-" if g:os ==# "Darwin"
-"     " Disable YCM
+" " osx {{{
+" if g:os ==# "darwin"
+"     " disable ycm
 "     " http://stackoverflow.com/questions/4261785/temporarily-disable-some-plugins-using-pathogen-in-vim
-"     " call add(g:pathogen_disabled, 'YouCompleteMe')
+"     " call add(g:pathogen_disabled, 'youcompleteme')
 " " }}}
-" " Linux {{{
-" elseif g:os ==# "Linux"
+" " linux {{{
+" elseif g:os ==# "linux"
 "     " nothing here yet."
 " endif
 " " }}}
@@ -206,6 +219,47 @@ nnoremap <C-w>- <ESC>:split<CR>
 " call pathogen#infect()
 " call pathogen#helptags()
 " " }}}
+" python syntax support - as basic as possible - flake8 - deprecated in favor of pyls deprecated {{{
+" let g:flake8_quickfix_height=3
+" let g:flake8_error_marker = 'ee'     " set error marker to 'ee'
+" let g:flake8_warning_marker = 'ww'   " set warning marker to 'ww'
+
+" " to use colors defined in the colorscheme
+" highlight link flake8_error      error
+" highlight link flake8_warning    warningmsg
+" highlight link flake8_complexity warningmsg
+" highlight link flake8_naming     warningmsg
+" highlight link flake8_pyflake    warningmsg
+" }}}
+" " vim-far deprecated {{{
+"
+" https://github.com/brooth/far.vim/issues/18
+"
+" use :far kalimera kalinuxta \.cpp for ag
+" let g:far#source = 'agnvim'
+" }}}
+" vim-markbar - vim-peekaboo but for the marks - Nah, not worth it - DEPRECATED {{{
+
+" " open/close markbar mappings
+" map <Leader>mb  <Plug>ToggleMarkbar
+" map <Leader>mo <Plug>OpenMarkbar
+" map <Leader>mc <Plug>CloseMarkbar
+" let g:markbar_enable_peekaboo = 0
+" }}}
+" vim-notes - DEPRECATED in favor of vimwiki {{{
+
+" let g:notes_directories = ['~/MEGA/notes']
+" let g:notes_suffix = ".md"
+" let g:notes_unicode_enabled = 1
+
+" let g:notes_conceal_bold = 0
+" let g:notes_conceal_italics = 0
+" let g:notes_conceal_code = 0
+" let g:notes_conceal_url = 0
+
+" autocmd filetype notes set nofoldenable    " disable folding
+" }}}
+" }}}
 
 " vim-plug package manager {{{
 
@@ -229,7 +283,6 @@ call plug#begin()
 Plug 'junegunn/vim-plug'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/nanotech/jellybeans.vim'
-Plug 'https://github.com/powerline/powerline'
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-abolish'
@@ -246,7 +299,7 @@ Plug 'https://github.com/majutsushi/tagbar'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/sudar/vim-arduino-syntax'
 Plug 'https://github.com/terryma/vim-expand-region'
-Plug 'https://github.com/vim-latex/vim-latex'
+Plug 'https://github.com/vim-latex/vim-latex', {'for': ['latex', ]}
 Plug 'https://github.com/plasticboy/vim-markdown'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/rhysd/vim-clang-format'
@@ -264,16 +317,16 @@ Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/mattn/webapi-vim'
 Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
-Plug 'https://github.com/dkarter/bullets.vim'
+Plug 'https://github.com/dkarter/bullets.vim', {'for': ['markdown', 'rst', 'vimwiki']}
 Plug 'https://github.com/Chiel92/vim-autoformat'
 Plug 'https://github.com/kana/vim-operator-user'
 Plug 'https://github.com/Shougo/vimproc.vim', {'do': 'make'}
-Plug 'https://github.com/dag/vim2hs'
-Plug 'https://github.com/eagletmt/ghcmod-vim'
-Plug 'https://github.com/eagletmt/neco-ghc'
+Plug 'https://github.com/dag/vim2hs', {'for': ['haskell', ]}
+Plug 'https://github.com/eagletmt/ghcmod-vim', {'for': ['haskell', ]}
+Plug 'https://github.com/eagletmt/neco-ghc', {'for': ['haskell', ]}
 Plug 'https://github.com/Shougo/neco-vim'
 Plug 'https://github.com/itchyny/vim-haskell-indent'
-Plug 'https://github.com/alepez/vim-gtest'
+Plug 'https://github.com/alepez/vim-gtest', {'for': ['cpp', ]}
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/mbbill/undotree/'
 Plug 'https://github.com/wincent/terminus'
@@ -301,14 +354,11 @@ Plug 'https://github.com/google/vimdoc'
 Plug 'https://github.com/junegunn/vader.vim'
 Plug 'https://github.com/janko-m/vim-test'
 Plug 'https://github.com/andymass/vim-matchup'
-Plug 'https://github.com/brooth/far.vim'
 Plug 'https://github.com/bfredl/nvim-miniyank'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
-Plug 'https://github.com/xolox/vim-misc'
-Plug 'https://github.com/xolox/vim-notes'
 Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'https://github.com/AndrewRadev/undoquit.vim'
 Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'rust' ]}
@@ -320,13 +370,13 @@ Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/tpope/vim-rsi'
 Plug 'w0rp/ale'
-" LanguageClient
-if has('nvim')
-    Plug 'autozimu/LanguageClient-neovim', {
-                \ 'branch': 'next',
-                \ 'do': 'bash install.sh',
-                \ }
-endif
+" " LanguageClient
+" if has('nvim')
+"     Plug 'autozimu/LanguageClient-neovim', {
+"                 \ 'branch': 'next',
+"                 \ 'do': 'bash install.sh',
+"                 \ }
+" endif
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -352,20 +402,24 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 
 
 " DEPRECATED plugins
-" Plug 'https://github.com/nathanaelkane/vim-indent-guides'
-" Plug 'https://github.com/alx741/vim-hindent' - For haskell indenting - I already have one
-" Plug 'https://github.com/houtsnip/vim-emacscommandline' - vim-rsi is much better
-" Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
-" Plug 'https://github.com/davidhalter/jedi-vim.git'
-" Plug 'https://github.com/nvie/vim-flake8'
-" Plug 'https://github.com/christoomey/vim-sort-motion'
-" Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
-" Plug 'https://github.com/itchyny/calendar.vim' - Good, but not good enough
-" Plug 'https://github.com/scrooloose/syntastic'
-" Plug 'https://github.com/bfredl/nvim-ipy'
-" Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
+" Plug 'https://github.com/powerline/powerline' - Use vim-airline
 " Plug 'https://github.com/Yilin-Yang/vim-markbar'
+" Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
+" Plug 'https://github.com/alx741/vim-hindent' - For haskell indenting - I already have one
 " Plug 'https://github.com/bergercookie/vim-ros' " Works only with py2 - this SUCKS
+" Plug 'https://github.com/bfredl/nvim-ipy'
+" Plug 'https://github.com/brooth/far.vim' - Not working properly - not worth it
+" Plug 'https://github.com/christoomey/vim-sort-motion'
+" Plug 'https://github.com/davidhalter/jedi-vim.git'
+" Plug 'https://github.com/houtsnip/vim-emacscommandline' - vim-rsi is much better
+" Plug 'https://github.com/itchyny/calendar.vim' - Good, but not good enough
+" Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
+" Plug 'https://github.com/nathanaelkane/vim-indent-guides'
+" Plug 'https://github.com/nvie/vim-flake8'
+" Plug 'https://github.com/scrooloose/syntastic'
+" Plug 'https://github.com/xolox/vim-misc'
+" Plug 'https://github.com/xolox/vim-notes'
+" Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
 
 " Totally useless... just open another horizontal tmux pane
 " Plug 'https://github.com/Lenovsky/nuake/'
@@ -563,18 +617,6 @@ let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
 " }}}
-" " Python Syntax Support - as basic as possible - flake8 - Deprecated in favor of pyls {{{
-" let g:flake8_quickfix_height=3
-" let g:flake8_error_marker = 'EE'     " set error marker to 'EE'
-" let g:flake8_warning_marker = 'WW'   " set warning marker to 'WW'
-
-" " to use colors defined in the colorscheme
-" highlight link Flake8_Error      Error
-" highlight link Flake8_Warning    WarningMsg
-" highlight link Flake8_Complexity WarningMsg
-" highlight link Flake8_Naming     WarningMsg
-" highlight link Flake8_PyFlake    WarningMsg
-" " }}}
 " Python mappings {{{
 let b:python_pdb_s='import pdb; pdb.set_trace()'
 autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
@@ -1125,6 +1167,7 @@ autocmd Filetype cmake set commentstring=#\ %s
 " }}}
 
 
+" Tags configuration {{{
 " ctags configuration {{{
 
 " ctags support for ansible
@@ -1234,6 +1277,12 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 
 " }}}
 
+" https://stackoverflow.com/questions/14465383/how-to-navigate-multiple-ctags-matches-in-vim
+" g<C-]> will jump to the tag if there's only one match and will present a list
+" if there are multiple matches
+nnoremap <C-]> g<C-]>
+" }}}
+
 " undotree - like GUndo {{{
 nnoremap <leader>ut :UndotreeToggle<CR>
 " }}}
@@ -1255,14 +1304,6 @@ let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_save_on_switch = 1
 " }}}
 
-" " vim-tmux-runner - DEPRECATED {{{
-" let g:VtrStripLeadingWhitespace = 0
-" let g:VtrClearEmptyLines = 0
-" let g:VtrAppendNewline = 1
-
-" nmap <leader>tr :VtrSendLinesToRunner<CR>
-" vmap <leader>tr <Esc>:VtrSendLinesToRunner<CR>
-" " }}}
 " vim-signature - Wow, so useful of a plugin{{{
 " https://github.com/kshenoy/vim-signature
 "
@@ -1280,8 +1321,6 @@ nnoremap <Leader><Leader>m :Make! -C build -j7<CR>
 " }}}
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
-" }}}
-" vim-autotags  " Didn't work in my case... {{{
 " }}}
 " vim-matchup {{{
 
@@ -1301,13 +1340,6 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " }}}
 " vim-debugstring {{{
 "
-" }}}
-" vim-far {{{
-"
-" https://github.com/brooth/far.vim/issues/18
-"
-" use :Far kalimera kalinuxta \.cpp FOR ag
-" let g:far#source = 'agnvim'
 " }}}
 " nvim-miniyank {{{
 map p <Plug>(miniyank-autoput)
@@ -1445,45 +1477,28 @@ nnoremap <leader>l :SourcetrailActivateToken<CR>
 " vim-peekaboo - Show contents of registers on "/@/CTRL-R {{{
 "
 " }}}
-" vim-markbar - vim-peekaboo but for the marks - Nah, not worth it {{{
 
-" " open/close markbar mappings
-" map <Leader>mb  <Plug>ToggleMarkbar
-" map <Leader>mo <Plug>OpenMarkbar
-" map <Leader>mc <Plug>CloseMarkbar
-" let g:markbar_enable_peekaboo = 0
-" }}}
-" vim-notes {{{
-
-let g:notes_directories = ['~/MEGA/notes']
-let g:notes_suffix = ".md"
-let g:notes_unicode_enabled = 1
-
-let g:notes_conceal_bold = 0
-let g:notes_conceal_italics = 0
-let g:notes_conceal_code = 0
-let g:notes_conceal_url = 0
-
-autocmd filetype notes set nofoldenable    " disable folding
-
-"
-" }}}
 " vimwiki {{{
 nmap <Leader>vw <Plug>VimwikiIndex
 
+let g:vimwiki_list = [{'path': '~/MEGA/vimwiki',
+            \ 'auto_tags': 1,
+            \ 'auto_diary_index': 1}]
 let g:vimwiki_folding=''
 let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
 " Toggle Filetype - two different mappings {{{
 autocmd filetype vimwiki nmap <leader>cf :set filetype=<CR>
 autocmd filetype vimwiki nmap <leader>cF :set filetype=vimwiki<CR>
-" Go to some random link
 autocmd filetype vimwiki cmap vwg :VimwikiGoto 
-autocmd filetype vimwiki call AutoPairsToggle()
+autocmd filetype vimwiki cmap vwt :VimwikiSearchTags 
 
 " }}}
 " }}}
 " taskwiki {{{
+
+autocmd filetype vimwiki cmap twa :TaskWikiAnnotate<CR>
+
 " MakeDiarySections function - use taskwiki viewports {{{
 function! MakeDiarySections()
     let l:date_str = strftime('%Y-%m-%d')
