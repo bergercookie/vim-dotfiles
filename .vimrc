@@ -1498,6 +1498,7 @@ autocmd filetype vimwiki cmap vwt :VimwikiSearchTags
 " taskwiki {{{
 
 autocmd filetype vimwiki cmap twa :TaskWikiAnnotate<CR>
+let g:work_str = $WORK
 
 " MakeDiarySections function - use taskwiki viewports {{{
 function! MakeDiarySections()
@@ -1508,8 +1509,18 @@ function! MakeDiarySections()
     let l:home = "== " . "home | project:home due:" . l:date_str . " =="
     put=l:home
     " Make it more generic, perhaps have the caller give you these strings
-    let l:work = "== " . "work | project:slamcore due:" . l:date_str . " =="
+    let l:work = "== " . "work | project:" . g:work_str . " due:" . l:date_str . " =="
     put=l:work
+endfunc
+
+function! PopulateWeeklyDone()
+    let l:date_str = strftime('%Y-%m-%d')
+    let l:header = "= Work until " . l:date_str . " | project:" . g:work_str .
+                \ " end.after:today-1wk status:completed " .  "="
+    put!=l:header
+
+    let l:refined_str = "Refined List"
+    put!=l:refined_str
 endfunc
 " }}}
 " }}}
