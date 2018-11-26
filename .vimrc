@@ -1498,7 +1498,7 @@ autocmd filetype vimwiki cmap vwt :VimwikiSearchTags
 " taskwiki {{{
 autocmd filetype vimwiki cmap twa :TaskWikiAnnotate<CR>
 let g:work_str = $WORK
-let g:taskwiki_sort_order="priority"
+let g:taskwiki_sort_order="status+,pri+,end+,due+,pri-,project+"
 
 " MakeDiarySections function - use taskwiki viewports {{{
 function! MakeDiarySections()
