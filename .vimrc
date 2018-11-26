@@ -160,7 +160,7 @@ nnoremap <C-w>- <ESC>:split<CR>
 
 " }}}
 
-" deprecated plugins configuration {{{
+" DEPRECATED plugins configuration {{{
 " " vim-tmux-runner - deprecated {{{
 " let g:vtrstripleadingwhitespace = 0
 " let g:vtrclearemptylines = 0
@@ -219,7 +219,7 @@ nnoremap <C-w>- <ESC>:split<CR>
 " call pathogen#infect()
 " call pathogen#helptags()
 " " }}}
-" python syntax support - as basic as possible - flake8 - deprecated in favor of pyls deprecated {{{
+" python syntax support - as basic as possible - flake7 - deprecated in favor of pyls deprecated {{{
 " let g:flake8_quickfix_height=3
 " let g:flake8_error_marker = 'ee'     " set error marker to 'ee'
 " let g:flake8_warning_marker = 'ww'   " set warning marker to 'ww'
@@ -258,6 +258,137 @@ nnoremap <C-w>- <ESC>:split<CR>
 " let g:notes_conceal_url = 0
 
 " autocmd filetype notes set nofoldenable    " disable folding
+" }}}
+" vim-racer - DEPRECATED, use deoplete-rust {{{
+" " https://github.com/racer-rust/vim-racer
+" let g:racer_cmd = "which racer"
+" let g:racer_experimental_completer = 1 " Experimental
+
+" augroup rust_aucommands
+" 	au FileType rust nmap gd <Plug>(rust-def)
+" 	au FileType rust nmap gs <Plug>(rust-def-split)
+" 	au FileType rust nmap gx <Plug>(rust-def-vertical)
+" 	au FileType rust nmap <leader>gd <Plug>(rust-doc)
+" augroup END
+
+" }}}
+" Syntastic Configuration - Syntastic is dead, long live ale {{{
+" " Syntastic - python {{{
+" let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
+" let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
+"       \E113,E501,W503'
+" let g:syntastic_python_mypy_args = '--quick-and-dirty'
+
+" let g:syntastic_aggregate_errors = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_loc_list_height = 3
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" " }}}
+" " Syntastic - vim {{{
+" let g:syntastic_vim_checkers = ['vint']
+" " }}}
+" " Syntastic - rst {{{
+" let g:syntastic_rst_checkers= ['proselint']
+" " }}}
+" " Syntastic - html {{{
+" let g:syntastic_html_checkers= ['proselint']
+" " }}}
+" " Syntastic - text {{{
+" let g:syntastic_text_checkers= ['proselint']
+" " }}}
+" " Syntastic - nroff {{{
+" let g:syntastic_nroff_checkers= ['proselint']
+" " }}}
+" " Syntastic - xhtml {{{
+" let g:syntastic_xhtml_checkers= ['proselint']
+" " }}}
+" " Syntastic - texinfo {{{
+" let g:syntastic_texinfo_checkers= ['proselint']
+" " }}}
+" " Syntastic - asciidoc {{{
+" let g:syntastic_asciidoc_checkers= ['proselint']
+" " }}}
+" " Syntastic - markdown {{{
+" let g:syntastic_markdown_checkers= ['proselint']
+" " }}}
+" " Syntastic - popd {{{
+" let g:syntastic_popd_checkers= ['proselint']
+" " }}}
+" " Syntastic - help {{{
+" let g:syntastic_help_checkers= ['proselint']
+" " }}}
+" " Syntastic - rust {{{
+" " Use cargo it's much better than rustc for projects that cargo manages
+" let g:syntastic_rust_checkers= ['cargo']
+" " }}}
+" " Syntastic - LaTex {{{
+" let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
+" " }}}
+" " Syntastic - C {{{
+" let g:syntastic_c_compiler = 'gcc'
+" let g:syntastic_c_no_default_include_dirs = 0
+" let g:syntastic_c_auto_refresh_includes = 1
+" " let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
+" let g:syntastic_c_checkers = ['gcc', ]
+" " }}}
+" " Syntastic - C++11 {{{
+" let g:syntastic_cpp_checkers = ['gcc', 'cpplint', 'cppcheck']
+" let g:syntastic_cpp_compiler = 'g++'
+" let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+" let g:syntastic_cpp_no_default_include_dirs = 0
+" let g:syntastic_cpp_auto_refresh_includes = 1
+" let g:syntastic_cpp_check_header = 1
+" let g:syntastic_cpp_cpplint_args = "--verbose=5"
+" let g:syntastic_cpp_cpplint_exec = "cpplint"
+" let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
+" " }}}
+"
+" map <leader>sc :SyntasticCheck<CR>
+"
+" " }}}
+" YCM - Don't Use YCM. This plugin is bloated, demands too many configuration steps DEPRECATED {{{
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" let g:ycm_collect_identifiers_from_tags_files=1
+" let g:ycm_global_ycm_extra_conf="~/.ycm_extra_conf.py"
+" let g:ycm_confirm_extra_conf=0
+
+" let g:ycm_python_binary_path='python'
+" }}}
+" " Easy-Align - DEPRECATED {{{
+" " https://github.com/junegunn/vim-easy-align
+" " Start interactive EasyAlign in visual mode (e.g. vipga)
+" xnoremap ga <Plug>(EasyAlign)
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+" nnoremap ga <Plug>(EasyAlign)
+" }}}
+" vim-indent-guides - See indentLine instead DEPRECATED {{{
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_start_level = 2
+" let g:indent_guides_guide_size = 1
+
+" let g:hindent_on_save = 1
+" let g:hindet_indent_size = 2
+" let g:hindent_line_length = 120
+" let g:indent_guides_auto_colors = 1
+" hi IndentGuidesOdd  ctermbg=black
+" hi IndentGuidesEven ctermbg=darkgrey
+
+" }}}" SuperTab - {{{
+let g:SuperTabDefaultCompletionType = "<c-n>"
+" }}}
+" Goyo - Distraction free writing in vim - DEPRECATED {{{
+" https://github.com/junegunn/goyo.vim
+" Type :Goyo
+" }}}
+" vim-ros - Demands python2 explicitly - don't use{{{
+" let g:ros_build_system = "catkin-tools"
+" let g:ros_catkin_make_options = '-j7 -DCMAKE_BUILD_TYPE=Debug'
+" }}}
+" clang_complete DEPRECATED {{{
+"let g:clang_jumpto_back_key = '<leader><leader>t'
 " }}}
 " }}}
 
@@ -390,11 +521,11 @@ else
 endif
 Plug 'https://github.com/jwilm/i3-vim-focus'
 
-" taskwiki + dependencies
+" vimwiki, taskwiki + dependencies
+Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
 Plug 'https://github.com/tbabej/taskwiki'
-Plug 'https://github.com/vimwiki/vimwiki', {'branch': 'dev'}
 Plug 'https://github.com/powerman/vim-plugin-AnsiEsc'
-Plug 'https://github.com/farseer90718/vim-taskwarrior'
+Plug 'https://github.com/farseer90718/vim-taskwarrior',  { 'on': 'VimwikiIndex' }
 
 " own + maintained version's
 Plug 'git@github.com:bergercookie/vim-snippets'
@@ -537,43 +668,6 @@ endfunc
 
 nnoremap <F12> :call WriteWhoDidThis()<CR>
 " }}}
-" Tagbar {{{
-nnoremap <leader>to :TagbarToggle<CR>
-" Start with tagbar disabled, and open tagbar at all the vim buffers afterwards
-map <leader>To :tabdo :Tagbar<CR>
-map <leader>TO :tabdo :TagbarClose<CR>
-" autocmd BufWinEnter * Tagbar
-" }}}
-" Tabularize {{{
-nnoremap <leader>tt :Tabularize /
-vnoremap <leader>tt :Tabularize /
-autocmd VimEnter * AddTabularPattern 1=    /^[^=]*\zs=
-autocmd VimEnter * AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
-" }}}
-" Statusline - Airline configuration at last {{{
-set laststatus=2
-let g:airline#extensions#tabline#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#hunks#enabled=1
-let g:airline#extensions#branch#enabled=1
-let g:airline_theme='dark' " https://github.com/vim-airline/vim-airline/wiki/Screenshots
-let g:airline_highlighting_cache = 0
-let g:airline#extensions#ale#enabled = 1
-
-" " highlight current tab
-" hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
-" hi TabLine ctermfg=Black ctermbg=Green
-" hi TabLineSel ctermfg=LightBlue
-
-" }}}
-
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-
 " Resetting the <ESC> key.. at last
 nnoremap <C-{> <ESC>
 vnoremap <C-{> <ESC>
@@ -612,160 +706,10 @@ set backspace=indent,eol,start
 set complete-=i
 set pastetoggle=<F2> " Super useful.
 
-" vim_markdown {{{
-let g:vim_markdown_folding_disabled=1
-let g:vim_markdown_math=1
-let g:vim_markdown_frontmatter=1
-" }}}
 " Python mappings {{{
 let b:python_pdb_s='import pdb; pdb.set_trace()'
 autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
 " }}}
-" " Syntastic Configuration - Syntastic is dead {{{
-" " Syntastic - python {{{
-
-" let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
-" let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
-"       \E113,E501,W503'
-" let g:syntastic_python_mypy_args = '--quick-and-dirty'
-
-" let g:syntastic_aggregate_errors = 1
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_loc_list_height = 3
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
-" " }}}
-
-" " Syntastic - vim {{{
-" let g:syntastic_vim_checkers = ['vint']
-" " }}}
-
-" " Syntastic - rst {{{
-" let g:syntastic_rst_checkers= ['proselint']
-" " }}}
-
-" " Syntastic - html {{{
-" let g:syntastic_html_checkers= ['proselint']
-" " }}}
-" " Syntastic - text {{{
-" let g:syntastic_text_checkers= ['proselint']
-" " }}}
-" " Syntastic - nroff {{{
-" let g:syntastic_nroff_checkers= ['proselint']
-" " }}}
-" " Syntastic - xhtml {{{
-" let g:syntastic_xhtml_checkers= ['proselint']
-" " }}}
-" " Syntastic - texinfo {{{
-" let g:syntastic_texinfo_checkers= ['proselint']
-" " }}}
-" " Syntastic - asciidoc {{{
-" let g:syntastic_asciidoc_checkers= ['proselint']
-" " }}}
-" " Syntastic - markdown {{{
-" let g:syntastic_markdown_checkers= ['proselint']
-" " }}}
-" " Syntastic - popd {{{
-" let g:syntastic_popd_checkers= ['proselint']
-" " }}}
-" " Syntastic - help {{{
-" let g:syntastic_help_checkers= ['proselint']
-" " }}}
-
-" " Syntastic - rust {{{
-" " Use cargo it's much better than rustc for projects that cargo manages
-" let g:syntastic_rust_checkers= ['cargo']
-" " }}}
-
-" " Syntastic - LaTex {{{
-" let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
-" " }}}
-
-" " Syntastic - C {{{
-" let g:syntastic_c_compiler = 'gcc'
-" let g:syntastic_c_no_default_include_dirs = 0
-" let g:syntastic_c_auto_refresh_includes = 1
-" " let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
-" let g:syntastic_c_checkers = ['gcc', ]
-" " }}}
-
-" " Syntastic - C++11 {{{
-" let g:syntastic_cpp_checkers = ['gcc', 'cpplint', 'cppcheck']
-" let g:syntastic_cpp_compiler = 'g++'
-" let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-" let g:syntastic_cpp_no_default_include_dirs = 0
-" let g:syntastic_cpp_auto_refresh_includes = 1
-" let g:syntastic_cpp_check_header = 1
-" let g:syntastic_cpp_cpplint_args = "--verbose=5"
-" let g:syntastic_cpp_cpplint_exec = "cpplint"
-" let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
-" " }}}
-"
-" map <leader>sc :SyntasticCheck<CR>
-"
-" " }}}
-" Ale - Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration  {{{
-" https://github.com/w0rp/ale#usage
-"
-" Run it manually
-map <leader>sc :ALELint<CR>
-"
-" let b:ale_fixers = ['prettier', 'eslint'] # TODO - order by order of run
-" let g:ale_fix_on_save = 1
-" let g:ale_completion_enabled = 1
-let g:ale_sign_column_always = 1
-" TODO Test :ALEGoToDefinition
-" TODO Test :ALEFindReferences
-" TODO Test :ALEHover
-" TODO Test :ALESymbolSearch
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_save = 1
-" You can disable this option too if you don't want linters to run on opening a
-" file
-" let g:ale_lint_on_enter = 0
-
-" Ale - CPP configuration {{{
-" use compile_commands.json
-let g:ale_c_parse_compile_commands = 1
-let g:ale_c_build_dir_names = ['build', 'build_rel', 'obj']
-" let g:ale_c_build_dir = 'build'
-" let b:ale_c_parse_makefile = 1
-
-autocmd FileType cpp let b:ale_linters = [
-            \ 'cppcheck', 'clang', 'clangd', 'gcc',
-            \ 'clang-check', 'clang-tidy', 'clang-format',
-            \ 'flawfinder', 'ccls']
-let g:ale_cpp_cppcheck_options='--enable=all --project=./compile_commands.json'
-let g:ale_cpp_clang_options='-std=c++14 -Wall -I/usr/include -I/usr/local/include -I/usr/local/include/eigen3'
-let g:ale_cpp_gcc_options='-std=c++14 -Wall -I/usr/include/ -I/usr/local/include/ -I/usr/local/include/eigen3'
-
-" }}}
-
-" {{{
-command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
-autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
-" }}}
-
-autocmd FileType python let b:ale_linters = ['flake8', 'pylint']
-autocmd FileType vim let b:ale_linters = ['vint']
-autocmd FileType cmake let b:ale_linters = ['cmakelint']
-
-" navigate between errors
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-" Enable hovering
-" Doesn't work in terminal vim
-" g:ale_set_balloons = 1
-" }}}
-
-let g:Tex_CompileRule_pdf = 'xelatex $*'
 
 " Show the current filename
 nnoremap <leader>2 :echo @%<CR>
@@ -782,15 +726,6 @@ if has("gui_running")
     set lines=999 columns=999
 endif
 
-" Mon Feb 29 00:09:09 EET 2016, Nikos Koukis
-" AutoPairs - https://github.com/jiangmiao/auto-pairs
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutToggle = '<leader>ap'
-
-" Mon Apr 4 15:31:29 EEST 2016, Nikos Koukis
-" clang configuration
-"let g:clang_jumpto_back_key = '<leader><leader>t'
-
 " ignore case in filename completion
 " http://stackoverflow.com/questions/3686841/vim-case-insensitive-filename-completion
 set wildignorecase
@@ -805,41 +740,6 @@ autocmd VimEnter * so $HOME/.vim/own_scripts/abbreviations.vim
 " Highlight current word *without* jumping to next occurance
 " http://vim.wikia.com/wiki/Highlight_all_search_pattern_matches
 nnoremap <leader>hw :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-
-" ctrlp {{{
-" Sat Apr 9 15:55:15 EEST 2016, Nikos Koukis
-" ctrlp is back!!
-" https://github.com/ctrlpvim/ctrlp.vim
-" Slow to start at first run - creates cachefiles.
-" :CtrlPClearAllCaches - clear cache
-set runtimepath^=$bundle/ctrlp.vim
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*/\.git/*
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_map='<C-s>'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex',
-  \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
-  \ }
-" The maximum number of files to scan, set to 0 for no limit:
-let g:ctrlp_max_files=0
-let g:ctrlp_switch_buffer = 'Et'
-let g:ctrlp_working_path_mode = 0
-" mappings
-nnoremap <leader>pp :CtrlP<CR>
-nnoremap <leader>pf :CtrlPBuffer<CR>
-nnoremap <leader>pm :CtrlPMRU<CR>
-" Search through your tags!
-nnoremap <leader>pt :CtrlPTag<CR>
-" }}}
-" vim-startify {{{
-let g:startify_change_to_dir = 0
-" }}}
-" vim-titlecase {{{
-" $VIMPATH/plugin/titlecase.vim
-" }}}
-" vim-visual-star-search - use */# on visual selection {{{
-"
-" }}}
 
 " C-n, C-p to browse the cmdline history in a filtered way
 cnoremap <C-p> <Up>
@@ -879,7 +779,6 @@ autocmd Filetype gitcommit setlocal spell textwidth=72 colorcolumn=80
 nnoremap <Leader>sp <ESC>:call ActivateSpelling()<CR>
 vnoremap <Leader>sp <ESC>:call ActivateSpelling()<CR>
 inoremap <Leader>sp <ESC>:call ActivateSpelling()<CR>
-
 
 " Indentation Configuration {{{
 
@@ -936,11 +835,6 @@ autocmd FileType cpp map <leader>rt :!ctags -R --c++-kinds=+p --fields=+liaS --e
 autocmd FileType rust map <leader>rt :!rusty-tags vi <CR>
 autocmd FileType rust setlocal colorcolumn=99
 
-" guten-tags - ctags managing plugin {{{
-let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
-" I may be adding to this list in the local vimrc file
-let g:gutentags_ctags_extra_args = ["/usr/include"]
-" }}}
 " C++ code completion {{{
 set completeopt=menuone,menu,longest,preview
 
@@ -954,25 +848,6 @@ nnoremap <leader><C-n> :tabm +1<CR>
 nnoremap <leader><leader><C-p> :tabm 0<CR>
 nnoremap <leader><leader><C-n> :tabm<CR>
 
-" }}}
-" jedi-vim {{{
-let g:jedi#popup_select_first = 1
-let g:jedi#show_call_signatures = "1"
-let g:jedi#documentation_command = "K"
-
-" Decide on the python version that neovim uses so that jedi-vim uses
-" that accordingly
-if has('nvim')
-    let pip2Res = ChompedSystem("pip2 freeze | grep neovim")
-    let pip3Res = ChompedSystem("pip3 freeze | grep neovim")
-
-    if pip2Res =~ "neovim"
-        let g:python_host_prog="/usr/bin/python2"
-    endif
-    if pip3Res =~ "neovim"
-        let g:python3_host_prog="/usr/bin/python3"
-    endif
-endif
 " }}}
 " Redraw the screen
 nnoremap <leader><leader>r :redraw!<CR>
@@ -1008,24 +883,7 @@ function! ActivateSpelling()
     :Americanize
 endfunc
 
-" vim-latex configuration {{{
-let g:Tex_GotoError = 0
-let g:Tex_ShowErrorContext = 0
-" }}}
-
-" vim-maximiser {{{
-  let g:maximizer_set_default_mapping = 1
-nnoremap <silent><leader>tz :MaximizerToggle<CR>
-vnoremap <silent><leader>tz :MaximizerToggle<CR>gv
-inoremap <silent><leader>tz <C-o>:MaximizerToggle<CR>
-" }}}
-
 autocmd VimLeavePre * cclose | lclose
-
-" vim-taskwarrior plugin configuration - Needed by taskwiki {{{
-" https://github.com/blindFS/vim-taskwarrior
-let g:task_rc_override = 'rc.defaultwidth=0' " line-wrapping
-" }}}
 
 " Rust configuration {{{
 let g:rustfmt_command = 'cargo fmt -- '
@@ -1039,133 +897,14 @@ autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . 
 
 " }}}
 
-" vim-racer - DEPRECATED, use deoplete-rust {{{
-" " https://github.com/racer-rust/vim-racer
-" let g:racer_cmd = "which racer"
-" let g:racer_experimental_completer = 1 " Experimental
-
-" augroup rust_aucommands
-" 	au FileType rust nmap gd <Plug>(rust-def)
-" 	au FileType rust nmap gs <Plug>(rust-def-split)
-" 	au FileType rust nmap gx <Plug>(rust-def-vertical)
-" 	au FileType rust nmap <leader>gd <Plug>(rust-doc)
-" augroup END
-
-" }}}
-
 set tags+=./tags;,tags;/
 
-" Sun 21 Jan 14:50:51 GMT 2018 - Nikos Koukis
-" Don't Use YCM. This plugin is bloated, demands too many configuration steps
-" YCM {{{
-" and when isn't as effective as it needs.
-"
-" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-" let g:ycm_collect_identifiers_from_tags_files=1
-" let g:ycm_global_ycm_extra_conf="~/.ycm_extra_conf.py"
-" let g:ycm_confirm_extra_conf=0
-
-" let g:ycm_python_binary_path='python'
-" }}}
-" SuperTab - {{{
-let g:SuperTabDefaultCompletionType = "<c-n>"
-" }}}
-" UltiSnips {{{
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" }}}
-" bullets.vim - Markdown plugin for correct indentation of bullet lists {{{
-" TODO - Do I need this?
-" https://github.com/dkarter/bullets.vi://github.com/dkarter/bullets.vim
-" Use C-d/C-t for indenting outwards/inwards
-" In visual: :RenumberSelection
-" }}}
-" vim-autoformat {{{
-" https://github.com/Chiel92/vim-autoformat
-noremap <leader>af :Autoformat<CR>
-let g:formatter_yapf_style = 'pep8'
-" }}}
-" vimproc.vim {{{
-" You need to run **make** prior to running this
-" https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim
-" }}}
-" vim2hs - Haskell multipurpose plugin {{{
-" https://github.com/dag/vim2hs
-let g:haskell_conceal_wide = 1
-let g:haskell_tabular = 1
-let g:hpaste_author = 'Nikos Koukis - bergercookie'
-" }}}
-" " Easy-Align {{{
-" " https://github.com/junegunn/vim-easy-align
-" " Start interactive EasyAlign in visual mode (e.g. vipga)
-" xnoremap ga <Plug>(EasyAlign)
-" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-" nnoremap ga <Plug>(EasyAlign)
-" }}}
-" vim-indent-guides - See indentLine instead DEPRECATED{{{
-" let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_start_level = 2
-" let g:indent_guides_guide_size = 1
-
-" let g:hindent_on_save = 1
-" let g:hindet_indent_size = 2
-" let g:hindent_line_length = 120
-" let g:indent_guides_auto_colors = 1
-" hi IndentGuidesOdd  ctermbg=black
-" hi IndentGuidesEven ctermbg=darkgrey
-
-" }}}
-" indentLine {{{
-let g:indentLine_enabled = 1
-"
-" }}}
 
 augroup conf_config
     autocmd! FileType conf setlocal foldmethod=marker
 augroup END
 " https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
-
-" Goyo - Distraction free writing in vim - Ugh! {{{
-" https://github.com/junegunn/goyo.vim
-" Type :Goyo
-" }}}
-
-" Terminus {{{
-" Adding minor important capabilities to vim (mouse support, terminal-agnostic
-" mouse cursor)
-"
-" https://github.com/wincent/terminus
-"
-" let g:TerminusNormalCursorShape=1
-" }}}
-
-" Focus reporting {{{
-" Improved mouse support
-" Bracketted paste
-" }}}
-
-" commentary.vim {{{
-" https://github.com/tpope/vim-commentaryhttps://github.com/tpope/vim-commentary
-autocmd Filetype cpp set commentstring=//\ %s
-autocmd Filetype cmake set commentstring=#\ %s
-" }}}
-
-" vim-eunoch {{{
-" helpers for UNIX
-" https://github.com/t<F20>pope/vim-eunuch
-" }}}
-
-" vim-unimpaired {{{
-" https://github.com/tpope/vim-unimpaired
-" }}}
-
 
 " Tags configuration {{{
 " ctags configuration {{{
@@ -1283,10 +1022,240 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 nnoremap <C-]> g<C-]>
 " }}}
 
+" Plugins configuration {{{
+" Tagbar {{{
+nnoremap <leader>to :TagbarToggle<CR>
+" Start with tagbar disabled, and open tagbar at all the vim buffers afterwards
+map <leader>To :tabdo :Tagbar<CR>
+map <leader>TO :tabdo :TagbarClose<CR>
+" autocmd BufWinEnter * Tagbar
+" }}}
+" Tabularize {{{
+nnoremap <leader>tt :Tabularize /
+vnoremap <leader>tt :Tabularize /
+autocmd VimEnter * AddTabularPattern 1=    /^[^=]*\zs=
+autocmd VimEnter * AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
+" }}}
+" Statusline - Airline configuration at last {{{
+set laststatus=2
+let g:airline#extensions#tabline#enabled = 0
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#hunks#enabled=1
+let g:airline#extensions#branch#enabled=1
+let g:airline_theme='dark' " https://github.com/vim-airline/vim-airline/wiki/Screenshots
+let g:airline_highlighting_cache = 0
+let g:airline#extensions#ale#enabled = 1
+
+" " highlight current tab
+" hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
+" hi TabLine ctermfg=Black ctermbg=Green
+" hi TabLineSel ctermfg=LightBlue
+
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+
+" }}}
+" vim_markdown {{{
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_math=1
+let g:vim_markdown_frontmatter=1
+" }}}
+" Cppman {{{
+command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
+autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
+" }}}
+" Ale - Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration  {{{
+" https://github.com/w0rp/ale#usage
+"
+" Run it manually
+map <leader>sc :ALELint<CR>
+"
+" let b:ale_fixers = ['prettier', 'eslint'] # TODO - order by order of run
+" let g:ale_fix_on_save = 1
+" let g:ale_completion_enabled = 1
+let g:ale_sign_column_always = 1
+" TODO Test :ALEGoToDefinition
+" TODO Test :ALEFindReferences
+" TODO Test :ALEHover
+" TODO Test :ALESymbolSearch
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 1
+" You can disable this option too if you don't want linters to run on opening a
+" file
+" let g:ale_lint_on_enter = 0
+
+" Ale - CPP configuration {{{
+" use compile_commands.json
+let g:ale_c_parse_compile_commands = 1
+let g:ale_c_build_dir_names = ['build', 'build_rel', 'obj']
+" let g:ale_c_build_dir = 'build'
+" let b:ale_c_parse_makefile = 1
+
+autocmd FileType cpp let b:ale_linters = [
+            \ 'cppcheck', 'clang', 'clangd', 'gcc',
+            \ 'clang-check', 'clang-tidy', 'clang-format',
+            \ 'flawfinder', 'ccls']
+let g:ale_cpp_cppcheck_options='--enable=all --project=./compile_commands.json'
+let g:ale_cpp_clang_options='-std=c++14 -Wall -I/usr/include -I/usr/local/include -I/usr/local/include/eigen3'
+let g:ale_cpp_gcc_options='-std=c++14 -Wall -I/usr/include/ -I/usr/local/include/ -I/usr/local/include/eigen3'
+
+" }}}
+
+autocmd FileType python let b:ale_linters = ['flake8', 'pylint']
+autocmd FileType vim let b:ale_linters = ['vint']
+autocmd FileType cmake let b:ale_linters = ['cmakelint']
+
+" navigate between errors
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" Enable hovering
+" Doesn't work in terminal vim
+" g:ale_set_balloons = 1
+" }}}
+" AutoPairs - https://github.com/jiangmiao/auto-pairs {{{
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutToggle = '<leader>ap'
+" }}}
+" guten-tags - ctags managing plugin {{{
+let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
+" I may be adding to this list in the local vimrc file
+let g:gutentags_ctags_extra_args = ["/usr/include"]
+" }}}
+" jedi-vim {{{
+let g:jedi#popup_select_first = 1
+let g:jedi#show_call_signatures = "1"
+let g:jedi#documentation_command = "K"
+
+" Decide on the python version that neovim uses so that jedi-vim uses
+" that accordingly
+if has('nvim')
+    let pip2Res = ChompedSystem("pip2 freeze | grep neovim")
+    let pip3Res = ChompedSystem("pip3 freeze | grep neovim")
+
+    if pip2Res =~ "neovim"
+        let g:python_host_prog="/usr/bin/python2"
+    endif
+    if pip3Res =~ "neovim"
+        let g:python3_host_prog="/usr/bin/python3"
+    endif
+endif
+" }}}
+" ctrlp {{{
+" Sat Apr 9 15:55:15 EEST 2016, Nikos Koukis
+" ctrlp is back!!
+" https://github.com/ctrlpvim/ctrlp.vim
+" Slow to start at first run - creates cachefiles.
+" :CtrlPClearAllCaches - clear cache
+set runtimepath^=$bundle/ctrlp.vim
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*/\.git/*
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_map='<C-s>'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex',
+  \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
+  \ }
+" The maximum number of files to scan, set to 0 for no limit:
+let g:ctrlp_max_files=0
+let g:ctrlp_switch_buffer = 'Et'
+let g:ctrlp_working_path_mode = 0
+" mappings
+nnoremap <leader>pp :CtrlP<CR>
+nnoremap <leader>pf :CtrlPBuffer<CR>
+nnoremap <leader>pm :CtrlPMRU<CR>
+" Search through your tags!
+nnoremap <leader>pt :CtrlPTag<CR>
+" }}}
+" vim-startify {{{
+let g:startify_change_to_dir = 0
+" }}}
+" vim-titlecase {{{
+" $VIMPATH/plugin/titlecase.vim
+" }}}
+" vim-visual-star-search - use */# on visual selection {{{
+"
+" }}}
+" vim-latex configuration {{{
+let g:Tex_CompileRule_pdf = 'xelatex $*'
+let g:Tex_GotoError = 0
+let g:Tex_ShowErrorContext = 0
+" }}}
+" vim-maximiser {{{
+  let g:maximizer_set_default_mapping = 1
+nnoremap <silent><leader>tz :MaximizerToggle<CR>
+vnoremap <silent><leader>tz :MaximizerToggle<CR>gv
+inoremap <silent><leader>tz <C-o>:MaximizerToggle<CR>
+" }}}
+" UltiSnips {{{
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" }}}
+" bullets.vim - Markdown plugin for correct indentation of bullet lists {{{
+" TODO - Do I need this?
+" https://github.com/dkarter/bullets.vi://github.com/dkarter/bullets.vim
+" Use C-d/C-t for indenting outwards/inwards
+" In visual: :RenumberSelection
+" }}}
+" vim-autoformat {{{
+" https://github.com/Chiel92/vim-autoformat
+noremap <leader>af :Autoformat<CR>
+let g:formatter_yapf_style = 'pep8'
+" }}}
+" vimproc.vim {{{
+" You need to run **make** prior to running this
+" https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim
+" }}}
+" vim2hs - Haskell multipurpose plugin {{{
+" https://github.com/dag/vim2hs
+let g:haskell_conceal_wide = 1
+let g:haskell_tabular = 1
+let g:hpaste_author = 'Nikos Koukis - bergercookie'
+" }}}
+" indentLine {{{
+let g:indentLine_enabled = 1
+"
+" }}}
+" Terminus {{{
+" Adding minor important capabilities to vim (mouse support, terminal-agnostic
+" mouse cursor)
+"
+" https://github.com/wincent/terminus
+"
+" let g:TerminusNormalCursorShape=1
+"
+" Focus reporting {{{
+" Improved mouse support
+" Bracketted paste
+" }}}
+"
+" }}}
+" commentary.vim {{{
+" https://github.com/tpope/vim-commentaryhttps://github.com/tpope/vim-commentary
+autocmd Filetype cpp set commentstring=//\ %s
+autocmd Filetype cmake set commentstring=#\ %s
+" }}}
+" vim-eunoch {{{
+" helpers for UNIX
+" https://github.com/t<F20>pope/vim-eunuch
+" }}}
+" vim-unimpaired {{{
+" https://github.com/tpope/vim-unimpaired
+" }}}
 " undotree - like GUndo {{{
 nnoremap <leader>ut :UndotreeToggle<CR>
 " }}}
-
 " tmux-integration plugins {{{
 " Sat Dec 9 20:05:59 GMT 2017, Nikos Koukis
 " tmux-completer - Never actually worked..
@@ -1296,14 +1265,11 @@ augroup tmux_config
 augroup END
 
 " }}}
-"
-
 " vim-tmux-navigator {{{
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_save_on_switch = 1
 " }}}
-
 " vim-signature - Wow, so useful of a plugin{{{
 " https://github.com/kshenoy/vim-signature
 "
@@ -1477,7 +1443,6 @@ nnoremap <leader>l :SourcetrailActivateToken<CR>
 " vim-peekaboo - Show contents of registers on "/@/CTRL-R {{{
 "
 " }}}
-
 " vimwiki {{{
 nmap <Leader>vw <Plug>VimwikiIndex
 
@@ -1492,8 +1457,13 @@ autocmd filetype vimwiki nmap <leader>cf :set filetype=<CR>
 autocmd filetype vimwiki nmap <leader>cF :set filetype=vimwiki<CR>
 autocmd filetype vimwiki cmap vwg :VimwikiGoto 
 autocmd filetype vimwiki cmap vwt :VimwikiSearchTags 
+autocmd Filetype vimwiki let b:autopairs_loaded=1
 
 " }}}
+" }}}
+" vim-taskwarrior plugin configuration - Needed by taskwiki {{{
+" https://github.com/blindFS/vim-taskwarrior
+let g:task_rc_override = 'rc.defaultwidth=0' " line-wrapping
 " }}}
 " taskwiki {{{
 autocmd filetype vimwiki cmap twa :TaskWikiAnnotate<CR>
@@ -1524,13 +1494,8 @@ function! PopulateWeeklyDone()
 endfunc
 " }}}
 " }}}
+" }}}
 
 " machine-local configuration
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
-
-
-" vim-ros {{{
-let g:ros_build_system = "catkin-tools"
-let g:ros_catkin_make_options = '-j7 -DCMAKE_BUILD_TYPE=Debug'
-" }}}
