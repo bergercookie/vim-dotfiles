@@ -161,6 +161,11 @@ nnoremap <C-w>- <ESC>:split<CR>
 " }}}
 
 " DEPRECATED plugins configuration {{{
+" " guten-tags - ctags managing plugin - UNUSED {{{
+" let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
+" " I may be adding to this list in the local vimrc file
+" let g:gutentags_ctags_extra_args = []
+" " }}}
 " " vim-tmux-runner - deprecated {{{
 " let g:vtrstripleadingwhitespace = 0
 " let g:vtrclearemptylines = 0
@@ -169,7 +174,7 @@ nnoremap <C-w>- <ESC>:split<CR>
 " nmap <leader>tr :vtrsendlinestorunner<cr>
 " vmap <leader>tr <esc>:vtrsendlinestorunner<cr>
 " " }}}
-" vim-autotags  didn't work in my case - see gutentags instead deprecated  {{{
+" vim-autotags  didn't work in my case - see gutentags instead - deprecated  {{{
 " }}}
 " nerdtree - deprecated {{{
 " map  <leader><leader>n :nerdtree <cr>
@@ -537,7 +542,6 @@ Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
 Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'https://github.com/AndrewRadev/undoquit.vim'
-Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'rust' ]}
 Plug 'chrisbra/csv.vim'
 Plug 'CoatiSoftware/vim-sourcetrail'
 Plug 'https://github.com/mhinz/vim-janah' " colorscheme
@@ -546,13 +550,6 @@ Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/tpope/vim-rsi'
 Plug 'w0rp/ale'
-" " LanguageClient
-" if has('nvim')
-"     Plug 'autozimu/LanguageClient-neovim', {
-"                 \ 'branch': 'next',
-"                 \ 'do': 'bash install.sh',
-"                 \ }
-" endif
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -578,6 +575,14 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 
 
 " DEPRECATED plugins
+" " LanguageClient
+" if has('nvim')
+"     Plug 'autozimu/LanguageClient-neovim', {
+"                 \ 'branch': 'next',
+"                 \ 'do': 'bash install.sh',
+"                 \ }
+" endif
+" Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'rust' ]}
 " Plug 'https://github.com/ctrlpvim/ctrlp.vim' - DEPRECATED in favor of fzf
 " Plug 'https://github.com/powerline/powerline' - Use vim-airline
 " Plug 'https://github.com/Yilin-Yang/vim-markbar'
@@ -1159,11 +1164,6 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " AutoPairs - https://github.com/jiangmiao/auto-pairs {{{
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutToggle = '<leader>ap'
-" }}}
-" guten-tags - ctags managing plugin {{{
-let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
-" I may be adding to this list in the local vimrc file
-let g:gutentags_ctags_extra_args = []
 " }}}
 " jedi-vim {{{
 let g:jedi#popup_select_first = 1
