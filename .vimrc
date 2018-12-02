@@ -390,6 +390,52 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " clang_complete DEPRECATED {{{
 "let g:clang_jumpto_back_key = '<leader><leader>t'
 " }}}
+" ctrlp - DEPRECATD in favor of fzf {{{
+" ctrlp is back!!
+" https://github.com/ctrlpvim/ctrlp.vim
+" Slow to start at first run - creates cachefiles.
+" :CtrlPClearAllCaches - clear cache
+" set runtimepath^=$bundle/ctrlp.vim
+" set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*/\.git/*
+" let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_map='<C-s>'
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex\|documentation',
+"   \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
+"   \ }
+" " The maximum number of files to scan, set to 0 for no limit:
+" let g:ctrlp_max_files=0
+" let g:ctrlp_switch_buffer = 'Et'
+" let g:ctrlp_working_path_mode = 0
+" " mappings
+" nnoremap <leader>pp :CtrlP<CR>
+" nnoremap <leader>pf :CtrlPBuffer<CR>
+" nnoremap <leader>pm :CtrlPMRU<CR>
+" " Search through your tags!
+" nnoremap <leader>pt :CtrlPTag<CR>
+" }}}
+" LanguageClient-neovim - Don't seem to run that well - UNUSED {{{
+
+" Python Language Server - pyls
+" https://github.com/palantir/python-language-server
+
+" let g:LanguageClient_serverCommands = {
+"       \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
+"       \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
+"       \ 'python': ['pyls'],
+"       \ }
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+" nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
+" nnoremap <silent> gR :call LanguageClient#textDocument_rename()<CR>
+
+" let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+" let g:LanguageClient_settingsPath = '/home/berger/.config/nvim/settings.json'
+" set completefunc=LanguageClient#complete
+" set formatexpr=LanguageClient_textDocument_rangeFormatting()
+" }}}
+"
 " }}}
 
 " vim-plug package manager {{{
@@ -412,7 +458,6 @@ endif
 
 call plug#begin()
 Plug 'junegunn/vim-plug'
-Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/nanotech/jellybeans.vim'
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/tpope/vim-surround'
@@ -533,6 +578,7 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 
 
 " DEPRECATED plugins
+" Plug 'https://github.com/ctrlpvim/ctrlp.vim' - DEPRECATED in favor of fzf
 " Plug 'https://github.com/powerline/powerline' - Use vim-airline
 " Plug 'https://github.com/Yilin-Yang/vim-markbar'
 " Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
@@ -571,20 +617,9 @@ set t_Co=256 " make terminator + vim combination
 
 
 " Colorscheme {{{
+" See :Colors<CR> for selecting another colorscheme
 set background=dark
-"colorscheme neverness
-"colorscheme monokai
 colorscheme molokai
-"colorscheme elda
-"colorscheme holokai
-"colorscheme vividchalk
-"colorscheme SlateDark
-"colorscheme summerfruit256
-"colorscheme tir_black
-"colorscheme solarized
-"colorscheme revolutions
-"colorscheme reloaded
-"
 " autocmd ColorScheme janah highlight Normal ctermbg=235 | colorscheme janah
 " }}}
 
@@ -1031,8 +1066,8 @@ map <leader>TO :tabdo :TagbarClose<CR>
 " autocmd BufWinEnter * Tagbar
 " }}}
 " Tabularize {{{
-nnoremap <leader>tt :Tabularize /
-vnoremap <leader>tt :Tabularize /
+nnoremap <leader>bb :Tabularize /
+vnoremap <leader>bb :Tabularize /
 autocmd VimEnter * AddTabularPattern 1=    /^[^=]*\zs=
 autocmd VimEnter * AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
 " }}}
@@ -1128,7 +1163,7 @@ let g:AutoPairsShortcutToggle = '<leader>ap'
 " guten-tags - ctags managing plugin {{{
 let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
 " I may be adding to this list in the local vimrc file
-let g:gutentags_ctags_extra_args = ["/usr/include"]
+let g:gutentags_ctags_extra_args = []
 " }}}
 " jedi-vim {{{
 let g:jedi#popup_select_first = 1
@@ -1148,31 +1183,6 @@ if has('nvim')
         let g:python3_host_prog="/usr/bin/python3"
     endif
 endif
-" }}}
-" ctrlp {{{
-" Sat Apr 9 15:55:15 EEST 2016, Nikos Koukis
-" ctrlp is back!!
-" https://github.com/ctrlpvim/ctrlp.vim
-" Slow to start at first run - creates cachefiles.
-" :CtrlPClearAllCaches - clear cache
-set runtimepath^=$bundle/ctrlp.vim
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*/\.git/*
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_map='<C-s>'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex',
-  \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
-  \ }
-" The maximum number of files to scan, set to 0 for no limit:
-let g:ctrlp_max_files=0
-let g:ctrlp_switch_buffer = 'Et'
-let g:ctrlp_working_path_mode = 0
-" mappings
-nnoremap <leader>pp :CtrlP<CR>
-nnoremap <leader>pf :CtrlPBuffer<CR>
-nnoremap <leader>pm :CtrlPMRU<CR>
-" Search through your tags!
-nnoremap <leader>pt :CtrlPTag<CR>
 " }}}
 " vim-startify {{{
 let g:startify_change_to_dir = 0
@@ -1334,27 +1344,7 @@ nmap <leader>it <Plug>(IPy-Interrupt)
 let g:ipy_celldef = ['^##', '^##']
 
 " }}}
-" LanguageClient-neovim - Don't seem to run that well {{{
 
-" Python Language Server - pyls
-" https://github.com/palantir/python-language-server
-
-" let g:LanguageClient_serverCommands = {
-"       \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-"       \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-"       \ 'python': ['pyls'],
-"       \ }
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
-" nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-" nnoremap <silent> gR :call LanguageClient#textDocument_rename()<CR>
-
-" let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-" let g:LanguageClient_settingsPath = '/home/berger/.config/nvim/settings.json'
-" set completefunc=LanguageClient#complete
-" set formatexpr=LanguageClient_textDocument_rangeFormatting()
-" }}}
 " deoplete.nvim {{{
 
 " Use deoplete.
@@ -1455,8 +1445,8 @@ let g:vimwiki_use_mouse = 1
 " Toggle Filetype - two different mappings {{{
 autocmd filetype vimwiki nmap <leader>cf :set filetype=<CR>
 autocmd filetype vimwiki nmap <leader>cF :set filetype=vimwiki<CR>
-autocmd filetype vimwiki cmap vwg :VimwikiGoto 
-autocmd filetype vimwiki cmap vwt :VimwikiSearchTags 
+cmap vwg :VimwikiGoto 
+cmap vwt :VimwikiSearchTags 
 autocmd Filetype vimwiki let b:autopairs_loaded=1
 
 " }}}
@@ -1493,6 +1483,76 @@ function! PopulateWeeklyDone()
     put!=l:refined_str
 endfunc
 " }}}
+" }}}
+" fzf - fuzzy-finder {{{
+" https://github.com/junegunn/fzf
+" https://github.com/junegunn/fzf.vim
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+nnoremap <leader>tf :Files<CR>
+nnoremap <leader>tF :Files 
+nnoremap <leader>tt :Tags<CR>
+nnoremap <leader>tb :Buffers<CR>
+nnoremap <leader>tw :Windows<CR>
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" let g:ctrlp_map='<C-s>'
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex\|documentation',
+"   \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
+"   \ }
+
+" Files [PATH] 	Files (similar to :FZF)
+" GFiles [OPTS] 	Git files (git ls-files)
+" GFiles? 	Git files (git status)
+" Buffers 	Open buffers
+" Colors 	Color schemes
+" Ag [PATTERN] 	ag search result (ALT-A to select all, ALT-D to deselect all)
+" Rg [PATTERN] 	rg search result (ALT-A to select all, ALT-D to deselect all)
+" Lines [QUERY] 	Lines in loaded buffers
+" BLines [QUERY] 	Lines in the current buffer
+" Tags [QUERY] 	Tags in the project (ctags -R)
+" BTags [QUERY] 	Tags in the current buffer
+" Marks 	Marks
+" Windows 	Windows
+" Locate PATTERN 	locate command output
+" History 	v:oldfiles and open buffers
+" History: 	Command history
+" History/ 	Search history
+" Snippets 	Snippets (UltiSnips)
+" Commits 	Git commits (requires fugitive.vim)
+" BCommits 	Git commits for the current buffer
+" Commands 	Commands
+" Maps 	Normal mode mappings
+" Helptags 	Help tags 1
+" Filetypes 	File types
+
 " }}}
 " }}}
 
