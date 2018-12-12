@@ -107,6 +107,9 @@ let g:clang_format#auto_formatexpr = 0
 set cinoptions+=(0
 ")  " This is here just to fix the colors from the open parenthesis
 
+" }}}
+
+" YAML options {{{
 augroup yaml_indentation
     autocmd!
     autocmd FileType yaml set tabstop=2
@@ -117,7 +120,9 @@ augroup yaml_indentation
     autocmd FileType yaml set autoindent               " indent at the same level of the previous line
     autocmd FileType yaml set expandtab
 augroup END
+" }}}
 
+" Markdown options {{{
 augroup md_indentation
     autocmd!
     autocmd FileType markdown set tabstop=4
@@ -131,12 +136,18 @@ augroup END
 
 augroup md_options
 	autocmd!
-  autocmd FileType markdown call ActivateSpelling()
+    autocmd FileType markdown call ActivateSpelling()
+augroup END
 
-  " Replace the heading
-  autocmd Filetype markdown onoremap ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
+" }}}
+
+" rst options {{{
+augroup rst_options
+	autocmd!
+    autocmd FileType rst call ActivateSpelling()
 augroup END
 " }}}
+
 
 nnoremap <C-\> <C-t>
 
