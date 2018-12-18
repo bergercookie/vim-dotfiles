@@ -781,7 +781,7 @@ endif
 " http://stackoverflow.com/questions/3686841/vim-case-insensitive-filename-completion
 set wildignorecase
 " bash like autocompletion
-set wildmode=longest,list
+set wildmode=longest,full
 
 
 " Fri Apr 8 20:18:54 EEST 2016, Nikos Koukis
@@ -1570,3 +1570,7 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " machine-local configuration
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
+
+" Vim-path and path-aware commands configuration {{{
+set path+=/usr/local/include,**
+" }}}
