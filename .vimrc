@@ -580,12 +580,33 @@ Plug 'https://github.com/tbabej/taskwiki'
 Plug 'https://github.com/powerman/vim-plugin-AnsiEsc'
 Plug 'https://github.com/farseer90718/vim-taskwarrior',  { 'on': 'VimwikiIndex' }
 
+" text objects general configuration {{{
+"
+" See list of available text objects by the community:
+" https://github.com/kana/vim-textobj-user/wiki
+Plug 'kana/vim-textobj-user'
+Plug 'whatyouhide/vim-textobj-xmlattr'
+Plug 'https://github.com/kana/vim-textobj-indent' " ai/ii, aI/iI
+Plug 'https://github.com/kana/vim-textobj-line' " al/il
+Plug 'https://github.com/adriaanzon/vim-textobj-matchit' " am/im
+Plug 'https://github.com/glts/vim-textobj-comment' " ac/ic/iC
+Plug 'https://github.com/thinca/vim-textobj-between' " af/if
+Plug 'https://github.com/Julian/vim-textobj-variable-segment' " av/iv
+Plug 'https://github.com/fvictorio/vim-textobj-backticks' " a`/i`, works multiline
+Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
+" Plug 'https://github.com/kana/vim-textobj-diff' " adh/idh - doesn't' look interesting
+" Plug 'vim-textobj-blanklines' " Use `ip` instead
+" Plug 'https://github.com/kana/vim-textobj-syntax' "ay/iy TODO
+" Plug 'https://github.com/kana/vim-textobj-help' " for :help pages
+" Plug 'https://github.com/bps/vim-textobj-python' " af/if, ac/ic TODO
+
+" }}}
+
 " own + maintained version's
 Plug 'git@github.com:bergercookie/vim-snippets'
 Plug 'git@github.com:bergercookie/vim-debugstring'
 
-
-" DEPRECATED plugins
+" DEPRECATED plugins {{{
 " " LanguageClient
 " if has('nvim')
 "     Plug 'autozimu/LanguageClient-neovim', {
@@ -593,6 +614,8 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 "                 \ 'do': 'bash install.sh',
 "                 \ }
 " endif
+
+" Plug 'https://github.com/kana/vim-textobj-function' " af/if  - Didn't work at all in the end, assumes specific function signature syntax UNUSED
 " Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'rust' ]}
 " Plug 'https://github.com/ctrlpvim/ctrlp.vim' - DEPRECATED in favor of fzf
 " Plug 'https://github.com/powerline/powerline' - Use vim-airline
@@ -613,9 +636,11 @@ Plug 'git@github.com:bergercookie/vim-debugstring'
 " Plug 'https://github.com/xolox/vim-misc'
 " Plug 'https://github.com/xolox/vim-notes'
 " Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
+" Plug 'https://github.com/Julian/vim-textobj-brace' " aj/ij - Doesn't work with [count]
 
 " Totally useless... just open another horizontal tmux pane
 " Plug 'https://github.com/Lenovsky/nuake/'
+" }}}
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
@@ -805,7 +830,8 @@ augroup END
 
 " Greek Support  {{{
 " courtesy of vkoukis
-set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
+set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
+nmap Θ :redo<CR>
 
 " use CTRL + 6 when in insert mode to switch to the language specified by the
 " keymap whenever you get into insert mode automatically
