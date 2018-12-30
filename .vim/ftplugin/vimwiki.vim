@@ -1,5 +1,5 @@
 " Make sure that you have also set up TaskWiki
-setlocal textwidth=0
+setlocal textwidth=80
 ActivateBritishSpelling
 
 " Toggle Filetype - two different mappings {{{
