@@ -75,25 +75,6 @@ augroup indentation
     set expandtab
 augroup END
 
-augroup indentation_for_cpp
-    autocmd!
-    " mrpt uses tabs for indentation
-    autocmd FileType cpp set tabstop=4
-    autocmd FileType cpp set shiftwidth=4 " use indents of X spaces
-    autocmd FileType cpp set preserveindent
-    autocmd FileType cpp set copyindent
-    autocmd FileType cpp set softtabstop=0
-    autocmd FileType cpp set autoindent " indent at the same level of the previous line
-    autocmd FileType cpp set noexpandtab
-    autocmd FileType cpp set textwidth=0 " Do not automatically break lines
-
-augroup END
-
-augroup cpp_tools
-    autocmd!
-    autocmd FileType cpp nnoremap <Leader>C :ClangFormatAutoToggle<CR>
-augroup END
-
 " clang_format {{{
 let g:clang_format#command = "/usr/bin/clang-format-3.8"
 let g:clang_format#detect_style_file = 1
@@ -108,46 +89,6 @@ set cinoptions+=(0
 ")  " This is here just to fix the colors from the open parenthesis
 
 " }}}
-
-" YAML options {{{
-augroup yaml_indentation
-    autocmd!
-    autocmd FileType yaml set tabstop=2
-    autocmd FileType yaml set shiftwidth=2             " use indents of X spaces
-    autocmd FileType yaml set preserveindent
-    autocmd FileType yaml set copyindent
-    autocmd FileType yaml set softtabstop=2
-    autocmd FileType yaml set autoindent               " indent at the same level of the previous line
-    autocmd FileType yaml set expandtab
-augroup END
-" }}}
-
-" Markdown options {{{
-augroup md_indentation
-    autocmd!
-    autocmd FileType markdown set tabstop=4
-    autocmd FileType markdown set shiftwidth=2             " use indents of X spaces
-    autocmd FileType markdown set nopreserveindent
-    autocmd FileType markdown set nocopyindent
-    autocmd FileType markdown set softtabstop=4
-    autocmd FileType markdown set noautoindent               " indent at the same level of the previous line
-    autocmd FileType markdown set expandtab
-augroup END
-
-augroup md_options
-	autocmd!
-    autocmd FileType markdown call ActivateSpelling()
-augroup END
-
-" }}}
-
-" rst options {{{
-augroup rst_options
-	autocmd!
-    autocmd FileType rst call ActivateSpelling()
-augroup END
-" }}}
-
 
 nnoremap <C-\> <C-t>
 
@@ -261,19 +202,6 @@ nnoremap <C-w>- <ESC>:split<CR>
 " map <Leader>mo <Plug>OpenMarkbar
 " map <Leader>mc <Plug>CloseMarkbar
 " let g:markbar_enable_peekaboo = 0
-" }}}
-" vim-notes - DEPRECATED in favor of vimwiki {{{
-
-" let g:notes_directories = ['~/MEGA/notes']
-" let g:notes_suffix = ".md"
-" let g:notes_unicode_enabled = 1
-
-" let g:notes_conceal_bold = 0
-" let g:notes_conceal_italics = 0
-" let g:notes_conceal_code = 0
-" let g:notes_conceal_url = 0
-
-" autocmd filetype notes set nofoldenable    " disable folding
 " }}}
 " vim-racer - DEPRECATED, use deoplete-rust {{{
 " " https://github.com/racer-rust/vim-racer
@@ -605,7 +533,7 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 Plug 'git@github.com:bergercookie/vim-snippets'
 Plug 'git@github.com:bergercookie/vim-debugstring'
 " Plug 'https://github.com/nelstrom/vim-americanize'
-Plug 'https://github.com/bergercookie/vim-britishise'
+Plug 'git@github.com:bergercookie/vim-britishise'
 
 " DEPRECATED plugins {{{
 " " LanguageClient
@@ -646,11 +574,6 @@ Plug 'https://github.com/bergercookie/vim-britishise'
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
 call plug#end()
-" }}}
-" Folding in markers for vim {{{
-augroup filetype_vim
-    autocmd! FileType vim setlocal foldmethod=marker
-augroup END
 " }}}
 
 "get syntax highlighting
@@ -783,10 +706,6 @@ set backspace=indent,eol,start
 set complete-=i
 set pastetoggle=<F2> " Super useful.
 
-" Python mappings {{{
-let b:python_pdb_s='import pdb; pdb.set_trace()'
-autocmd FileType python nnoremap <leader>dp :put=b:python_pdb_s<CR>
-" }}}
 
 " Show the current filename
 nnoremap <leader>2 :echo @%<CR>
@@ -809,10 +728,6 @@ set wildignorecase
 " bash like autocompletion
 set wildmode=longest,full
 
-
-" Fri Apr 8 20:18:54 EEST 2016, Nikos Koukis
-autocmd VimEnter * so $HOME/.vim/own_scripts/abbreviations.vim
-
 " Sat Apr 9 14:59:33 EEST 2016, Nikos Koukis
 " Highlight current word *without* jumping to next occurance
 " http://vim.wikia.com/wiki/Highlight_all_search_pattern_matches
@@ -828,7 +743,6 @@ augroup filetypedetect " This is a special autocommands group do not do autocmd!
 augroup END
 
 " }}}
-
 " Greek Support  {{{
 " courtesy of vkoukis
 set langmap=ΑA,ΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz
@@ -848,15 +762,6 @@ vnoremap γ; gq
 
 " use %% for accessing files in the path of the current buffer
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
-
-" https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message
-" git commit configuration
-autocmd Filetype gitcommit setlocal spell textwidth=72 colorcolumn=80
-
-" toogle spelling
-nnoremap <Leader>sp <ESC>:call ActivateSpelling()<CR>
-vnoremap <Leader>sp <ESC>:call ActivateSpelling()<CR>
-inoremap <Leader>sp <ESC>:call ActivateSpelling()<CR>
 
 " Indentation Configuration {{{
 
@@ -907,13 +812,6 @@ nnoremap <leader>ss  :ShowSpaces 1<CR>
 nnoremap <leader>ts  m`:TrimSpaces<CR>``
 vnoremap <leader>ts  :TrimSpaces<CR>
 
-" Generate ctags
-map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
-autocmd FileType cpp map <leader>rt :!ctags -R --c++-kinds=+p --fields=+liaS --extra=+q --tag-relative . <CR>
-autocmd FileType rust map <leader>rt :!rusty-tags vi <CR>
-autocmd FileType rust setlocal colorcolumn=99
-
-" C++ code completion {{{
 set completeopt=menuone,menu,longest,preview
 
 " omni-completion - where to search ...
@@ -926,7 +824,6 @@ nnoremap <leader><C-n> :tabm +1<CR>
 nnoremap <leader><leader><C-p> :tabm 0<CR>
 nnoremap <leader><leader><C-n> :tabm<CR>
 
-" }}}
 " Redraw the screen
 nnoremap <leader><leader>r :redraw!<CR>
 
@@ -943,27 +840,10 @@ au TabLeave * let g:lasttab = tabpagenr()
 autocmd BufNewFile,BufRead ~/.mutt/temp/mutt* call SetMuttConfig()
 function! SetMuttConfig()
     :source ~/.mutt/lbdbq.vim
-    call ActivateSpelling()
+    call ActivateBritishSpelling()
 endfunc
 
 " }}}
-
-autocmd Filetype tex call SetLatexConfig()
-function! SetLatexConfig()
-    set textwidth=80
-    call ActivateSpelling()
-endfunc
-
-function! ActivateSpelling()
-    " spelling support
-    set spelllang=en_gb,el
-    set spell
-    " :Americanize
-    call Britishise()
-endfunc
-
-autocmd VimLeavePre * cclose | lclose
-
 " Rust configuration {{{
 let g:rustfmt_command = 'cargo fmt -- '
 " let g:rustfmt_options = '-f'
@@ -973,19 +853,14 @@ let g:rustfmt_fail_silently = 0
 " Use rusty-ctags to produce a tags file for vim
 autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
-
 " }}}
 
-set tags+=./tags;,tags;/
+autocmd VimLeavePre * cclose | lclose
 
-
-augroup conf_config
-    autocmd! FileType conf setlocal foldmethod=marker
-augroup END
-" https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
+" Clean registers - https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
 " Tags configuration {{{
+set tags+=./tags;,tags;/
 " ctags configuration {{{
 
 " ctags support for ansible
@@ -1095,19 +970,20 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 
 " }}}
 
-" https://stackoverflow.com/questions/14465383/how-to-navigate-multiple-ctags-matches-in-vim
+" Generate tags
+map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
+
 " g<C-]> will jump to the tag if there's only one match and will present a list
 " if there are multiple matches
+" https://stackoverflow.com/questions/14465383/how-to-navigate-multiple-ctags-matches-in-vim
 nnoremap <C-]> g<C-]>
 " }}}
-
 " Plugins configuration {{{
 " Tagbar {{{
 nnoremap <leader>to :TagbarToggle<CR>
 " Start with tagbar disabled, and open tagbar at all the vim buffers afterwards
 map <leader>To :tabdo :Tagbar<CR>
 map <leader>TO :tabdo :TagbarClose<CR>
-" autocmd BufWinEnter * Tagbar
 " }}}
 " Tabularize {{{
 nnoremap <leader>bb :Tabularize /
@@ -1145,7 +1021,6 @@ let g:vim_markdown_frontmatter=1
 " }}}
 " Cppman {{{
 command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
-autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
 " }}}
 " Ale - Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration  {{{
 " https://github.com/w0rp/ale#usage
@@ -1178,19 +1053,11 @@ let g:ale_c_build_dir_names = ['build', 'build_rel', 'obj']
 " let g:ale_c_build_dir = 'build'
 " let b:ale_c_parse_makefile = 1
 
-autocmd FileType cpp let b:ale_linters = [
-            \ 'cppcheck', 'clang', 'clangd', 'gcc',
-            \ 'clang-check', 'clang-tidy', 'clang-format',
-            \ 'flawfinder', 'ccls']
 let g:ale_cpp_cppcheck_options='--enable=all --project=./compile_commands.json'
 let g:ale_cpp_clang_options='-std=c++14 -Wall -I/usr/include -I/usr/local/include -I/usr/local/include/eigen3'
 let g:ale_cpp_gcc_options='-std=c++14 -Wall -I/usr/include/ -I/usr/local/include/ -I/usr/local/include/eigen3'
 
 " }}}
-
-autocmd FileType python let b:ale_linters = ['flake8', 'pylint']
-autocmd FileType vim let b:ale_linters = ['vint']
-autocmd FileType cmake let b:ale_linters = ['cmakelint']
 
 " navigate between errors
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -1291,9 +1158,7 @@ let g:indentLine_enabled = 1
 "
 " }}}
 " commentary.vim {{{
-" https://github.com/tpope/vim-commentaryhttps://github.com/tpope/vim-commentary
-autocmd Filetype cpp set commentstring=//\ %s
-autocmd Filetype cmake set commentstring=#\ %s
+" https://github.com/tpope/vim-commentary
 " }}}
 " vim-eunoch {{{
 " helpers for UNIX
@@ -1304,15 +1169,6 @@ autocmd Filetype cmake set commentstring=#\ %s
 " }}}
 " undotree - like GUndo {{{
 nnoremap <leader>ut :UndotreeToggle<CR>
-" }}}
-" tmux-integration plugins {{{
-" Sat Dec 9 20:05:59 GMT 2017, Nikos Koukis
-" tmux-completer - Never actually worked..
-
-augroup tmux_config
-    autocmd! FileType tmux setlocal foldmethod=marker
-augroup END
-
 " }}}
 " vim-tmux-navigator {{{
 " Disable tmux navigator when zooming the Vim pane
@@ -1482,27 +1338,12 @@ let g:vimwiki_folding=''
 let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
 
-autocmd Filetype vimwiki call SetVimWikiCfg()
-function! SetVimWikiCfg()
-    call ActivateSpelling()
-endfunc
-
-
-" Toggle Filetype - two different mappings {{{
-autocmd filetype vimwiki nmap <leader>cf :set filetype=<CR>
-autocmd filetype vimwiki nmap <leader>cF :set filetype=vimwiki<CR>
-cmap vwg :VimwikiGoto 
-cmap vwt :VimwikiSearchTags 
-autocmd Filetype vimwiki let b:autopairs_loaded=1
-
-" }}}
 " }}}
 " vim-taskwarrior plugin configuration - Needed by taskwiki {{{
 " https://github.com/blindFS/vim-taskwarrior
 let g:task_rc_override = 'rc.defaultwidth=0' " line-wrapping
 " }}}
 " taskwiki {{{
-autocmd filetype vimwiki cmap twa :TaskWikiAnnotate<CR>
 let g:work_str = $WORK
 let g:taskwiki_sort_order="status+,pri+,end+,due+,pri-,project+"
 
@@ -1601,11 +1442,16 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " }}}
 " }}}
-
-" machine-local configuration
-let g:local_vimrc = '~/.vimrc.local'
-execute 'source ' . g:local_vimrc
-
 " Vim-path and path-aware commands configuration {{{
 set path+=/usr/local/include,**
 " }}}
+" Abbreviations - vim {{{
+ab wrt with regards to
+ab wRt with respect to
+ab teh the
+" }}}
+" machine-local configuration {{{
+let g:local_vimrc = '~/.vimrc.local'
+execute 'source ' . g:local_vimrc
+" }}}
+
