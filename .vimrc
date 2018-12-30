@@ -479,7 +479,6 @@ Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-abolish'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
-Plug 'https://github.com/nelstrom/vim-americanize'
 Plug 'https://github.com/PeterRincker/vim-argumentative'
 Plug 'https://github.com/vim-scripts/Hardy'
 Plug 'https://github.com/tpope/vim-obsession'
@@ -605,6 +604,8 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " own + maintained version's
 Plug 'git@github.com:bergercookie/vim-snippets'
 Plug 'git@github.com:bergercookie/vim-debugstring'
+" Plug 'https://github.com/nelstrom/vim-americanize'
+Plug 'https://github.com/bergercookie/vim-britishise'
 
 " DEPRECATED plugins {{{
 " " LanguageClient
@@ -955,9 +956,10 @@ endfunc
 
 function! ActivateSpelling()
     " spelling support
-    :set spelllang=en,el
-    :set spell
-    :Americanize
+    set spelllang=en_gb,el
+    set spell
+    " :Americanize
+    call Britishise()
 endfunc
 
 autocmd VimLeavePre * cclose | lclose
@@ -1479,6 +1481,13 @@ let g:vimwiki_list = [{'path': '~/MEGA/vimwiki',
 let g:vimwiki_folding=''
 let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
+
+autocmd Filetype vimwiki call SetVimWikiCfg()
+function! SetVimWikiCfg()
+    call ActivateSpelling()
+endfunc
+
+
 " Toggle Filetype - two different mappings {{{
 autocmd filetype vimwiki nmap <leader>cf :set filetype=<CR>
 autocmd filetype vimwiki nmap <leader>cF :set filetype=vimwiki<CR>
