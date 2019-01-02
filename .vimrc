@@ -609,11 +609,6 @@ nnoremap <leader>n :call NumberToggle()<cr>
 nnoremap U :redo<CR>
 nnoremap <c-r> <nop>
 
-
-" Quick exit command
-nnoremap <Leader>e :quit<CR> " Quit current window
-nnoremap <Leader>E :qa!<CR> "Quit all windows
-
 " easier moving of code blocks
 vnoremap < <gv
 vnoremap > >gv
