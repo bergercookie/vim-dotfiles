@@ -40,8 +40,13 @@ set viminfo='100,<50,s10,h,n$HOME/.viminfo
 if !has('nvim')
     set viminfo+=!  " Compatible viminfo file in both vim and neovim
 endif
+" ignore case in filename completion
+" http://stackoverflow.com/questions/3686841/vim-case-insensitive-filename-completion
+set wildignorecase
+" bash like autocompletion
+set wildmode=longest,full
 
-" Cursor color
+" Cursor color {{{
 " http://vim.wikia.com/wiki/Configuring_the_cursor
 highlight Cursor guifg=white guibg=black
 highlight iCursor guifg=white guibg=steelblue
@@ -49,16 +54,21 @@ set guicursor=n-v-c:block-Cursor
 set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
+" }}}
 
 
-" Remap <leader> to comma
+" Remap <leader> to comma {{{
 let mapleader = ","
 nnoremap \ ,
+" }}}
 
 " use specific indentation rules per language
 filetype indent plugin on
 filetype indent on
 
+" Syntax highlighting
+syntax on
+set t_Co=256 " make terminator + vim combination
 
 " }}}
 " Indentation Related Settings {{{
@@ -83,15 +93,11 @@ let g:clang_format#auto_format = 0
 let g:clang_format#auto_formatexpr = 0
 " }}}
 
-
-
 set cinoptions+=(0
 ")  " This is here just to fix the colors from the open parenthesis
 
 " }}}
-
 nnoremap <C-\> <C-t>
-
 " Tab handling {{{
 nnoremap <C-t> :tabnew<Space>
 nnoremap <C-n> :tabnext<CR>
@@ -111,7 +117,6 @@ nnoremap <C-w>\| <ESC>:vsplit<CR>
 nnoremap <C-w>- <ESC>:split<CR>
 
 " }}}
-
 " DEPRECATED plugins configuration {{{
 " " guten-tags - ctags managing plugin - UNUSED {{{
 " let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
@@ -381,9 +386,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " }}}
 "
 " }}}
-
 " vim-plug package manager {{{
-
 
 " How to delete a plugin?
 "
@@ -576,20 +579,12 @@ Plug 'git@github.com:bergercookie/vim-britishise'
 call plug#end()
 " }}}
 
-"get syntax highlighting
-syntax on
-set t_Co=256 " make terminator + vim combination
-
-
 " Colorscheme {{{
 " See :Colors<CR> for selecting another colorscheme
 set background=dark
 colorscheme molokai
 " autocmd ColorScheme janah highlight Normal ctermbg=235 | colorscheme janah
 " }}}
-
-" source $MYVIMRC reloads the saved $MYVIMRC
-nnoremap <Leader>aa :source $MYVIMRC <CR>
 
 " Relative numbering {{{
 function! NumberToggle()
@@ -605,13 +600,41 @@ endfunc
 nnoremap <leader>n :call NumberToggle()<cr>
 " }}}
 
+" Various handy remappings {{{
+" source $MYVIMRC reloads the saved $MYVIMRC
+nnoremap <Leader>aa :source $MYVIMRC <CR>
+" Exit vim (wo saving)
+nnoremap <leader>e :q<CR>
 " Easy redoing
 nnoremap U :redo<CR>
 nnoremap <c-r> <nop>
 
-" easier moving of code blocks
-vnoremap < <gv
-vnoremap > >gv
+" Clear search highlights
+nnoremap <silent><leader>/ :noh<return><CR>
+
+" Resetting the <ESC> key.. at last
+nnoremap <C-{> <ESC>
+vnoremap <C-{> <ESC>
+inoremap <C-{> <ESC>
+
+" Sat Apr 9 14:59:33 EEST 2016, Nikos Koukis
+" Highlight current word *without* jumping to next occurance
+" http://vim.wikia.com/wiki/Highlight_all_search_pattern_matches
+nnoremap <leader>hw :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
+" C-n, C-p to browse the cmdline history in a filtered way
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" Show the current filename
+nnoremap <leader>2 :echo @%<CR>
+vnoremap <leader>2 :echo @%<CR>
+
+" Convert slashes to backslashes for Windows.
+" http://vim.wikia.com/wiki/VimTip600
+nnoremap <leader>cp :let @+=expand("%")<CR>
+nnoremap <leader>cl :let @+=expand("%:p")<CR>
+" }}}
 
 " fun: left/right-strip a string {{{
 " https://vi.stackexchange.com/questions/2867/how-do-you-chomp-a-string-in-vim
@@ -622,7 +645,6 @@ function! ChompedSystem( ... )
     return substitute(call('system', a:000), '\n\+$', '', '')
 endfunction
 " }}}
-
 " fun: Get Gcc version {{{
 function! GetGccVersion()
     let l:gcc_ver = ChompedSystem(
@@ -631,7 +653,6 @@ function! GetGccVersion()
     return l:gcc_ver[0]
 endfunction
 " }}}
-
 " fun: Make and jump to temporary files {{{
 function! MakeTmpFile()
     let $a = system('mktemp --suffix ".markdown"')
@@ -639,7 +660,6 @@ function! MakeTmpFile()
 endfunc
 nnoremap <leader>mk :call MakeTmpFile()<CR>
 " }}}
-
 " fun: Open URLs in your browser {{{
 function! HandleURL()
     let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
@@ -660,16 +680,9 @@ function! WriteWhoDidThis()
     :put=l:fullStr
     :Commentary " take care of the comment type
 endfunc
-
 nnoremap <F12> :call WriteWhoDidThis()<CR>
 " }}}
-" Resetting the <ESC> key.. at last
-nnoremap <C-{> <ESC>
-vnoremap <C-{> <ESC>
-inoremap <C-{> <ESC>
-
-
-" Changing the default title - courtesy of http://www.dotfiles.org/~inty/.vimrc
+" Changing the default title - courtesy of http://www.dotfiles.org/~inty/.vimrc {{{
 if has('title')
 	set titlestring=
 	set titlestring+=%f\                     " file name
@@ -677,14 +690,14 @@ if has('title')
 	set titlestring+=\ -\ %{v:progname}      " program name
 	set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')} " working directory
 endif
+" }}}
 
-" Searching Configuration
+" Searching Configuration {{{
 set incsearch
 set hlsearch
-"
-" Clear highlights
-nnoremap <silent><leader>/ :noh<return><CR>
+" }}}
 
+" Sane scrolling {{{
 if !&scrolloff
 	set scrolloff=1
 endif
@@ -692,45 +705,23 @@ if !&sidescrolloff
 	set sidescrolloff=5
 endif
 set display+=lastline
-
-if &encoding ==# 'latin1' && has('gui_running')
-	set encoding=utf-8
-endif
+" }}}
 
 set backspace=indent,eol,start
 set complete-=i
-set pastetoggle=<F2> " Super useful.
+set pastetoggle=<F2>
 
-
-" Show the current filename
-nnoremap <leader>2 :echo @%<CR>
-vnoremap <leader>2 :echo @%<CR>
-
-" Convert slashes to backslashes for Windows.
-" http://vim.wikia.com/wiki/VimTip600
-nnoremap <leader>cp :let @+=expand("%")<CR>
-nnoremap <leader>cl :let @+=expand("%:p")<CR>
-
+" GVim specific {{{
 if has("gui_running")
+    if &encoding ==# 'latin1'
+	    set encoding=utf-8
+    endif
+
     " GUI is running or is about to start.
     " Maximize gvim window (for an alternative on Windows, see simalt below).
     set lines=999 columns=999
 endif
-
-" ignore case in filename completion
-" http://stackoverflow.com/questions/3686841/vim-case-insensitive-filename-completion
-set wildignorecase
-" bash like autocompletion
-set wildmode=longest,full
-
-" Sat Apr 9 14:59:33 EEST 2016, Nikos Koukis
-" Highlight current word *without* jumping to next occurance
-" http://vim.wikia.com/wiki/Highlight_all_search_pattern_matches
-nnoremap <leader>hw :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-
-" C-n, C-p to browse the cmdline history in a filtered way
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+" }}}
 
 " Octave/Matlab configuration {{{
 augroup filetypedetect " This is a special autocommands group do not do autocmd! by itself!!!
