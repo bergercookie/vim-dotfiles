@@ -522,7 +522,7 @@ Plug 'https://github.com/adriaanzon/vim-textobj-matchit' " am/im
 Plug 'https://github.com/glts/vim-textobj-comment' " ac/ic/iC
 Plug 'https://github.com/thinca/vim-textobj-between' " af/if
 Plug 'https://github.com/Julian/vim-textobj-variable-segment' " av/iv
-Plug 'https://github.com/fvictorio/vim-textobj-backticks' " a`/i`, works multiline
+" Plug 'https://github.com/fvictorio/vim-textobj-backticks' " a`/i`, works multiline
 Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " Plug 'https://github.com/kana/vim-textobj-diff' " adh/idh - doesn't' look interesting
 " Plug 'vim-textobj-blanklines' " Use `ip` instead

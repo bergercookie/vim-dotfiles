@@ -5,9 +5,6 @@ ActivateBritishSpelling
 " Toggle Filetype - two different mappings {{{
 nmap <buffer> <leader>cf :set filetype=<CR>
 nmap <buffer> <leader>cF :set filetype=vimwiki<CR>
-cmap <buffer> twa :TaskWikiAnnotate<CR>
-cmap <buffer> vwg :VimwikiGoto
-cmap <buffer> vwt :VimwikiSearchTags
 
 let b:autopairs_loaded=1
 " }}}
