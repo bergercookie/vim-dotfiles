@@ -12,6 +12,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Basic configuration {{{
+" Very basic configuration {{{
 set cursorline
 " set cursorcolumn
 set clipboard=unnamedplus " Access the system clipboard
@@ -45,35 +46,26 @@ endif
 set wildignorecase
 " bash like autocompletion
 set wildmode=longest,full
-
-" Cursor color {{{
-" http://vim.wikia.com/wiki/Configuring_the_cursor
-highlight Cursor guifg=white guibg=black
-highlight iCursor guifg=white guibg=steelblue
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
-" }}}
-
-
-" Remap <leader> to comma {{{
-let mapleader = ","
-nnoremap \ ,
-" }}}
+set backspace=indent,eol,start
+set complete-=i
+set pastetoggle=<F2>
 
 " use specific indentation rules per language
 filetype indent plugin on
 filetype indent on
-
 " Syntax highlighting
 syntax on
 set t_Co=256 " make terminator + vim combination
-
+" Remap <leader> to comma {{{
+let mapleader = ","
+nnoremap \ ,
+" }}}
+" Searching Configuration {{{
+set incsearch
+set hlsearch
 " }}}
 " Indentation Related Settings {{{
 set smarttab
-
 augroup indentation
     autocmd!
     set tabstop=4
@@ -84,30 +76,42 @@ augroup indentation
     set autoindent               " indent at the same level of the previous line
     set expandtab
 augroup END
-
-" clang_format {{{
-let g:clang_format#command = "/usr/bin/clang-format-3.8"
-let g:clang_format#detect_style_file = 1
-let g:clang_format#auto_format_on_insert_leave = 0
-let g:clang_format#auto_format = 0
-let g:clang_format#auto_formatexpr = 0
 " }}}
 
+
+" }}}
+
+" do it only when you have a good reason to.
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
+" Cursor color {{{
+" http://vim.wikia.com/wiki/Configuring_the_cursor
+highlight Cursor guifg=white guibg=black
+highlight iCursor guifg=white guibg=steelblue
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
+" }}}
+" use %% for accessing files in the path of the current buffer
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+" Redraw the screen
+nnoremap <leader><leader>r :redraw!<CR>
+autocmd VimLeavePre * cclose | lclose
+" Clean registers - https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
+" Indent on opening parentheses
 set cinoptions+=(0
 ")  " This is here just to fix the colors from the open parenthesis
-
 " }}}
-nnoremap <C-\> <C-t>
 " Tab handling {{{
+nnoremap <C-\> <C-t>
 nnoremap <C-t> :tabnew<Space>
 nnoremap <C-n> :tabnext<CR>
 nnoremap <C-p> :tabprev<CR>
 vnoremap <C-t> <ESC>:tabnew<Space>
 vnoremap <C-n> <ESC>:tabnext<CR>
 vnoremap <C-p> <ESC>:tabprev<CR>
-"inoremap <C-t> <ESC>:tabnew<Space>
-"inoremap <C-n> <ESC>:tabnext<CR>
-"inoremap <C-p> <ESC>:tabprev<CR>
 cnoremap <C-t> <ESC>:tabnew<Space>
 cnoremap <C-n> <ESC>:tabnext<CR>
 cnoremap <C-p> <ESC>:tabprev<CR>
@@ -116,275 +120,16 @@ cnoremap <C-p> <ESC>:tabprev<CR>
 nnoremap <C-w>\| <ESC>:vsplit<CR>
 nnoremap <C-w>- <ESC>:split<CR>
 
-" }}}
-" DEPRECATED plugins configuration {{{
-" " guten-tags - ctags managing plugin - UNUSED {{{
-" let g:gutentags_ctags_exclude = ["*build*", "*doc*"]
-" " I may be adding to this list in the local vimrc file
-" let g:gutentags_ctags_extra_args = []
-" " }}}
-" " vim-tmux-runner - deprecated {{{
-" let g:vtrstripleadingwhitespace = 0
-" let g:vtrclearemptylines = 0
-" let g:vtrappendnewline = 1
-
-" nmap <leader>tr :vtrsendlinestorunner<cr>
-" vmap <leader>tr <esc>:vtrsendlinestorunner<cr>
-" " }}}
-" vim-autotags  didn't work in my case - see gutentags instead - deprecated  {{{
-" }}}
-" nerdtree - deprecated {{{
-" map  <leader><leader>n :nerdtree <cr>
-" nnoremap <leader>n :let nerdtreequitonopen = 1<bar>nerdtreetoggle<cr>
-" nnoremap <leader>n :let nerdtreequitonopen = 0<bar>nerdtreetoggle<cr>
-" " }}}
-" vim-husk https://github.com/vim-utils/vim-husk - vim command line emacs-like mappings deprecated{{{
-" }}}
-" vim-geeknote - don't use it deprecated {{{
-"
-" vim-geeknote configuration
-" you may  think of using it again, huh?
-" seriously, just don't use it...
-" }}}
-" dragvisuals configuration - currently unused {{{
-" use the visual lines!
-" todo - plugin isn't set up correctly
-" vnoremap  <expr>  <left>   dvb_drag('left')
-" vnoremap  <expr>  <right>  dvb_drag('right')
-" vnoremap  <expr>  <down>   dvb_drag('down')
-" vnoremap  <expr>  <up>     dvb_drag('up')
-" vnoremap  <expr>  d        dvb_duplicate()
-" }}}
-" pathongen package manager - deprecated {{{
-" " vim sessions default to capturing all global options, which includes the
-" " 'runtimepath' that pathogen.vim manipulates. this can cause other problems
-" " too, so i recommend turning that behavior off
-" set sessionoptions-=options
-
-" let g:pathogen_disabled = []
-
-" " os-specific vim bundles {{{
-" " http://stackoverflow.com/a/6847015/2843583
-" let g:os = substitute(system('uname'), "\n", "", "")
-" " osx {{{
-" if g:os ==# "darwin"
-"     " disable ycm
-"     " http://stackoverflow.com/questions/4261785/temporarily-disable-some-plugins-using-pathogen-in-vim
-"     " call add(g:pathogen_disabled, 'youcompleteme')
-" " }}}
-" " linux {{{
-" elseif g:os ==# "linux"
-"     " nothing here yet."
-" endif
-" " }}}
-" " }}}
-" call pathogen#infect()
-" call pathogen#helptags()
-" " }}}
-" python syntax support - as basic as possible - flake7 - deprecated in favor of pyls deprecated {{{
-" let g:flake8_quickfix_height=3
-" let g:flake8_error_marker = 'ee'     " set error marker to 'ee'
-" let g:flake8_warning_marker = 'ww'   " set warning marker to 'ww'
-
-" " to use colors defined in the colorscheme
-" highlight link flake8_error      error
-" highlight link flake8_warning    warningmsg
-" highlight link flake8_complexity warningmsg
-" highlight link flake8_naming     warningmsg
-" highlight link flake8_pyflake    warningmsg
-" }}}
-" " vim-far deprecated {{{
-"
-" https://github.com/brooth/far.vim/issues/18
-"
-" use :far kalimera kalinuxta \.cpp for ag
-" let g:far#source = 'agnvim'
-" }}}
-" vim-markbar - vim-peekaboo but for the marks - Nah, not worth it - DEPRECATED {{{
-
-" " open/close markbar mappings
-" map <Leader>mb  <Plug>ToggleMarkbar
-" map <Leader>mo <Plug>OpenMarkbar
-" map <Leader>mc <Plug>CloseMarkbar
-" let g:markbar_enable_peekaboo = 0
-" }}}
-" vim-racer - DEPRECATED, use deoplete-rust {{{
-" " https://github.com/racer-rust/vim-racer
-" let g:racer_cmd = "which racer"
-" let g:racer_experimental_completer = 1 " Experimental
-
-" augroup rust_aucommands
-" 	au FileType rust nmap gd <Plug>(rust-def)
-" 	au FileType rust nmap gs <Plug>(rust-def-split)
-" 	au FileType rust nmap gx <Plug>(rust-def-vertical)
-" 	au FileType rust nmap <leader>gd <Plug>(rust-doc)
-" augroup END
-
-" }}}
-" Syntastic Configuration - Syntastic is dead, long live ale {{{
-" " Syntastic - python {{{
-" let g:syntastic_python_checkers=['flake8', 'pylint3', 'mypy']
-" let g:syntastic_python_flake8_args = '--ignore=W391,W291,W293,E303,E265,E261,
-"       \E113,E501,W503'
-" let g:syntastic_python_mypy_args = '--quick-and-dirty'
-
-" let g:syntastic_aggregate_errors = 1
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_loc_list_height = 3
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" " }}}
-" " Syntastic - vim {{{
-" let g:syntastic_vim_checkers = ['vint']
-" " }}}
-" " Syntastic - rst {{{
-" let g:syntastic_rst_checkers= ['proselint']
-" " }}}
-" " Syntastic - html {{{
-" let g:syntastic_html_checkers= ['proselint']
-" " }}}
-" " Syntastic - text {{{
-" let g:syntastic_text_checkers= ['proselint']
-" " }}}
-" " Syntastic - nroff {{{
-" let g:syntastic_nroff_checkers= ['proselint']
-" " }}}
-" " Syntastic - xhtml {{{
-" let g:syntastic_xhtml_checkers= ['proselint']
-" " }}}
-" " Syntastic - texinfo {{{
-" let g:syntastic_texinfo_checkers= ['proselint']
-" " }}}
-" " Syntastic - asciidoc {{{
-" let g:syntastic_asciidoc_checkers= ['proselint']
-" " }}}
-" " Syntastic - markdown {{{
-" let g:syntastic_markdown_checkers= ['proselint']
-" " }}}
-" " Syntastic - popd {{{
-" let g:syntastic_popd_checkers= ['proselint']
-" " }}}
-" " Syntastic - help {{{
-" let g:syntastic_help_checkers= ['proselint']
-" " }}}
-" " Syntastic - rust {{{
-" " Use cargo it's much better than rustc for projects that cargo manages
-" let g:syntastic_rust_checkers= ['cargo']
-" " }}}
-" " Syntastic - LaTex {{{
-" let g:syntastic_tex_checkers = ['lacheck', 'text/language_check', 'proselint']
-" " }}}
-" " Syntastic - C {{{
-" let g:syntastic_c_compiler = 'gcc'
-" let g:syntastic_c_no_default_include_dirs = 0
-" let g:syntastic_c_auto_refresh_includes = 1
-" " let g:syntastic_c_checkers = ['clang_tidy', 'gcc', ]
-" let g:syntastic_c_checkers = ['gcc', ]
-" " }}}
-" " Syntastic - C++11 {{{
-" let g:syntastic_cpp_checkers = ['gcc', 'cpplint', 'cppcheck']
-" let g:syntastic_cpp_compiler = 'g++'
-" let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-" let g:syntastic_cpp_no_default_include_dirs = 0
-" let g:syntastic_cpp_auto_refresh_includes = 1
-" let g:syntastic_cpp_check_header = 1
-" let g:syntastic_cpp_cpplint_args = "--verbose=5"
-" let g:syntastic_cpp_cpplint_exec = "cpplint"
-" let g:syntastic_clang_tidy_config_file='~/.syntastic_clang_tidy.cfg'
-" " }}}
-"
-" map <leader>sc :SyntasticCheck<CR>
-"
-" " }}}
-" YCM - Don't Use YCM. This plugin is bloated, demands too many configuration steps DEPRECATED {{{
-" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-" let g:ycm_collect_identifiers_from_tags_files=1
-" let g:ycm_global_ycm_extra_conf="~/.ycm_extra_conf.py"
-" let g:ycm_confirm_extra_conf=0
-
-" let g:ycm_python_binary_path='python'
-" }}}
-" " Easy-Align - DEPRECATED {{{
-" " https://github.com/junegunn/vim-easy-align
-" " Start interactive EasyAlign in visual mode (e.g. vipga)
-" xnoremap ga <Plug>(EasyAlign)
-" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-" nnoremap ga <Plug>(EasyAlign)
-" }}}
-" vim-indent-guides - See indentLine instead DEPRECATED {{{
-" let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_start_level = 2
-" let g:indent_guides_guide_size = 1
-
-" let g:hindent_on_save = 1
-" let g:hindet_indent_size = 2
-" let g:hindent_line_length = 120
-" let g:indent_guides_auto_colors = 1
-" hi IndentGuidesOdd  ctermbg=black
-" hi IndentGuidesEven ctermbg=darkgrey
-
-" }}}" SuperTab - {{{
-let g:SuperTabDefaultCompletionType = "<c-n>"
-" }}}
-" Goyo - Distraction free writing in vim - DEPRECATED {{{
-" https://github.com/junegunn/goyo.vim
-" Type :Goyo
-" }}}
-" vim-ros - Demands python2 explicitly - don't use{{{
-" let g:ros_build_system = "catkin-tools"
-" let g:ros_catkin_make_options = '-j7 -DCMAKE_BUILD_TYPE=Debug'
-" }}}
-" clang_complete DEPRECATED {{{
-"let g:clang_jumpto_back_key = '<leader><leader>t'
-" }}}
-" ctrlp - DEPRECATD in favor of fzf {{{
-" ctrlp is back!!
-" https://github.com/ctrlpvim/ctrlp.vim
-" Slow to start at first run - creates cachefiles.
-" :CtrlPClearAllCaches - clear cache
-" set runtimepath^=$bundle/ctrlp.vim
-" set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.DS_Store,*/\.git/*
-" let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_map='<C-s>'
-" let g:ctrlp_custom_ignore = {
-"   \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex\|documentation',
-"   \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
-"   \ }
-" " The maximum number of files to scan, set to 0 for no limit:
-" let g:ctrlp_max_files=0
-" let g:ctrlp_switch_buffer = 'Et'
-" let g:ctrlp_working_path_mode = 0
-" " mappings
-" nnoremap <leader>pp :CtrlP<CR>
-" nnoremap <leader>pf :CtrlPBuffer<CR>
-" nnoremap <leader>pm :CtrlPMRU<CR>
-" " Search through your tags!
-" nnoremap <leader>pt :CtrlPTag<CR>
-" }}}
-" LanguageClient-neovim - Don't seem to run that well - UNUSED {{{
-
-" Python Language Server - pyls
-" https://github.com/palantir/python-language-server
-
-" let g:LanguageClient_serverCommands = {
-"       \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-"       \ 'c': ['cquery', '--log-file=/tmp/cq.log'],
-"       \ 'python': ['pyls'],
-"       \ }
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
-" nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-" nnoremap <silent> gR :call LanguageClient#textDocument_rename()<CR>
-
-" let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-" let g:LanguageClient_settingsPath = '/home/berger/.config/nvim/settings.json'
-" set completefunc=LanguageClient#complete
-" set formatexpr=LanguageClient_textDocument_rangeFormatting()
-" }}}
-"
+" Mappings for moving around the vimtabs
+nnoremap <leader><C-p> :tabm -1<CR>
+nnoremap <leader><C-n> :tabm +1<CR>
+nnoremap <leader><leader><C-p> :tabm 0<CR>
+nnoremap <leader><leader><C-n> :tabm<CR>
+" go to last vim tab
+" http://stackoverflow.com/questions/2119754/switch-to-last-active-tab-in-vim
+let g:lasttab = 1
+nnoremap <Leader>t- :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
 " }}}
 " vim-plug package manager {{{
 
@@ -405,24 +150,19 @@ endif
 
 call plug#begin()
 Plug 'junegunn/vim-plug'
-Plug 'https://github.com/nanotech/jellybeans.vim'
 Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/tpope/vim-abolish'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/PeterRincker/vim-argumentative'
-Plug 'https://github.com/vim-scripts/Hardy'
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/wesQ3/vim-windowswap'
-Plug 'https://github.com/vimperator/vimperator.vim'
 Plug 'https://github.com/tpope/vim-speeddating'
 Plug 'https://github.com/godlygeek/tabular'
 Plug 'https://github.com/majutsushi/tagbar'
 Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'https://github.com/sudar/vim-arduino-syntax'
 Plug 'https://github.com/terryma/vim-expand-region'
 Plug 'https://github.com/vim-latex/vim-latex', {'for': ['latex', ]}
-Plug 'https://github.com/plasticboy/vim-markdown'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/rhysd/vim-clang-format'
 Plug 'https://github.com/tpope/vim-dispatch'
@@ -437,8 +177,8 @@ Plug 'https://github.com/davidbeckingsale/writegood.vim'
 Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/racer-rust/vim-racer'
-Plug 'https://github.com/mattn/webapi-vim'
 Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
+Plug 'https://github.com/plasticboy/vim-markdown'
 Plug 'https://github.com/dkarter/bullets.vim', {'for': ['markdown', 'rst', 'vimwiki']}
 Plug 'https://github.com/Chiel92/vim-autoformat'
 Plug 'https://github.com/kana/vim-operator-user'
@@ -448,15 +188,13 @@ Plug 'https://github.com/eagletmt/ghcmod-vim', {'for': ['haskell', ]}
 Plug 'https://github.com/eagletmt/neco-ghc', {'for': ['haskell', ]}
 Plug 'https://github.com/Shougo/neco-vim'
 Plug 'https://github.com/itchyny/vim-haskell-indent'
-Plug 'https://github.com/alepez/vim-gtest', {'for': ['cpp', ]}
+Plug 'https://github.com/AndrewRadev/undoquit.vim'
 Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/mbbill/undotree/'
 Plug 'https://github.com/wincent/terminus'
 Plug 'https://github.com/tpope/vim-eunuch'
-Plug 'https://github.com/tpope/vim-unimpaired'
 Plug 'https://github.com/ciaranm/detectindent'
 Plug 'https://github.com/kshenoy/vim-signature'
-Plug 'https://github.com/mhinz/vim-startify'
 Plug 'https://github.com/bronson/vim-trailing-whitespace'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/tpope/vim-projectionist'
@@ -469,24 +207,16 @@ Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 Plug 'https://github.com/roxma/vim-tmux-clipboard'
 Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
-Plug 'https://github.com/kana/vim-vspec'
 Plug 'https://github.com/Yggdroot/indentLine'
-Plug 'https://github.com/inside/vim-grep-operator'
 Plug 'https://github.com/google/vimdoc'
 Plug 'https://github.com/junegunn/vader.vim'
 Plug 'https://github.com/janko-m/vim-test'
 Plug 'https://github.com/andymass/vim-matchup'
-Plug 'https://github.com/bfredl/nvim-miniyank'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
 Plug 'https://github.com/Shougo/neoinclude.vim'
-Plug 'https://github.com/AndrewRadev/undoquit.vim'
-Plug 'chrisbra/csv.vim'
-Plug 'CoatiSoftware/vim-sourcetrail'
-Plug 'https://github.com/mhinz/vim-janah' " colorscheme
-Plug 'https://github.com/josuegaleas/jay'
 Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/tpope/vim-rsi'
@@ -507,7 +237,6 @@ Plug 'https://github.com/jwilm/i3-vim-focus'
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
 Plug 'https://github.com/tbabej/taskwiki'
-Plug 'https://github.com/powerman/vim-plugin-AnsiEsc'
 Plug 'https://github.com/farseer90718/vim-taskwarrior',  { 'on': 'VimwikiIndex' }
 
 " text objects general configuration {{{
@@ -533,59 +262,20 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " }}}
 
 " own + maintained version's
-Plug 'git@github.com:bergercookie/vim-snippets'
-Plug 'git@github.com:bergercookie/vim-debugstring'
-" Plug 'https://github.com/nelstrom/vim-americanize'
-Plug 'git@github.com:bergercookie/vim-britishise'
-
-" DEPRECATED plugins {{{
-" " LanguageClient
-" if has('nvim')
-"     Plug 'autozimu/LanguageClient-neovim', {
-"                 \ 'branch': 'next',
-"                 \ 'do': 'bash install.sh',
-"                 \ }
-" endif
-
-" Plug 'https://github.com/kana/vim-textobj-function' " af/if  - Didn't work at all in the end, assumes specific function signature syntax UNUSED
-" Plug 'https://github.com/ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp', 'rust' ]}
-" Plug 'https://github.com/ctrlpvim/ctrlp.vim' - DEPRECATED in favor of fzf
-" Plug 'https://github.com/powerline/powerline' - Use vim-airline
-" Plug 'https://github.com/Yilin-Yang/vim-markbar'
-" Plug 'https://github.com/airodactyl/neovim-ranger' - NOT WORKING - Opened issue
-" Plug 'https://github.com/alx741/vim-hindent' - For haskell indenting - I already have one
-" Plug 'https://github.com/bergercookie/vim-ros' " Works only with py2 - this SUCKS
-" Plug 'https://github.com/bfredl/nvim-ipy'
-" Plug 'https://github.com/brooth/far.vim' - Not working properly - not worth it
-" Plug 'https://github.com/christoomey/vim-sort-motion'
-" Plug 'https://github.com/davidhalter/jedi-vim.git'
-" Plug 'https://github.com/houtsnip/vim-emacscommandline' - vim-rsi is much better
-" Plug 'https://github.com/itchyny/calendar.vim' - Good, but not good enough
-" Plug 'https://github.com/justmao945/vim-clang' - DONT USE THIS
-" Plug 'https://github.com/nathanaelkane/vim-indent-guides'
-" Plug 'https://github.com/nvie/vim-flake8'
-" Plug 'https://github.com/scrooloose/syntastic'
-" Plug 'https://github.com/xolox/vim-misc'
-" Plug 'https://github.com/xolox/vim-notes'
-" Plug 'thalesmello/webcomplete.vim' " Doesn't work that well, don't use it
-" Plug 'https://github.com/Julian/vim-textobj-brace' " aj/ij - Doesn't work with [count]
-
-" Totally useless... just open another horizontal tmux pane
-" Plug 'https://github.com/Lenovsky/nuake/'
-" }}}
+Plug 'https://github.com/bergercookie/vim-snippets'
+Plug 'https://github.com/bergercookie/vim-debugstring'
+Plug 'https://github.com/bergercookie/vim-britishise'
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
 call plug#end()
 " }}}
-
 " Colorscheme {{{
 " See :Colors<CR> for selecting another colorscheme
 set background=dark
 colorscheme molokai
 " autocmd ColorScheme janah highlight Normal ctermbg=235 | colorscheme janah
 " }}}
-
 " Relative numbering {{{
 function! NumberToggle()
 if(&relativenumber == 1)
@@ -599,7 +289,6 @@ endfunc
 
 nnoremap <leader>n :call NumberToggle()<cr>
 " }}}
-
 " Various handy remappings {{{
 " source $MYVIMRC reloads the saved $MYVIMRC
 nnoremap <Leader>aa :source $MYVIMRC <CR>
@@ -635,7 +324,7 @@ vnoremap <leader>2 :echo @%<CR>
 nnoremap <leader>cp :let @+=expand("%")<CR>
 nnoremap <leader>cl :let @+=expand("%:p")<CR>
 " }}}
-
+" functions - TODO - group these {{{
 " fun: left/right-strip a string {{{
 " https://vi.stackexchange.com/questions/2867/how-do-you-chomp-a-string-in-vim
 function! Chomp(string)
@@ -673,14 +362,15 @@ endfunction
 map <leader>uu :call HandleURL()<CR>
 " }}}
 " fun: Who did this. {{{
-function! WriteWhoDidThis()
-    let l:name = "Nikos Koukis"
-    let l:curDate = ChompedSystem('date')
-    let l:fullStr = l:curDate . ' - ' . l:name
-    :put=l:fullStr
-    :Commentary " take care of the comment type
-endfunc
-nnoremap <F12> :call WriteWhoDidThis()<CR>
+" function! WriteWhoDidThis()
+"     let l:name = "Nikos Koukis"
+"     let l:curDate = ChompedSystem('date')
+"     let l:fullStr = l:curDate . ' - ' . l:name
+"     :put=l:fullStr
+"     :Commentary " take care of the comment type
+" endfunc
+" nnoremap <F12> :call WriteWhoDidThis()<CR>
+" }}}
 " }}}
 " Changing the default title - courtesy of http://www.dotfiles.org/~inty/.vimrc {{{
 if has('title')
@@ -691,12 +381,6 @@ if has('title')
 	set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')} " working directory
 endif
 " }}}
-
-" Searching Configuration {{{
-set incsearch
-set hlsearch
-" }}}
-
 " Sane scrolling {{{
 if !&scrolloff
 	set scrolloff=1
@@ -706,23 +390,6 @@ if !&sidescrolloff
 endif
 set display+=lastline
 " }}}
-
-set backspace=indent,eol,start
-set complete-=i
-set pastetoggle=<F2>
-
-" GVim specific {{{
-if has("gui_running")
-    if &encoding ==# 'latin1'
-	    set encoding=utf-8
-    endif
-
-    " GUI is running or is about to start.
-    " Maximize gvim window (for an alternative on Windows, see simalt below).
-    set lines=999 columns=999
-endif
-" }}}
-
 " Octave/Matlab configuration {{{
 augroup filetypedetect " This is a special autocommands group do not do autocmd! by itself!!!
 	autocmd! BufRead,BufNewFile *.m,*.oct set filetype=matlab
@@ -745,10 +412,6 @@ set imsearch=-1
 " arrange lines - up to 80 characters
 vnoremap γ; gq
 " }}}
-
-" use %% for accessing files in the path of the current buffer
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
-
 " Indentation Configuration {{{
 
 " Return indent (all whitespace at start of a line), converted from
@@ -781,55 +444,6 @@ command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,<q-arg
 command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
 
 " }}}
-
-" do it only when you have a good reason to.
-"set list
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
-
-function! TrimSpaces() range
-  let oldhlsearch=ShowSpaces(1)
-  execute a:firstline.",".a:lastline."substitute ///gec"
-  let &hlsearch=oldhlsearch
-endfunction
-
-command! -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
-command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call! TrimSpaces()
-nnoremap <leader>ss  :ShowSpaces 1<CR>
-nnoremap <leader>ts  m`:TrimSpaces<CR>``
-vnoremap <leader>ts  :TrimSpaces<CR>
-
-set completeopt=menuone,menu,longest,preview
-
-" omni-completion - where to search ...
-" https://www.youtube.com/watch?v=3TX3kV3TICU
-set complete=.,w,b,u,t,i,kspell
-
-" Mappings for moving around the vimtabs
-nnoremap <leader><C-p> :tabm -1<CR>
-nnoremap <leader><C-n> :tabm +1<CR>
-nnoremap <leader><leader><C-p> :tabm 0<CR>
-nnoremap <leader><leader><C-n> :tabm<CR>
-
-" Redraw the screen
-nnoremap <leader><leader>r :redraw!<CR>
-
-" go to last vim tab
-" http://stackoverflow.com/questions/2119754/switch-to-last-active-tab-in-vim
-let g:lasttab = 1
-nnoremap <Leader>t- :exe "tabn ".g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
-
-" Mutt configuration {{{
-" TODO autocompletion in vim for mutt mail composing
-" https://dev.mutt.org/trac/wiki/ConfigTricks
-
-autocmd BufNewFile,BufRead ~/.mutt/temp/mutt* call SetMuttConfig()
-function! SetMuttConfig()
-    :source ~/.mutt/lbdbq.vim
-    call ActivateBritishSpelling()
-endfunc
-
-" }}}
 " Rust configuration {{{
 let g:rustfmt_command = 'cargo fmt -- '
 " let g:rustfmt_options = '-f'
@@ -840,11 +454,6 @@ let g:rustfmt_fail_silently = 0
 autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 " }}}
-
-autocmd VimLeavePre * cclose | lclose
-
-" Clean registers - https://stackoverflow.com/questions/19430200/how-to-clear-vim-registers-effectively
-command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 " Tags configuration {{{
 set tags+=./tags;,tags;/
 " ctags configuration {{{
@@ -965,6 +574,13 @@ map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
 nnoremap <C-]> g<C-]>
 " }}}
 " Plugins configuration {{{
+" clang_format {{{
+let g:clang_format#command = "/usr/bin/clang-format-3.8"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format_on_insert_leave = 0
+let g:clang_format#auto_format = 0
+let g:clang_format#auto_formatexpr = 0
+" }}}
 " Tagbar {{{
 nnoremap <leader>to :TagbarToggle<CR>
 " Start with tagbar disabled, and open tagbar at all the vim buffers afterwards
@@ -987,7 +603,8 @@ let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline_theme='dark' " https://github.com/vim-airline/vim-airline/wiki/Screenshots
 let g:airline_highlighting_cache = 0
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 0
+let g:airline_focuslost_inactive = 1
 
 " " highlight current tab
 " hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
@@ -1061,19 +678,8 @@ let g:AutoPairsShortcutToggle = '<leader>ap'
 let g:jedi#popup_select_first = 1
 let g:jedi#show_call_signatures = "1"
 let g:jedi#documentation_command = "K"
-
-" Decide on the python version that neovim uses so that jedi-vim uses
-" that accordingly
 if has('nvim')
-    let pip2Res = ChompedSystem("pip2 freeze | grep neovim")
-    let pip3Res = ChompedSystem("pip3 freeze | grep neovim")
-
-    if pip2Res =~ "neovim"
-        let g:python_host_prog="/usr/bin/python2"
-    endif
-    if pip3Res =~ "neovim"
-        let g:python3_host_prog="/usr/bin/python3"
-    endif
+    let g:python3_host_prog="/usr/bin/python3"
 endif
 " }}}
 " vim-startify {{{
@@ -1082,6 +688,7 @@ let g:startify_change_to_dir = 0
 " vim-titlecase {{{
 " $VIMPATH/plugin/titlecase.vim
 " }}}
+" NOT THE FOLLOWING
 " vim-visual-star-search - use */# on visual selection {{{
 "
 " }}}
@@ -1105,7 +712,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " }}}
 " bullets.vim - Markdown plugin for correct indentation of bullet lists {{{
-" TODO - Do I need this?
 " https://github.com/dkarter/bullets.vi://github.com/dkarter/bullets.vim
 " Use C-d/C-t for indenting outwards/inwards
 " In visual: :RenumberSelection
@@ -1123,7 +729,6 @@ let g:formatter_yapf_style = 'pep8'
 " https://github.com/dag/vim2hs
 let g:haskell_conceal_wide = 1
 let g:haskell_tabular = 1
-let g:hpaste_author = 'Nikos Koukis - bergercookie'
 " }}}
 " indentLine {{{
 let g:indentLine_enabled = 1
@@ -1137,11 +742,6 @@ let g:indentLine_enabled = 1
 "
 " let g:TerminusNormalCursorShape=1
 "
-" Focus reporting {{{
-" Improved mouse support
-" Bracketted paste
-" }}}
-"
 " }}}
 " commentary.vim {{{
 " https://github.com/tpope/vim-commentary
@@ -1149,9 +749,6 @@ let g:indentLine_enabled = 1
 " vim-eunoch {{{
 " helpers for UNIX
 " https://github.com/t<F20>pope/vim-eunuch
-" }}}
-" vim-unimpaired {{{
-" https://github.com/tpope/vim-unimpaired
 " }}}
 " undotree - like GUndo {{{
 nnoremap <leader>ut :UndotreeToggle<CR>
@@ -1198,34 +795,6 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " vim-debugstring {{{
 "
 " }}}
-" nvim-miniyank {{{
-map p <Plug>(miniyank-autoput)
-map P <Plug>(miniyank-autoPut)
-map <leader>p <Plug>(miniyank-startput)
-map <leader>P <Plug>(miniyank-startPut)
-" cycle backwards with g-
-map <leader>n <Plug>(miniyank-cycle)
-let g:miniyank_maxitems = 20
-
-" map <Leader>c <Plug>(miniyank-tochar)
-" map <Leader>l <Plug>(miniyank-toline)
-" map <Leader>b <Plug>(miniyank-toblock)
-
-" }}}
-" nvim-ipy {{{
-let g:nvim_ipy_perform_mappings = 0
-let g:ipy_set_ft = 1
-nmap <leader>il <Plug>(IPy-Run)
-nmap <leader>ic <Plug>(IPy-RunCell)
-nmap <leader>ir <Plug>(IPy-Complete)
-nmap <leader>i? <Plug>(IPy-WordObjInfo)
-nmap <leader>ii <Plug>(IPy-Interrupt)
-nmap <leader>it <Plug>(IPy-Interrupt)
-
-let g:ipy_celldef = ['^##', '^##']
-
-" }}}
-
 " deoplete.nvim {{{
 
 " Use deoplete.
@@ -1394,12 +963,6 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-
-" let g:ctrlp_map='<C-s>'
-" let g:ctrlp_custom_ignore = {
-"   \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|tmp$\|build.*$\|doc/html$\|doc/latex\|documentation',
-"   \ 'file': '\.exe$\|\.so$\|\.dat$\|\.png'
-"   \ }
 
 " Files [PATH] 	Files (similar to :FZF)
 " GFiles [OPTS] 	Git files (git ls-files)
