@@ -833,7 +833,7 @@ let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
 " }}}
 " deoplete-clang {{{
 let g:deoplete#sources#clang#libclang_path='/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header='/usr/lib/libclang_include'
+let g:deoplete#sources#clang#clang_header='/usr/lib/clang'
 let g:deoplete#sources#clang#std={'c': 'c11', 'cpp': 'c++1z', 'objc': 'c11', 'objcpp': 'c++1z'}
 let g:deoplete#sources#clang#clang_complete_database='.'
 " }}}
