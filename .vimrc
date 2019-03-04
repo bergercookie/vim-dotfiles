@@ -770,8 +770,8 @@ nnoremap <leader>zs :AS<CR>
 nnoremap <leader>zt :AT<CR>
 " }}}
 " vim-dispatch {{{
-nnoremap <Leader>m :Make -C build -j7<CR>
-nnoremap <Leader><Leader>m :Make! -C build -j7<CR>
+nnoremap <Leader>m :Make -C build -j<CR>
+nnoremap <Leader><Leader>m :Make! -C build -j<CR>
 " }}}
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
@@ -929,6 +929,9 @@ endfunc
 " fzf - fuzzy-finder {{{
 " https://github.com/junegunn/fzf
 " https://github.com/junegunn/fzf.vim
+"
+set rtp+=$HOME/.linuxbrew/opt/fzf
+
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
