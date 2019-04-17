@@ -49,6 +49,7 @@ set wildmode=longest,full
 set backspace=indent,eol,start
 set complete-=i
 set pastetoggle=<F2>
+set tabpagemax=100  " max tabs on :tab all
 
 " use specific indentation rules per language
 filetype indent plugin on
@@ -218,7 +219,6 @@ Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
 Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'arakashic/chromatica.nvim'
-Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/tpope/vim-rsi'
 Plug 'w0rp/ale'
 " Multi-entry selection UI. FZF
@@ -879,9 +879,6 @@ let g:undoquit_mapping = '<Leader>uq'
 
 nnoremap <leader>l :SourcetrailActivateToken<CR>
 
-" }}}
-" vim-peekaboo - Show contents of registers on "/@/CTRL-R {{{
-"
 " }}}
 " vimwiki {{{
 nmap <Leader>vw <Plug>VimwikiIndex
