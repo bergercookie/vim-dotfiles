@@ -1,6 +1,7 @@
 setlocal suffixesadd+=.h,.hpp,.hxx,.c,.cc,.cpp,.cxx
 setlocal path+=/usr/include/c++/
 setlocal commentstring=//\ %s
+set matchpairs+=<:>
 
 nmap <buffer> <Leader>C :ClangFormatAutoToggle<CR>
 nmap <buffer> <leader>rt :!ctags -R --c++-kinds=+p --fields=+liaS --extra=+q --tag-relative . <CR>

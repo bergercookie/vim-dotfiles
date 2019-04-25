@@ -262,9 +262,10 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " }}}
 
 " own + maintained version's
-Plug 'https://github.com/bergercookie/vim-snippets'
-Plug 'https://github.com/bergercookie/vim-debugstring'
-Plug 'https://github.com/bergercookie/vim-britishise'
+Plug 'git@github.com:bergercookie/vim-snippets'
+Plug 'git@github.com:bergercookie/vim-debugstring'
+Plug 'git@github.com:bergercookie/vim-britishise'
+Plug 'git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
@@ -889,6 +890,8 @@ let g:vimwiki_list = [{'path': '~/MEGA/vimwiki',
 let g:vimwiki_folding=''
 let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
+let g:vimwiki_auto_header = 1
+let g:links_space_char = '_'
 
 " }}}
 " vim-taskwarrior plugin configuration - Needed by taskwiki {{{
@@ -910,6 +913,9 @@ function! MakeDiarySections()
     " Make it more generic, perhaps have the caller give you these strings
     let l:work = "== " . "work | project:" . g:work_str . " due:" . l:date_str . " =="
     put=l:work
+
+    let l:rest = "== " . "rest |" . " project: due:" . l:date_str . " =="
+    put=l:rest
 endfunc
 
 function! PopulateWeeklyDone()
