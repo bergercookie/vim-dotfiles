@@ -1009,4 +1009,3 @@ ab teh the
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
 " }}}
-
