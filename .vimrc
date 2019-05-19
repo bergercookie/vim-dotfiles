@@ -233,6 +233,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'https://github.com/jwilm/i3-vim-focus'
+Plug 'https://github.com/NLKNguyen/papercolor-theme'
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -265,7 +266,8 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 Plug 'git@github.com:bergercookie/vim-snippets'
 Plug 'git@github.com:bergercookie/vim-debugstring'
 Plug 'git@github.com:bergercookie/vim-britishise'
-Plug 'git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
+Plug 'git@github.com:bergercookie/describe.nvim'
+" Plug 'https://github.com/jacobsimpson/nvim-example-python-plugin'
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
@@ -274,7 +276,8 @@ call plug#end()
 " Colorscheme {{{
 " See :Colors<CR> for selecting another colorscheme
 set background=dark
-colorscheme molokai
+colorscheme PaperColor
+" colorscheme molokai
 " autocmd ColorScheme janah highlight Normal ctermbg=235 | colorscheme janah
 " }}}
 " Relative numbering {{{
@@ -372,6 +375,20 @@ map <leader>uu :call HandleURL()<CR>
 " endfunc
 " nnoremap <F12> :call WriteWhoDidThis()<CR>
 " }}}
+" }}}
+" fun: get visual selection - vimscript {{{
+function! g:GetVisualSelection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
 " }}}
 " Changing the default title - courtesy of http://www.dotfiles.org/~inty/.vimrc {{{
 if has('title')
