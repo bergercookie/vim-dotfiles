@@ -63,6 +63,7 @@ nnoremap \ ,
 " }}}
 " Searching Configuration {{{
 set incsearch
+set inccommand=split
 set hlsearch
 " }}}
 " Indentation Related Settings {{{
@@ -234,6 +235,7 @@ else
 endif
 Plug 'https://github.com/jwilm/i3-vim-focus'
 Plug 'https://github.com/NLKNguyen/papercolor-theme'
+Plug 'https://github.com/christoomey/vim-titlecase'
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -305,10 +307,9 @@ nnoremap <c-r> <nop>
 " Clear search highlights
 nnoremap <silent><leader>/ :noh<return><CR>
 
-" Resetting the <ESC> key.. at last
-nnoremap <C-{> <ESC>
-vnoremap <C-{> <ESC>
-inoremap <C-{> <ESC>
+" Keep visual selection when moving blocks left and right
+vnoremap < <gv
+vnoremap > >gv
 
 " Sat Apr 9 14:59:33 EEST 2016, Nikos Koukis
 " Highlight current word *without* jumping to next occurance
@@ -336,14 +337,6 @@ function! Chomp(string)
 endfunction
 function! ChompedSystem( ... )
     return substitute(call('system', a:000), '\n\+$', '', '')
-endfunction
-" }}}
-" fun: Get Gcc version {{{
-function! GetGccVersion()
-    let l:gcc_ver = ChompedSystem(
-                \ "$(gcc --version | head -n 1 | rev | cut -d' ' -f1 | rev)")
-
-    return l:gcc_ver[0]
 endfunction
 " }}}
 " fun: Make and jump to temporary files {{{
@@ -375,7 +368,6 @@ map <leader>uu :call HandleURL()<CR>
 " endfunc
 " nnoremap <F12> :call WriteWhoDidThis()<CR>
 " }}}
-" }}}
 " fun: get visual selection - vimscript {{{
 function! g:GetVisualSelection()
     " Why is this not a built-in Vim script function?!
@@ -389,6 +381,7 @@ function! g:GetVisualSelection()
     let lines[0] = lines[0][column_start - 1:]
     return join(lines, "\n")
 endfunction
+" }}}
 " }}}
 " Changing the default title - courtesy of http://www.dotfiles.org/~inty/.vimrc {{{
 if has('title')
@@ -704,11 +697,6 @@ endif
 let g:startify_change_to_dir = 0
 " }}}
 " vim-titlecase {{{
-" $VIMPATH/plugin/titlecase.vim
-" }}}
-" NOT THE FOLLOWING
-" vim-visual-star-search - use */# on visual selection {{{
-"
 " }}}
 " vim-latex configuration {{{
 let g:Tex_CompileRule_pdf = 'xelatex $*'
@@ -716,7 +704,7 @@ let g:Tex_GotoError = 0
 let g:Tex_ShowErrorContext = 0
 " }}}
 " vim-maximiser {{{
-  let g:maximizer_set_default_mapping = 1
+let g:maximizer_set_default_mapping = 1
 nnoremap <silent><leader>tz :MaximizerToggle<CR>
 vnoremap <silent><leader>tz :MaximizerToggle<CR>gv
 inoremap <silent><leader>tz <C-o>:MaximizerToggle<CR>
@@ -866,12 +854,6 @@ let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
 let g:vim_markdown_conceal = 0
 
 " }}}
-" vim-projectionist {{{
-nnoremap <leader>zz :A<CR>
-nnoremap <leader>zs :AS<CR>
-nnoremap <leader>zv :AV<CR>
-nnoremap <leader>zt :AT<CR>
-" }}}
 " nvim-chromatica {{{
 
 nnoremap <leader>cs :ChromaticaStart<CR>
@@ -986,6 +968,9 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+nnoremap q: :History:<CR>
+nnoremap q/ :History/<CR>
 
 " Files [PATH] 	Files (similar to :FZF)
 " GFiles [OPTS] 	Git files (git ls-files)
