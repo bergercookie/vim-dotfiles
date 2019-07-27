@@ -222,6 +222,9 @@ Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/tpope/vim-rsi'
 Plug 'w0rp/ale'
+" For GBrowse
+Plug 'https://github.com/tommcdo/vim-fubitive'
+Plug 'https://github.com/tpope/vim-rhubarb'
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -776,8 +779,8 @@ nnoremap <leader>zs :AS<CR>
 nnoremap <leader>zt :AT<CR>
 " }}}
 " vim-dispatch {{{
-nnoremap <Leader>m :Make -C build -j<CR>
-nnoremap <Leader><Leader>m :Make! -C build -j<CR>
+nnoremap <Leader>m :Make -C build <CR>
+nnoremap <Leader><Leader>m :Make! -C build <CR>
 " }}}
 " vim-fugitive {{{
 " Show the glog results in the quickfix window by :copen after glog
