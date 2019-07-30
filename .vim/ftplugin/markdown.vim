@@ -7,4 +7,4 @@ setlocal noautoindent
 setlocal expandtab
 setlocal textwidth=80
 
-ActivateBritishSpelling
+" ActivateBritishSpelling

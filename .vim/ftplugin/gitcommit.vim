@@ -2,4 +2,4 @@
 " git commit configuration
 setlocal textwidth=72
 setlocal colorcolumn=72
-ActivateBritishSpelling
+" ActivateBritishSpelling

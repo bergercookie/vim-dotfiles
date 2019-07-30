@@ -270,9 +270,8 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " own + maintained version's
 Plug 'git@github.com:bergercookie/vim-snippets'
 Plug 'git@github.com:bergercookie/vim-debugstring'
-Plug 'git@github.com:bergercookie/vim-britishise'
-Plug 'git@github.com:bergercookie/describe.nvim'
-" Plug 'https://github.com/jacobsimpson/nvim-example-python-plugin'
+" Plug 'git@github.com:bergercookie/vim-britishise'
+" Plug 'git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
