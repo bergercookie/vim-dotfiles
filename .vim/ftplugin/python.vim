@@ -10,3 +10,4 @@ func! s:SetBreakpoint()
 endf
 map <buffer> <leader>dp :call <SID>SetBreakpoint()<CR>
 
+set foldmethod=indent

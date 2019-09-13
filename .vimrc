@@ -239,6 +239,7 @@ endif
 Plug 'https://github.com/jwilm/i3-vim-focus'
 Plug 'https://github.com/NLKNguyen/papercolor-theme'
 Plug 'https://github.com/christoomey/vim-titlecase'
+Plug 'https://github.com/bronson/vim-visual-star-search'
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -330,6 +331,7 @@ vnoremap <leader>2 :echo @%<CR>
 " http://vim.wikia.com/wiki/VimTip600
 nnoremap <leader>cp :let @+=expand("%")<CR>
 nnoremap <leader>cl :let @+=expand("%:p")<CR>
+nnoremap <leader>fl :call FillLine('-')<CR>
 " }}}
 " functions - TODO - group these {{{
 " fun: left/right-strip a string {{{
@@ -382,6 +384,22 @@ function! g:GetVisualSelection()
     let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][column_start - 1:]
     return join(lines, "\n")
+endfunction
+" }}}
+" Fill the rest of a line with characters {{{
+function! FillLine( str ) 
+    " set tw to the desired total length
+    let tw = &textwidth
+    if tw==0 | let tw = 80 | endif
+    " strip trailing spaces first
+    .s/[[:space:]]*$//
+    " calculate total number of 'str's to insert
+    let reps = (tw - col("$")) / len(a:str)
+    " insert them, if there's room, removing trailing spaces (though forcing
+    " there to be one)
+    if reps > 0
+        .s/$/\=(' '.repeat(a:str, reps))/
+    endif
 endfunction
 " }}}
 " }}}
