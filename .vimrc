@@ -150,6 +150,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Enabled Plugins {{{
 call plug#begin()
 Plug 'junegunn/vim-plug'
 Plug 'https://github.com/ervandew/supertab'
@@ -240,6 +241,7 @@ Plug 'https://github.com/jwilm/i3-vim-focus'
 Plug 'https://github.com/NLKNguyen/papercolor-theme'
 Plug 'https://github.com/christoomey/vim-titlecase'
 Plug 'https://github.com/bronson/vim-visual-star-search'
+Plug 'https://github.com/dag/vim-fish'
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -273,6 +275,7 @@ Plug 'git@github.com:bergercookie/vim-snippets'
 Plug 'git@github.com:bergercookie/vim-debugstring'
 " Plug 'git@github.com:bergercookie/vim-britishise'
 " Plug 'git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
+" }}}
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
@@ -1030,4 +1033,9 @@ ab teh the
 " machine-local configuration {{{
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
+" }}}
+" support/config for the fish shell {{{
+if &shell =~# 'fish$'
+    set shell=sh
+endif
 " }}}
