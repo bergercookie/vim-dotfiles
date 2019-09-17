@@ -748,7 +748,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " vim-autoformat {{{
 " https://github.com/Chiel92/vim-autoformat
 noremap <leader>af :Autoformat<CR>
-let g:formatter_yapf_style = 'pep8'
+let g:formatter_yapf_style = 'black'
 " }}}
 " vimproc.vim {{{
 " You need to run **make** prior to running this
