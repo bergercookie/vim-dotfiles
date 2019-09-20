@@ -390,7 +390,7 @@ function! g:GetVisualSelection()
 endfunction
 " }}}
 " Fill the rest of a line with characters {{{
-function! FillLine( str ) 
+function! FillLine(str)
     " set tw to the desired total length
     let tw = &textwidth
     if tw==0 | let tw = 80 | endif
@@ -747,8 +747,9 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " }}}
 " vim-autoformat {{{
 " https://github.com/Chiel92/vim-autoformat
-noremap <leader>af :Autoformat<CR>
-let g:formatter_yapf_style = 'black'
+" https://github.com/Chiel92/vim-autoformat/issues/131#issuecomment-287997925
+nnoremap <leader>af  ix<ESC>x:undojoin \| Autoformat<CR>.
+let g:formatters_python = ['black']
 " }}}
 " vimproc.vim {{{
 " You need to run **make** prior to running this
