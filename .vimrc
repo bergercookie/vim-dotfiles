@@ -241,7 +241,7 @@ Plug 'https://github.com/jwilm/i3-vim-focus'
 Plug 'https://github.com/NLKNguyen/papercolor-theme'
 Plug 'https://github.com/christoomey/vim-titlecase'
 Plug 'https://github.com/bronson/vim-visual-star-search'
-Plug 'https://github.com/dag/vim-fish'
+Plug 'https://github.com/kmarius/vim-fish'
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -1040,3 +1040,8 @@ if &shell =~# 'fish$'
     set shell=sh
 endif
 " }}}
+
+
+" for some reason it gets disabled, after a recent PlugUpdte of mine.
+" Maybe vim-fish has something to do with it..
+syntax on

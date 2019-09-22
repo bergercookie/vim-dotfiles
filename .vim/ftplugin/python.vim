@@ -14,5 +14,3 @@ func! s:SetBreakpoint()
     cal append('.', repeat(' ', strlen(matchstr(getline('.'), '^\s*'))) . 'import ipdb; ipdb.set_trace()')
 endf
 map <buffer> <leader>dp :call <SID>SetBreakpoint()<CR>
-
-
