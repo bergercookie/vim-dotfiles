@@ -179,7 +179,6 @@ Plug 'https://github.com/pearofducks/ansible-vim'
 Plug 'https://github.com/davidbeckingsale/writegood.vim'
 Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/rust-lang/rust.vim'
-Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
 Plug 'https://github.com/plasticboy/vim-markdown'
 Plug 'https://github.com/dkarter/bullets.vim', {'for': ['markdown', 'rst', 'vimwiki']}
@@ -217,7 +216,8 @@ Plug 'https://github.com/janko-m/vim-test'
 Plug 'https://github.com/andymass/vim-matchup'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
-Plug 'sebastianmarkow/deoplete-rust'
+Plug 'https://github.com/racer-rust/vim-racer'
+" Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
 Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'arakashic/chromatica.nvim'
@@ -231,7 +231,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " deoplete
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins', 'for': ['rust', 'cpp', 'c', 'python', ]}
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -242,6 +242,8 @@ Plug 'https://github.com/NLKNguyen/papercolor-theme'
 Plug 'https://github.com/christoomey/vim-titlecase'
 Plug 'https://github.com/bronson/vim-visual-star-search'
 Plug 'https://github.com/kmarius/vim-fish'
+Plug 'cespare/vim-toml'
+Plug 'https://github.com/tpope/vim-vinegar'
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -479,9 +481,9 @@ command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q
 
 " }}}
 " Rust configuration {{{
-let g:rustfmt_command = 'cargo fmt -- '
+let g:rustfmt_command = 'cargo +nightly fmt -- '
 " let g:rustfmt_options = '-f'
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
 let g:rustfmt_fail_silently = 0
 
 " Use rusty-ctags to produce a tags file for vim
@@ -836,8 +838,10 @@ let g:deoplete#enable_smart_case = 1
 " endif
 
 " Disable the candidates in String syntaxes.
-call deoplete#custom#source('_',
-            \ 'disabled_syntaxes', ['String'])
+if exists('g:loaded_deoplete')
+    call deoplete#custom#source('_',
+                \ 'disabled_syntaxes', ['String'])
+endif
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -853,13 +857,11 @@ let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#enable_cache = 1
 
 " }}}
-" deoplete-rust {{{
-
-let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
-let g:deoplete#sources#rust#show_duplicates=0
-let g:deoplete#sources#rust#documentation_max_height=20
-let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
-
+" " deoplete-rust {{{
+" let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
+" let g:deoplete#sources#rust#show_duplicates=0
+" let g:deoplete#sources#rust#documentation_max_height=20
+" let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
 " }}}
 " deoplete-clang {{{
 let g:deoplete#sources#clang#libclang_path='/usr/lib/libclang.so'
@@ -877,6 +879,12 @@ let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
 
 let g:vim_markdown_conceal = 0
 
+" }}}
+" vim-racer {{{
+let g:racer_cmd = $HOME . '/.cargo/bin/racer'
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
+let g:racer_disable_errors = 0
 " }}}
 " nvim-chromatica {{{
 
