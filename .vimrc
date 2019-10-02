@@ -273,10 +273,10 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " }}}
 
 " own + maintained version's
-Plug 'git@github.com:bergercookie/vim-snippets'
-Plug 'git@github.com:bergercookie/vim-debugstring'
-" Plug 'git@github.com:bergercookie/vim-britishise'
-" Plug 'git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
+Plug 'ssh://git@github.com:bergercookie/vim-snippets'
+Plug 'ssh://git@github.com:bergercookie/vim-debugstring'
+" Plug 'ssh://git@github.com:bergercookie/vim-britishise'
+" Plug 'ssh://git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
 " }}}
 
 " Automatically executes filetype plugin indent on and syntax enable. You can
