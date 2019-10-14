@@ -243,7 +243,6 @@ Plug 'https://github.com/christoomey/vim-titlecase'
 Plug 'https://github.com/bronson/vim-visual-star-search'
 Plug 'https://github.com/kmarius/vim-fish'
 Plug 'cespare/vim-toml'
-Plug 'https://github.com/tpope/vim-vinegar'
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -269,6 +268,8 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " Plug 'https://github.com/kana/vim-textobj-syntax' "ay/iy TODO
 " Plug 'https://github.com/kana/vim-textobj-help' " for :help pages
 " Plug 'https://github.com/bps/vim-textobj-python' " af/if, ac/ic TODO
+
+Plug 'https://github.com/lambdalisue/suda.vim'
 
 " }}}
 
