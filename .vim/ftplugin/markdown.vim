@@ -7,4 +7,22 @@ setlocal noautoindent
 setlocal expandtab
 setlocal textwidth=80
 
-" ActivateBritishSpelling
+set spell
+set spelllang=en,el
+
+function! WrapInCodeBlock()
+    normal! O
+    {% highlight bash %}
+    :exe "normal "
+    normal! jo
+    {% endhighlight %}
+    :exe "normal "
+endfunc
+nmap <buffer> <leader>wb :call WrapInCodeBlock()<CR>
+
+function! ConvertVimwikiLinkToMarkdown()
+  let old=&tw
+  :exe "normal ds[f|xdT[$a("
+  let &tw=old
+endfunc
+nmap <buffer> <leader>cl :call ConvertVimwikiLinkToMarkdown()<CR>

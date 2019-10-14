@@ -217,6 +217,7 @@ Plug 'https://github.com/andymass/vim-matchup'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'https://github.com/racer-rust/vim-racer'
+Plug 'https://github.com/tpope/vim-liquid'
 " Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
 Plug 'https://github.com/Shougo/neoinclude.vim'
@@ -916,15 +917,21 @@ nnoremap <leader>l :SourcetrailActivateToken<CR>
 " vimwiki {{{
 nmap <Leader>vw <Plug>VimwikiIndex
 
-let g:vimwiki_list = [{'path': '~/MEGA/vimwiki',
-            \ 'auto_tags': 1,
-            \ 'auto_diary_index': 1}]
+let g:vimwiki_list = [
+            \ {'path': '~/MEGA/vimwiki',
+            \  'auto_tags': 1,
+            \  'auto_diary_index': 1},
+            \ {'path': '~/Documents/bergercookie.github.io/_posts',
+            \  'auto_tags': 1,
+            \  'auto_diary_index': 1,
+            \  'syntax': 'markdown', 'ext': '.md' }]
 let g:vimwiki_folding=''
 let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
 let g:vimwiki_auto_header = 1
 let g:links_space_char = '_'
-
+let g:vimwiki_roo='~/MEGA/vimwiki'
+let g:vimwiki_global_ext=0
 " }}}
 " vim-taskwarrior plugin configuration - Needed by taskwiki {{{
 " https://github.com/blindFS/vim-taskwarrior
