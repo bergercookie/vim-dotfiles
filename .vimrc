@@ -931,7 +931,15 @@ let g:vimwiki_auto_header = 1
 let g:links_space_char = '_'
 let g:vimwiki_home='$HOME/MEGA/vimwiki'
 let g:vimwiki_global_ext=0
-command! -bang VimWikiSearch call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/MEGA/vimwiki $HOME/Documents/bergercookie.github.io/_posts', 'sink': 'e'}, <bang>0))
+command! -bang VimWikiFiles call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/MEGA/vimwiki $HOME/Documents/bergercookie.github.io/_posts' }, <bang>0))
+nnoremap <leader>vf :VimWikiFiles<CR>
+
+command! -bang -nargs=* VimWikiSearch
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case ' . shellescape(<q-args>) . ' $HOME/MEGA/vimwiki $HOME/Documents/bergercookie.github.io/_posts', 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 nnoremap <leader>vs :VimWikiSearch<CR>
 
 " }}}
