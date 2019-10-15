@@ -244,6 +244,9 @@ Plug 'https://github.com/christoomey/vim-titlecase'
 Plug 'https://github.com/bronson/vim-visual-star-search'
 Plug 'https://github.com/kmarius/vim-fish'
 Plug 'cespare/vim-toml'
+Plug 'https://github.com/lambdalisue/suda.vim'
+" real-plug-end
+
 
 " vimwiki, taskwiki + dependencies
 Plug 'https://github.com/vimwiki/vimwiki', { 'branch': 'dev' }
@@ -251,7 +254,6 @@ Plug 'https://github.com/tbabej/taskwiki'
 Plug 'https://github.com/farseer90718/vim-taskwarrior',  { 'on': 'VimwikiIndex' }
 
 " text objects general configuration {{{
-"
 " See list of available text objects by the community:
 " https://github.com/kana/vim-textobj-user/wiki
 Plug 'kana/vim-textobj-user'
@@ -269,19 +271,16 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " Plug 'https://github.com/kana/vim-textobj-syntax' "ay/iy TODO
 " Plug 'https://github.com/kana/vim-textobj-help' " for :help pages
 " Plug 'https://github.com/bps/vim-textobj-python' " af/if, ac/ic TODO
-
-Plug 'https://github.com/lambdalisue/suda.vim'
-
 " }}}
-
-" own + maintained version's
+" own + maintained version's {{{
 Plug 'ssh://git@github.com:bergercookie/vim-snippets'
 Plug 'ssh://git@github.com:bergercookie/vim-debugstring'
 " Plug 'ssh://git@github.com:bergercookie/vim-britishise'
 " Plug 'ssh://git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
 " }}}
+" }}}
 
-" Automatically executes filetype plugin indent on and syntax enable. You can
+"" Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
 call plug#end()
 " }}}
@@ -1072,7 +1071,7 @@ endif
 " }}}
 
 " coc.nvim configuration and modules
-" They are node modules and are managed by coc itself instead of vim-plug
+" These are node modules and are managed by coc itself instead of vim-plug
 " {{{
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
 " For coc-browser, you should first install the browser extension first!
