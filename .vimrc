@@ -208,7 +208,6 @@ Plug 'https://github.com/tmux-plugins/vim-tmux-focus-events'
 Plug 'https://github.com/tmux-plugins/vim-tmux'
 Plug 'https://github.com/christoomey/vim-tmux-navigator'
 Plug 'https://github.com/roxma/vim-tmux-clipboard'
-Plug 'https://github.com/wellle/tmux-complete.vim', {'do': ':UpdateRemotePlugins'}
 Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/google/vimdoc'
 Plug 'https://github.com/junegunn/vader.vim'
@@ -220,6 +219,7 @@ Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/tpope/vim-liquid'
 " Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/tpope/vim-rsi'
@@ -847,7 +847,7 @@ endif
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-let g:deoplete#sources#jedi#extra_path = '$HOME/.local/lib/python3.5/site-packages/'
+let g:deoplete#sources#jedi#extra_path = '$HOME/.local/lib/python3.6/site-packages/'
 let g:res = ""
 if has('python3')
     let g:res = ChompedSystem('python3 -m site --user-site')
@@ -918,10 +918,10 @@ nnoremap <leader>l :SourcetrailActivateToken<CR>
 nmap <Leader>vw <Plug>VimwikiIndex
 
 let g:vimwiki_list = [
-            \ {'path': '~/MEGA/vimwiki',
+            \ {'path': '$HOME/MEGA/vimwiki',
             \  'auto_tags': 1,
             \  'auto_diary_index': 1},
-            \ {'path': '~/Documents/bergercookie.github.io/_posts',
+            \ {'path': '$HOME/Documents/bergercookie.github.io/_posts',
             \  'auto_tags': 1,
             \  'auto_diary_index': 1,
             \  'syntax': 'markdown', 'ext': '.md' }]
@@ -930,8 +930,11 @@ let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
 let g:vimwiki_auto_header = 1
 let g:links_space_char = '_'
-let g:vimwiki_roo='~/MEGA/vimwiki'
+let g:vimwiki_home='$HOME/MEGA/vimwiki'
 let g:vimwiki_global_ext=0
+command! -bang VimWikiSearch call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/MEGA/vimwiki $HOME/Documents/bergercookie.github.io/_posts', 'sink': 'e'}, <bang>0))
+nnoremap <leader>vs :VimWikiSearch<CR>
+
 " }}}
 " vim-taskwarrior plugin configuration - Needed by taskwiki {{{
 " https://github.com/blindFS/vim-taskwarrior
@@ -997,6 +1000,9 @@ nnoremap <leader>tF :Files
 nnoremap <leader>tt :Tags<CR>
 nnoremap <leader>tb :Buffers<CR>
 nnoremap <leader>tw :Windows<CR>
+nnoremap <leader>th :History<CR>
+nnoremap <leader>t/ :History/<CR>
+nnoremap <leader>t: :History/<CR>
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -1057,6 +1063,21 @@ if &shell =~# 'fish$'
 endif
 " }}}
 
+" Use rg if it's installed {{{
+if executable('rg')
+    " https://vi.stackexchange.com/a/8858/6972
+    set grepprg=rg\ --vimgrep
+    set grepformat=%f:%l:%c:%m
+endif
+" }}}
+
+" coc.nvim configuration and modules
+" They are node modules and are managed by coc itself instead of vim-plug
+" {{{
+" see ~/.config/nvim/coc-settings.json file for the coc preferences
+" For coc-browser, you should first install the browser extension first!
+let g:coc_global_extensions = ["coc-browser"]
+" }}}
 
 " for some reason it gets disabled, after a recent PlugUpdte of mine.
 " Maybe vim-fish has something to do with it..
