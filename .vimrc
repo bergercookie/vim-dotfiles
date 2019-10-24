@@ -752,8 +752,9 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " vim-autoformat {{{
 " https://github.com/Chiel92/vim-autoformat
 " https://github.com/Chiel92/vim-autoformat/issues/131#issuecomment-287997925
-nnoremap <leader>af  ix<ESC>x:undojoin \| Autoformat<CR>.
-let g:formatters_python = ['black']
+nnoremap <leader>af  ix<ESC>x:undojoin \| Autoformat<CR>
+let g:formatdef_black_w_args = '"black -q --line-length " . &tw . " -t py36 -"'
+let g:formatters_python = ['black_w_args']
 " }}}
 " vimproc.vim {{{
 " You need to run **make** prior to running this

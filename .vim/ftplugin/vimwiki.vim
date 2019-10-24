@@ -31,3 +31,8 @@ endfunc
 nmap <buffer> <leader>al :call AddVimWikiLink()<CR>
 nmap <buffer> <leader>aL :call AddVimWikiLink2()<CR>
 "}}}
+
+function! AddHeaderLvl()
+    :exe "normal 0i=A="
+endfunc
+nmap <buffer> <leader>= :call AddHeaderLvl()<CR>
