@@ -7,18 +7,8 @@ setlocal noautoindent
 setlocal expandtab
 setlocal textwidth=80
 
-set spell
-set spelllang=en,el
-
-function! WrapInCodeBlock()
-    normal! O
-    {% highlight bash %}
-    :exe "normal "
-    normal! jo
-    {% endhighlight %}
-    :exe "normal "
-endfunc
-nmap <buffer> <leader>wb :call WrapInCodeBlock()<CR>
+setlocal spell
+setlocal spelllang=en,el
 
 function! ConvertVimwikiLinkToMarkdown()
   let old=&tw

@@ -1,8 +1,7 @@
 " Make sure that you have also set up TaskWiki
 setlocal textwidth=80
-" ActivateBritishSpelling
-set spell
-set spelllang=en,el
+setlocal spell
+setlocal spelllang=en,el
 
 " Toggle Filetype - two different mappings {{{
 nmap <buffer> <leader>cf :set filetype=<CR>
@@ -32,11 +31,3 @@ endfunc
 nmap <buffer> <leader>al :call AddVimWikiLink()<CR>
 nmap <buffer> <leader>aL :call AddVimWikiLink2()<CR>
 "}}}
-
-function! WrapInCodeBlock()
-    normal! O{% highlight bash %}
-    :exe "normal "
-    normal! jo{% endhighlight %}
-    :exe "normal "
-endfunc
-nmap <buffer> <leader>wb :call WrapInCodeBlock()<CR>

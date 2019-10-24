@@ -245,6 +245,7 @@ Plug 'https://github.com/bronson/vim-visual-star-search'
 Plug 'https://github.com/kmarius/vim-fish'
 Plug 'cespare/vim-toml'
 Plug 'https://github.com/lambdalisue/suda.vim'
+Plug 'https://github.com/embear/vim-localvimrc'
 " real-plug-end
 
 
@@ -1050,6 +1051,10 @@ nnoremap q/ :History/<CR>
 " Helptags 	Help tags 1
 " Filetypes 	File types
 
+" }}}
+" localvimrc {{{
+let g:localvimrc_persistent = 2
+let g:localvimrc_sandbox = 0
 " }}}
 " }}}
 " Vim-path and path-aware commands configuration {{{
