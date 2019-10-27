@@ -246,6 +246,7 @@ Plug 'https://github.com/kmarius/vim-fish'
 Plug 'cespare/vim-toml'
 Plug 'https://github.com/lambdalisue/suda.vim'
 Plug 'https://github.com/embear/vim-localvimrc'
+Plug 'https://github.com/jez/vim-superman'
 " real-plug-end
 
 
@@ -289,8 +290,8 @@ call plug#end()
 " See :Colors<CR> for selecting another colorscheme
 set background=dark
 colorscheme PaperColor
+" colorscheme solarized
 " colorscheme molokai
-" autocmd ColorScheme janah highlight Normal ctermbg=235 | colorscheme janah
 " }}}
 " Relative numbering {{{
 function! NumberToggle()
