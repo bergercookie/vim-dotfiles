@@ -247,6 +247,8 @@ Plug 'cespare/vim-toml'
 Plug 'https://github.com/lambdalisue/suda.vim'
 Plug 'https://github.com/embear/vim-localvimrc'
 Plug 'https://github.com/jez/vim-superman'
+Plug 'https://github.com/beyondmarc/opengl.vim'
+Plug 'https://github.com/tikhomirov/vim-glsl'
 " real-plug-end
 
 
