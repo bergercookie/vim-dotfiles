@@ -250,6 +250,7 @@ Plug 'https://github.com/jez/vim-superman'
 Plug 'https://github.com/beyondmarc/opengl.vim'
 Plug 'https://github.com/tikhomirov/vim-glsl'
 Plug 'https://github.com/peterhoeg/vim-qml'
+Plug 'https://github.com/farfanoide/vim-kivy'
 " real-plug-end
 
 
@@ -280,6 +281,7 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " own + maintained version's {{{
 Plug 'ssh://git@github.com:bergercookie/vim-snippets'
 Plug 'ssh://git@github.com:bergercookie/vim-debugstring'
+Plug 'https://github.com/bergercookie/vim-log-syntax'
 " Plug 'ssh://git@github.com:bergercookie/vim-britishise'
 " Plug 'ssh://git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
 " }}}
