@@ -219,7 +219,9 @@ Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/tpope/vim-liquid'
 " Plug 'sebastianmarkow/deoplete-rust'
 Plug 'zchee/deoplete-clang'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" TODO - coc-browser works but doesn't work well with other plugins that do
+" completion (e.g., jedi for python) - fix this
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'arakashic/chromatica.nvim'
 Plug 'https://github.com/tpope/vim-rsi'
