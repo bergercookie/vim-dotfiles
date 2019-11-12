@@ -253,6 +253,7 @@ Plug 'https://github.com/beyondmarc/opengl.vim'
 Plug 'https://github.com/tikhomirov/vim-glsl'
 Plug 'https://github.com/peterhoeg/vim-qml'
 Plug 'https://github.com/farfanoide/vim-kivy'
+Plug 'https://github.com/chrisbra/Colorizer'
 " real-plug-end
 
 
