@@ -87,12 +87,14 @@ augroup END
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
 " Cursor color {{{
 " http://vim.wikia.com/wiki/Configuring_the_cursor
-highlight Cursor guifg=white guibg=black
-highlight iCursor guifg=white guibg=steelblue
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
+" highlight Cursor guifg=white guibg=black
+" highlight iCursor guifg=white guibg=steelblue
+" set guicursor=n-v-c:block-Cursor
+" set guicursor+=i:ver100-iCursor
+" set guicursor+=n-v-c:blinkon0
+" set guicursor+=i:blinkwait10
+set guifont=SauceCodePro_Nerd_Font:h9
+
 " }}}
 " use %% for accessing files in the path of the current buffer
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
@@ -182,7 +184,6 @@ Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
 Plug 'https://github.com/plasticboy/vim-markdown'
 Plug 'https://github.com/dkarter/bullets.vim', {'for': ['markdown', 'rst', 'vimwiki']}
-Plug 'https://github.com/Chiel92/vim-autoformat'
 Plug 'https://github.com/kana/vim-operator-user'
 Plug 'https://github.com/Shougo/vimproc.vim', {'do': 'make'}
 Plug 'https://github.com/dag/vim2hs', {'for': ['haskell', ]}
@@ -675,11 +676,12 @@ command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expan
 " Ale - Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration  {{{
 " https://github.com/w0rp/ale#usage
 "
-" Run it manually
+" in case you want to run it manually
 map <leader>sc :ALELint<CR>
-"
-" let b:ale_fixers = ['prettier', 'eslint'] # TODO - order by order of run
-" let g:ale_fix_on_save = 1
+" autoformat
+map <leader>af :ALEFix<CR>
+let g:ale_fix_on_save = 0
+
 " let g:ale_completion_enabled = 1
 let g:ale_sign_column_always = 1
 " TODO Test :ALEGoToDefinition
@@ -757,13 +759,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " https://github.com/dkarter/bullets.vi://github.com/dkarter/bullets.vim
 " Use C-d/C-t for indenting outwards/inwards
 " In visual: :RenumberSelection
-" }}}
-" vim-autoformat {{{
-" https://github.com/Chiel92/vim-autoformat
-" https://github.com/Chiel92/vim-autoformat/issues/131#issuecomment-287997925
-nnoremap <leader>af  ix<ESC>x:undojoin \| Autoformat<CR>
-let g:formatdef_black_w_args = '"black -q --line-length " . &tw . " -t py36 -"'
-let g:formatters_python = ['black_w_args']
 " }}}
 " vimproc.vim {{{
 " You need to run **make** prior to running this
