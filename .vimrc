@@ -78,6 +78,7 @@ augroup indentation
     set autoindent               " indent at the same level of the previous line
     set expandtab
 augroup END
+
 " }}}
 
 
@@ -180,6 +181,7 @@ Plug 'https://github.com/szw/vim-maximizer.git'
 Plug 'https://github.com/pearofducks/ansible-vim'
 Plug 'https://github.com/davidbeckingsale/writegood.vim'
 Plug 'https://github.com/SirVer/ultisnips'
+Plug 'https://github.com/sudar/vim-arduino-snippets'
 Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
 Plug 'https://github.com/plasticboy/vim-markdown'
@@ -255,6 +257,7 @@ Plug 'https://github.com/tikhomirov/vim-glsl'
 Plug 'https://github.com/peterhoeg/vim-qml'
 Plug 'https://github.com/farfanoide/vim-kivy'
 Plug 'https://github.com/chrisbra/Colorizer'
+Plug 'https://github.com/sheerun/vim-polyglot'
 " real-plug-end
 
 
@@ -1069,6 +1072,26 @@ endif
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
 " For coc-browser, you should first install the browser extension first!
 let g:coc_global_extensions = ["coc-browser"]
+" }}}
+
+" arduino configuration {{{
+let g:arduino_dir = $HOME . '/.arduino15'
+let g:arduino_tags_file = $HOME . '/.vim/arduino.tags'
+
+"generate and load ctags
+function! GenerateArduinoTags()
+  let l:packages = g:arduino_dir . '/packages/'
+  execute '!ctags -R --fields=+liaS --tag-relative -f ' . g:arduino_tags_file ' ' . l:packages
+endfunction
+command! GenerateArguinoTags silent! :call GenerateArduinoTags()
+
+" Assumes that GenerateArduinoTags has already executed and was successful
+function! LoadArduinoTags()
+  if stridx(g:arduino_dir, &tags) == -1
+    let &tags = &tags . ',' . g:arduino_tags_file
+  endif
+endfunction
+command! LoadArduinoTags :call LoadArduinoTags()
 " }}}
 
 " for some reason it gets disabled, after a recent PlugUpdte of mine.
