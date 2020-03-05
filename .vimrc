@@ -258,6 +258,7 @@ Plug 'https://github.com/peterhoeg/vim-qml'
 Plug 'https://github.com/farfanoide/vim-kivy'
 Plug 'https://github.com/chrisbra/Colorizer'
 Plug 'https://github.com/sheerun/vim-polyglot'
+Plug 'https://github.com/CoatiSoftware/vim-sourcetrail'
 " real-plug-end
 
 
@@ -370,18 +371,7 @@ function! MakeTmpFile()
 endfunc
 nnoremap <leader>mk :call MakeTmpFile()<CR>
 " }}}
-" fun: Open URLs in your browser {{{
-function! HandleURL()
-    let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
-    echo s:uri
-    if s:uri != ""
-        silent exec "!xdg-open '".s:uri."'"
-    else
-        echo "No URI found in line."
-    endif
-endfunction
-map <leader>uu :call HandleURL()<CR>
-" }}}
+map <leader>uu :echoerr "Use gx"<CR>
 " fun: Who did this. {{{
 " function! WriteWhoDidThis()
 "     let l:name = "Nikos Koukis"
@@ -431,6 +421,17 @@ if has('title')
 	set titlestring+=\ -\ %{v:progname}      " program name
 	set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')} " working directory
 endif
+" }}}
+" Remove Trailing Whitespaces - https://vim.fandom.com/wiki/Remove_unwanted_spaces {{{
+function StripTrailingWhitespace()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    normal Hmy
+    %s/\s\+$//e
+    normal 'yz<CR>
+    normal `z
+  endif
+endfunction
 " }}}
 " Sane scrolling {{{
 if !&scrolloff
