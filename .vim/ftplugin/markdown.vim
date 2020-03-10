@@ -9,10 +9,3 @@ setlocal textwidth=80
 
 setlocal spell
 setlocal spelllang=en,el
-
-function! ConvertVimwikiLinkToMarkdown()
-  let old=&tw
-  :exe "normal ds[f|xdT[$a("
-  let &tw=old
-endfunc
-nmap <buffer> <leader>cl :call ConvertVimwikiLinkToMarkdown()<CR>

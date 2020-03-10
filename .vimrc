@@ -287,8 +287,9 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " Plug 'https://github.com/bps/vim-textobj-python' " af/if, ac/ic TODO
 " }}}
 " own + maintained version's {{{
-Plug 'ssh://git@github.com:bergercookie/vim-snippets'
-Plug 'ssh://git@github.com:bergercookie/vim-debugstring'
+Plug 'ssh://git@github.com/bergercookie/vim-snippets'
+Plug 'ssh://git@github.com/bergercookie/vimduino-cli'
+Plug 'ssh://git@github.com/bergercookie/vim-debugstring'
 Plug 'https://github.com/bergercookie/vim-log-syntax'
 " Plug 'ssh://git@github.com:bergercookie/vim-britishise'
 " Plug 'ssh://git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
@@ -1073,26 +1074,6 @@ endif
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
 " For coc-browser, you should first install the browser extension first!
 let g:coc_global_extensions = ["coc-browser"]
-" }}}
-
-" arduino configuration {{{
-let g:arduino_dir = $HOME . '/.arduino15'
-let g:arduino_tags_file = $HOME . '/.vim/arduino.tags'
-
-"generate and load ctags
-function! GenerateArduinoTags()
-  let l:packages = g:arduino_dir . '/packages/'
-  execute '!ctags -R --fields=+liaS --tag-relative -f ' . g:arduino_tags_file ' ' . l:packages
-endfunction
-command! GenerateArguinoTags silent! :call GenerateArduinoTags()
-
-" Assumes that GenerateArduinoTags has already executed and was successful
-function! LoadArduinoTags()
-  if stridx(g:arduino_dir, &tags) == -1
-    let &tags = &tags . ',' . g:arduino_tags_file
-  endif
-endfunction
-command! LoadArduinoTags :call LoadArduinoTags()
 " }}}
 
 " for some reason it gets disabled, after a recent PlugUpdte of mine.
