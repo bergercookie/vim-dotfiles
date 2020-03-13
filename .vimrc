@@ -30,7 +30,6 @@ set mouse=a " enable the mouse
 if !has('nvim')
     set ttymouse=xterm2
 endif
-set ignorecase
 set showcmd
 set shiftround " round indent to multiple of 'shiftwidth'
 set colorcolumn=80
@@ -62,6 +61,8 @@ let mapleader = ","
 nnoremap \ ,
 " }}}
 " Searching Configuration {{{
+set ignorecase
+set smartcase
 set incsearch
 set inccommand=split
 set hlsearch
@@ -259,6 +260,7 @@ Plug 'https://github.com/farfanoide/vim-kivy'
 Plug 'https://github.com/chrisbra/Colorizer'
 Plug 'https://github.com/sheerun/vim-polyglot'
 Plug 'https://github.com/CoatiSoftware/vim-sourcetrail'
+" Plug 'https://github.com/johnsyweb/vim-makeshift'
 " real-plug-end
 
 
