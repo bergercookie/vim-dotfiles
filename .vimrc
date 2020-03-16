@@ -727,8 +727,10 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " g:ale_set_balloons = 1
 " }}}
 " AutoPairs - https://github.com/jiangmiao/auto-pairs {{{
+let g:AutoPairs =  {'(':')', '[':']', '{':'}', "'":"'", '"':'"', '"""':'"""', "'''":"'''"}
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutToggle = '<leader>ap'
+
 " }}}
 " jedi-vim {{{
 let g:jedi#popup_select_first = 1
