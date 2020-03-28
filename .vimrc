@@ -293,6 +293,7 @@ Plug 'ssh://git@github.com/bergercookie/vim-snippets'
 Plug 'ssh://git@github.com/bergercookie/vimduino-cli'
 Plug 'ssh://git@github.com/bergercookie/vim-debugstring'
 Plug 'https://github.com/bergercookie/vim-log-syntax'
+Plug 'https://github.com/bergercookie/vim-deb-preview'
 " Plug 'ssh://git@github.com:bergercookie/vim-britishise'
 " Plug 'ssh://git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
 " }}}
