@@ -844,6 +844,10 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " vim-debugstring {{{
 "
 " }}}
+" vim-deb-preview {{{
+let g:debpreview_overwrite = 1
+let g:debpreview_newdebfile_ext =".new"
+" }}}
 " deoplete.nvim {{{
 
 " Use deoplete.
