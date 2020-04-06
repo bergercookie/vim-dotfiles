@@ -261,6 +261,9 @@ Plug 'https://github.com/chrisbra/Colorizer'
 Plug 'https://github.com/sheerun/vim-polyglot'
 Plug 'https://github.com/CoatiSoftware/vim-sourcetrail'
 " Plug 'https://github.com/johnsyweb/vim-makeshift'
+" ranger.vim
+Plug 'rbgrouleff/bclose.vim'
+Plug 'https://github.com/francoiscabrol/ranger.vim'
 " real-plug-end
 
 
@@ -1083,6 +1086,11 @@ endif
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
 " For coc-browser, you should first install the browser extension first!
 let g:coc_global_extensions = ["coc-browser"]
+" }}}
+
+" {{{
+" open ranger when vim open a directory
+let g:ranger_replace_netrw = 1
 " }}}
 
 " for some reason it gets disabled, after a recent PlugUpdte of mine.
