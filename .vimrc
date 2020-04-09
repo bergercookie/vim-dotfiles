@@ -112,12 +112,15 @@ set cinoptions+=(0
 " }}}
 " Tab handling {{{
 nnoremap <C-\> <C-t>
+
 nnoremap <C-t> :tabnew<Space>
 nnoremap <C-n> :tabnext<CR>
 nnoremap <C-p> :tabprev<CR>
+
 vnoremap <C-t> <ESC>:tabnew<Space>
 vnoremap <C-n> <ESC>:tabnext<CR>
 vnoremap <C-p> <ESC>:tabprev<CR>
+
 cnoremap <C-t> <ESC>:tabnew<Space>
 cnoremap <C-n> <ESC>:tabnext<CR>
 cnoremap <C-p> <ESC>:tabprev<CR>
