@@ -55,7 +55,6 @@ filetype indent plugin on
 filetype indent on
 " Syntax highlighting
 syntax on
-set t_Co=256 " make terminator + vim combination
 " Remap <leader> to comma {{{
 let mapleader = ","
 nnoremap \ ,
@@ -87,17 +86,6 @@ augroup END
 
 " do it only when you have a good reason to.
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
-" Cursor color {{{
-" http://vim.wikia.com/wiki/Configuring_the_cursor
-" highlight Cursor guifg=white guibg=black
-" highlight iCursor guifg=white guibg=steelblue
-" set guicursor=n-v-c:block-Cursor
-" set guicursor+=i:ver100-iCursor
-" set guicursor+=n-v-c:blinkon0
-" set guicursor+=i:blinkwait10
-set guifont=SauceCodePro_Nerd_Font:h9
-
-" }}}
 " use %% for accessing files in the path of the current buffer
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 " Redraw the screen
@@ -231,6 +219,7 @@ Plug 'zchee/deoplete-clang'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'arakashic/chromatica.nvim'
+Plug 'arcticicestudio/nord-vim'
 Plug 'https://github.com/tpope/vim-rsi'
 Plug 'w0rp/ale'
 " For GBrowse
@@ -267,6 +256,7 @@ Plug 'https://github.com/CoatiSoftware/vim-sourcetrail'
 " ranger.vim
 Plug 'rbgrouleff/bclose.vim'
 Plug 'https://github.com/francoiscabrol/ranger.vim'
+Plug 'chriskempson/base16-vim'
 " real-plug-end
 
 
@@ -309,12 +299,19 @@ Plug 'https://github.com/bergercookie/vim-deb-preview'
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
 call plug#end()
 " }}}
-" Colorscheme {{{
-" See :Colors<CR> for selecting another colorscheme
+" Colorscheme Configuration {{{
+" See :Colors<CR> for previewing another colorscheme
 set background=dark
+set t_Co=256
+set termguicolors
 colorscheme PaperColor
-" colorscheme solarized
-" colorscheme molokai
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.dark': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
 " }}}
 " Relative numbering {{{
 function! NumberToggle()
@@ -943,7 +940,7 @@ nnoremap <leader>l :SourcetrailActivateToken<CR>
 nmap <Leader>vw <Plug>VimwikiIndex
 
 let g:vimwiki_list = [
-            \ {'path': '$HOME/MEGA/vimwiki',
+            \ {'path': '$HOME/sync/main/vimwiki',
             \  'auto_tags': 1,
             \  'auto_diary_index': 1},
             \ {'path': '$HOME/Documents/bergercookie.github.io/_posts',
@@ -955,14 +952,14 @@ let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
 let g:vimwiki_auto_header = 1
 let g:links_space_char = '_'
-let g:vimwiki_home='$HOME/MEGA/vimwiki'
+let g:vimwiki_home='$HOME/sync/main/vimwiki'
 let g:vimwiki_global_ext=0
-command! -bang VimWikiFiles call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/MEGA/vimwiki $HOME/Documents/bergercookie.github.io/_posts' }, <bang>0))
+command! -bang VimWikiFiles call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/sync/main/vimwiki $HOME/Documents/bergercookie.github.io/_posts' }, <bang>0))
 nnoremap <leader>vf :VimWikiFiles<CR>
 
 command! -bang -nargs=* VimWikiSearch
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case ' . shellescape(<q-args>) . ' $HOME/MEGA/vimwiki $HOME/Documents/bergercookie.github.io/_posts', 1,
+  \   'rg --column --line-number --no-heading --color=always --smart-case ' . shellescape(<q-args>) . ' $HOME/sync/main/vimwiki $HOME/Documents/bergercookie.github.io/_posts', 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
@@ -1004,8 +1001,11 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 nnoremap <leader>tf :Files<CR>
-nnoremap <leader>tF :Files 
+nnoremap <leader>tF :Files
+
 nnoremap <leader>tt :Tags<CR>
+vnoremap <leader>tt :call fzf#vim#tags(GetVisualSelection())<CR>
+
 nnoremap <leader>tb :Buffers<CR>
 nnoremap <leader>tw :Windows<CR>
 nnoremap <leader>th :History<CR>
@@ -1093,7 +1093,7 @@ let g:coc_global_extensions = ["coc-browser"]
 
 " {{{
 " open ranger when vim open a directory
-let g:ranger_replace_netrw = 1
+let g:ranger_replace_netrw = 0
 " }}}
 
 " for some reason it gets disabled, after a recent PlugUpdte of mine.

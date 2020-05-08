@@ -5,6 +5,7 @@ setlocal copyindent
 setlocal softtabstop=4
 setlocal autoindent
 setlocal expandtab
+setlocal commentstring=#\ %s
 
 let b:ale_linters = ['cmakelint']
-setlocal commentstring=#\ %s
+let g:ale_fixers["cmake"] = ["cmakeformat", 'remove_trailing_lines', 'trim_whitespace']
