@@ -230,7 +230,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " deoplete
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins', 'for': ['rust', 'cpp', 'c', 'python', ]}
+  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -257,6 +257,7 @@ Plug 'https://github.com/CoatiSoftware/vim-sourcetrail'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'https://github.com/francoiscabrol/ranger.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'https://github.com/jamessan/vim-gnupg/'
 " real-plug-end
 
 
@@ -625,7 +626,7 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 " }}}
 
 " Generate tags
-map <leader>rt :!ctags -R --fields=+liaS --tag-relative . <CR>
+map <leader>rt :Dispatch ctags -R --fields=+liaS --tag-relative . <CR>
 
 " g<C-]> will jump to the tag if there's only one match and will present a list
 " if there are multiple matches
@@ -662,7 +663,7 @@ let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline_theme=&background " https://github.com/vim-airline/vim-airline/wiki/Screenshots
 let g:airline_highlighting_cache = 0
-let g:airline#extensions#ale#enabled = 0
+let g:airline#extensions#ale#enabled = 1
 let g:airline_focuslost_inactive = 1
 
 " " highlight current tab
@@ -692,7 +693,6 @@ map <leader>sc :ALELint<CR>
 " autoformat
 map <leader>af :ALEFix<CR>
 let g:ale_fix_on_save = 0
-
 " let g:ale_completion_enabled = 1
 let g:ale_sign_column_always = 1
 " TODO Test :ALEGoToDefinition
@@ -855,7 +855,10 @@ let g:debpreview_newdebfile_ext =".new"
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+call deoplete#custom#option({
+            \ 'auto_complete_delay': 200,
+            \ 'smart_case': v:true,
+            \ })
 
 " if !exists('g:deoplete#omni#input_patterns')
 "     let g:deoplete#omni#input_patterns = {}
