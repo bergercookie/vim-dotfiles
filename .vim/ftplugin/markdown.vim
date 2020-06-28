@@ -6,6 +6,5 @@ setlocal softtabstop=4
 setlocal noautoindent
 setlocal expandtab
 setlocal textwidth=80
-
 setlocal spell
 setlocal spelllang=en,el

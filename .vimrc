@@ -17,6 +17,7 @@ set cursorline
 " set cursorcolumn
 set clipboard=unnamedplus " Access the system clipboard
 set nobackup
+set nowritebackup
 set noswapfile
 set nocompatible
 set history=1000 " Store a ton of history (default is 20)
@@ -209,39 +210,23 @@ Plug 'https://github.com/junegunn/vader.vim'
 Plug 'https://github.com/janko-m/vim-test'
 Plug 'https://github.com/andymass/vim-matchup'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
-Plug 'zchee/deoplete-jedi', {'do': 'UpdateRemotePlugins'}
 Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/tpope/vim-liquid'
-" Plug 'sebastianmarkow/deoplete-rust'
-Plug 'zchee/deoplete-clang'
-" TODO - coc-browser works but doesn't work well with other plugins that do
-" completion (e.g., jedi for python) - fix this
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'https://github.com/Shougo/neoinclude.vim'
 Plug 'arakashic/chromatica.nvim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'https://github.com/tpope/vim-rsi'
-Plug 'w0rp/ale'
 " For GBrowse
 Plug 'https://github.com/tommcdo/vim-fubitive'
 Plug 'https://github.com/tpope/vim-rhubarb'
 " Multi-entry selection UI. FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" deoplete
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
 Plug 'https://github.com/jwilm/i3-vim-focus'
 Plug 'https://github.com/NLKNguyen/papercolor-theme'
 Plug 'https://github.com/christoomey/vim-titlecase'
 Plug 'https://github.com/bronson/vim-visual-star-search'
 Plug 'https://github.com/kmarius/vim-fish'
-Plug 'cespare/vim-toml'
+Plug 'https://github.com/cespare/vim-toml'
 Plug 'https://github.com/lambdalisue/suda.vim'
 Plug 'https://github.com/embear/vim-localvimrc'
 Plug 'https://github.com/jez/vim-superman'
@@ -258,6 +243,9 @@ Plug 'rbgrouleff/bclose.vim'
 Plug 'https://github.com/francoiscabrol/ranger.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'https://github.com/jamessan/vim-gnupg/'
+" Coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 " real-plug-end
 
 
@@ -663,8 +651,8 @@ let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
 let g:airline_theme=&background " https://github.com/vim-airline/vim-airline/wiki/Screenshots
 let g:airline_highlighting_cache = 0
-let g:airline#extensions#ale#enabled = 1
 let g:airline_focuslost_inactive = 1
+let g:airline#extensions#coc#enabled = 1
 
 " " highlight current tab
 " hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
@@ -685,64 +673,11 @@ let g:vim_markdown_frontmatter=1
 " Cppman {{{
 command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
 " }}}
-" Ale - Asynchronous linting/fixing for Vim and Language Server Protocol (LSP) integration  {{{
-" https://github.com/w0rp/ale#usage
-"
-" in case you want to run it manually
-map <leader>sc :ALELint<CR>
-" autoformat
-map <leader>af :ALEFix<CR>
-let g:ale_fix_on_save = 0
-" let g:ale_completion_enabled = 1
-let g:ale_sign_column_always = 1
-" TODO Test :ALEGoToDefinition
-" TODO Test :ALEFindReferences
-" TODO Test :ALEHover
-" TODO Test :ALESymbolSearch
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_save = 1
-" You can disable this option too if you don't want linters to run on opening a
-" file
-" let g:ale_lint_on_enter = 0
-
-" Ale - CPP configuration {{{
-" use compile_commands.json
-let g:ale_c_parse_compile_commands = 1
-let g:ale_c_build_dir_names = ['build', 'build_rel', 'obj']
-" let g:ale_c_build_dir = 'build'
-" let b:ale_c_parse_makefile = 1
-
-let g:ale_cpp_cppcheck_options='--enable=all --project=./compile_commands.json'
-let g:ale_cpp_clang_options='-std=c++14 -Wall -I/usr/include -I/usr/local/include -I/usr/local/include/eigen3'
-let g:ale_cpp_gcc_options='-std=c++14 -Wall -I/usr/include/ -I/usr/local/include/ -I/usr/local/include/eigen3'
-
-" }}}
-
-" navigate between errors
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-" Enable hovering
-" Doesn't work in terminal vim
-" g:ale_set_balloons = 1
-" }}}
 " AutoPairs - https://github.com/jiangmiao/auto-pairs {{{
 let g:AutoPairs =  {'(':')', '[':']', '{':'}', "'":"'", '"':'"', '"""':'"""', "'''":"'''"}
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutToggle = '<leader>ap'
 
-" }}}
-" jedi-vim {{{
-let g:jedi#popup_select_first = 1
-let g:jedi#show_call_signatures = "1"
-let g:jedi#documentation_command = "K"
-if has('nvim')
-    let g:python3_host_prog="/usr/bin/python3"
-endif
 " }}}
 " vim-startify {{{
 let g:startify_change_to_dir = 0
@@ -850,57 +785,6 @@ hi MatchParen cterm=none ctermbg=none ctermfg=magenta
 " vim-deb-preview {{{
 let g:debpreview_overwrite = 1
 let g:debpreview_newdebfile_ext =".new"
-" }}}
-" deoplete.nvim {{{
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option({
-            \ 'auto_complete_delay': 200,
-            \ 'smart_case': v:true,
-            \ })
-
-" if !exists('g:deoplete#omni#input_patterns')
-"     let g:deoplete#omni#input_patterns = {}
-" endif
-
-" Disable the candidates in String syntaxes.
-if exists('g:loaded_deoplete')
-    call deoplete#custom#source('_',
-                \ 'disabled_syntaxes', ['String'])
-endif
-
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-let g:deoplete#sources#jedi#extra_path = '$HOME/.local/lib/python3.6/site-packages/'
-let g:res = ""
-if has('python3')
-    let g:res = ChompedSystem('python3 -m site --user-site')
-elseif has('python2')
-    let g:res = ChompedSystem('python2 -m site --user-site')
-end
-let g:deoplete#sources#jedi#extra_path = [g:res]
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#sources#jedi#enable_cache = 1
-
-" }}}
-" " deoplete-rust {{{
-" let g:deoplete#sources#rust#racer_binary=$HOME . '/.cargo/bin/racer'
-" let g:deoplete#sources#rust#show_duplicates=0
-" let g:deoplete#sources#rust#documentation_max_height=20
-" let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH
-" }}}
-" deoplete-clang {{{
-let g:deoplete#sources#clang#libclang_path='/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header='/usr/lib/clang'
-let g:deoplete#sources#clang#std={'c': 'c11', 'cpp': 'c++1z', 'objc': 'c11', 'objcpp': 'c++1z'}
-let g:deoplete#sources#clang#clang_complete_database='.'
-" }}}
-" neoinclude {{{
-if !exists('g:neoinclude#exts')
-	let g:neoinclude#exts = {}
-endif
-let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
 " }}}
 " vim-markdown {{{
 
