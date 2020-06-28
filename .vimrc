@@ -19,6 +19,7 @@ set clipboard=unnamedplus " Access the system clipboard
 set nobackup
 set nowritebackup
 set noswapfile
+set signcolumn
 set nocompatible
 set history=1000 " Store a ton of history (default is 20)
 set undolevels=1000
@@ -215,7 +216,7 @@ Plug 'https://github.com/tpope/vim-liquid'
 Plug 'arakashic/chromatica.nvim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'https://github.com/tpope/vim-rsi'
-" For GBrowse
+" For :GBrowse
 Plug 'https://github.com/tommcdo/vim-fubitive'
 Plug 'https://github.com/tpope/vim-rhubarb'
 " Multi-entry selection UI. FZF
@@ -245,7 +246,6 @@ Plug 'chriskempson/base16-vim'
 Plug 'https://github.com/jamessan/vim-gnupg/'
 " Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 " real-plug-end
 
 
@@ -974,8 +974,70 @@ endif
 " These are node modules and are managed by coc itself instead of vim-plug
 " {{{
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
-" For coc-browser, you should first install the browser extension first!
-let g:coc_global_extensions = ["coc-browser"]
+"
+" For coc-browser:
+"   Install browser extension first
+"   https://github.com/voldikss/browser-source-provider
+let g:coc_global_extensions = [
+            \ "coc-cmake",
+            \ "coc-tsserver",
+            \ "coc-browser",
+            \ "coc-snippets",
+            \ "coc-pyright",
+            \ "coc-python",
+            \ "coc-json", "coc-css", "coc-java",
+            \ "coc-markdownlint",
+            \ "coc-rust-analyzer"]
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>Af  <Plug>(coc-format-selected)
+nmap <leader>Af  <Plug>(coc-format-selected)
+
+xmap <leader>af :call CocAction('format')<CR>
+nmap <leader>af :call CocAction('format')<CR>
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 " }}}
 
 " {{{

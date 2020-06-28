@@ -1,8 +1,132 @@
 {
-  "languageserver": {
-     "Python": {
-       "command": "path/to/ada_language_server",
-       "filetypes": ["ada"]
-     }
-  }
+    "coc.preferences.extensionUpdateCheck": "never",
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cc",
+                "cpp",
+                "c++",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        },
+        "cmake": {
+            "command": "cmake-language-server",
+            "filetypes": [
+                "cmake"
+            ],
+            "rootPatterns": [
+                "build/"
+            ],
+            "initializationOptions": {
+                "buildDirectory": "build"
+            }
+        },
+        "rust": {
+            "command": "rust-analyzer",
+            "filetypes": [
+                "rust"
+            ],
+            "rootPatterns": [
+                "Cargo.toml"
+            ]
+        },
+        "golang": {
+            "command": "gopls",
+            "rootPatterns": [
+                "go.mod"
+            ],
+            "disableWorkspaceFolders": true,
+            "filetypes": [
+                "go"
+            ]
+        },
+        "dockerfile": {
+            "command": "docker-langserver",
+            "filetypes": [
+                "dockerfile"
+            ],
+            "args": [
+                "--stdio"
+            ]
+        },
+        "bash": {
+            "command": "bash-language-server",
+            "args": [
+                "start"
+            ],
+            "filetypes": [
+                "sh"
+            ],
+            "ignoredRootPaths": [
+                "~"
+            ]
+        },
+        "lua": {
+            "command": "lua-lsp",
+            "filetypes": [
+                "lua"
+            ]
+        },
+        "vimls": {
+            "command": "vim-language-server",
+            "args": [
+                "--stdio"
+            ],
+            "initializationOptions": {
+                "iskeyword": "@,48-57,_,192-255,-#",
+                "vimruntime": "",
+                "runtimepath": "",
+                "diagnostic": {
+                    "enable": true
+                },
+                "indexes": {
+                    "runtimepath": true,
+                    "gap": 300,
+                    "count": 2,
+                    "projectRootPatterns": [
+                        "strange-root-pattern",
+                        ".git",
+                        "autoload",
+                        "plugin"
+                    ]
+                },
+                "suggest": {
+                    "fromVimruntime": true,
+                    "fromRuntimepath": false
+                }
+            },
+            "filetypes": [
+                "vim"
+            ]
+        }
+    },
+
+    // -------------------------------------------------------------------------
+    // python
+    // -------------------------------------------------------------------------
+    "python.pythonPath": "/usr/bin/python3",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "-l",
+        "95",
+        "-t",
+        "py36"
+    ],
+    "python.autoUpdateLanguageServer": true
 }
