@@ -20,6 +20,9 @@
             "initializationOptions": {
                 "cache": {
                     "directory": "/tmp/ccls"
+                },
+                "highlight": {
+                    "lsRanges": true
                 }
             }
         },
@@ -63,18 +66,6 @@
                 "--stdio"
             ]
         },
-        "bash": {
-            "command": "bash-language-server",
-            "args": [
-                "start"
-            ],
-            "filetypes": [
-                "sh"
-            ],
-            "ignoredRootPaths": [
-                "~"
-            ]
-        },
         "lua": {
             "command": "lua-lsp",
             "filetypes": [
@@ -114,7 +105,6 @@
             ]
         }
     },
-
     // -------------------------------------------------------------------------
     // python
     // -------------------------------------------------------------------------
@@ -128,5 +118,13 @@
         "-t",
         "py36"
     ],
-    "python.autoUpdateLanguageServer": true
+    "python.autoUpdateLanguageServer": true,
+    "yaml.format.singleQuote": false,
+    "yaml.hover": true,
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/docker/compose/master/compose/config/config_schema_v2.0.json": "**/docker-compose*.yml"
+    },
+    "sh.enable": true,
+    "rust-analyzer.checkOnSave.allTargets": true,
+    "rust-analyzer.checkOnSave.allFeatures": true
 }

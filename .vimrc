@@ -19,7 +19,7 @@ set clipboard=unnamedplus " Access the system clipboard
 set nobackup
 set nowritebackup
 set noswapfile
-set signcolumn
+set signcolumn="yes"
 set nocompatible
 set history=1000 " Store a ton of history (default is 20)
 set undolevels=1000
@@ -80,7 +80,15 @@ augroup indentation
     set autoindent               " indent at the same level of the previous line
     set expandtab
 augroup END
-
+" }}}
+" undo directory setup {{{
+let undo_dir_path = $HOME . "/.cache/vim-undo-dir"
+if !isdirectory(undo_dir_path)
+    call system("mkdir -p " . undo_dir_path)
+    call system("chmod " . "700 " .  undo_dir_path)
+endif
+let &undodir = undo_dir_path
+set undofile
 " }}}
 
 
@@ -213,7 +221,6 @@ Plug 'https://github.com/andymass/vim-matchup'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
 Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/tpope/vim-liquid'
-Plug 'arakashic/chromatica.nvim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'https://github.com/tpope/vim-rsi'
 " For :GBrowse
@@ -244,8 +251,8 @@ Plug 'rbgrouleff/bclose.vim'
 Plug 'https://github.com/francoiscabrol/ranger.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'https://github.com/jamessan/vim-gnupg/'
-" Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 " real-plug-end
 
 
@@ -797,14 +804,7 @@ let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
 let g:racer_disable_errors = 0
 " }}}
-" nvim-chromatica {{{
-
-nnoremap <leader>cs :ChromaticaStart<CR>
-nnoremap <leader>cS :ChromaticaStop<CR>
-let g:chromatica#libclang_path='/usr/lib/libclang.so'
-let g:chromatica#enable_at_startup=1
-let g:chromatica#highlight_feature_level=1
-" let g:chromatica#responsive_mode=1
+" nvim-chromatica - Switched to vim-lsp-cxx-highlight {{{
 " }}}
 " i3-vim-focus {{{
 " TODO - fix it
@@ -943,7 +943,6 @@ nnoremap q/ :History/<CR>
 let g:localvimrc_persistent = 2
 let g:localvimrc_sandbox = 0
 " }}}
-" }}}
 " Vim-path and path-aware commands configuration {{{
 set path+=/usr/local/include,**
 " }}}
@@ -961,7 +960,6 @@ if &shell =~# 'fish$'
     set shell=sh
 endif
 " }}}
-
 " Use rg if it's installed {{{
 if executable('rg')
     " https://vi.stackexchange.com/a/8858/6972
@@ -969,16 +967,16 @@ if executable('rg')
     set grepformat=%f:%l:%c:%m
 endif
 " }}}
-
-" coc.nvim configuration and modules
+" coc.nvim configuration and modules {{{
 " These are node modules and are managed by coc itself instead of vim-plug
-" {{{
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
 "
 " For coc-browser:
 "   Install browser extension first
 "   https://github.com/voldikss/browser-source-provider
 let g:coc_global_extensions = [
+            \ "coc-docker",
+            \ "coc-yaml",
             \ "coc-cmake",
             \ "coc-tsserver",
             \ "coc-browser",
@@ -987,7 +985,9 @@ let g:coc_global_extensions = [
             \ "coc-python",
             \ "coc-json", "coc-css", "coc-java",
             \ "coc-markdownlint",
-            \ "coc-rust-analyzer"]
+            \ "coc-rust-analyzer",
+            \ "coc-sh",
+            \]
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -1033,18 +1033,52 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>x  <Plug>(coc-codeaction-selected)
+nmap <leader>x  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
-" }}}
 
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <leader>od  :<C-u>CocList diagnostics<cr>
+" Show commands.
+nnoremap <silent><nowait> <leader>oc  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <leader>oo  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <leader>os  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <leader>on  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <leader>op  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <leader>or  :<C-u>CocListResume<CR>
+
+" }}}
 " {{{
 " open ranger when vim open a directory
 let g:ranger_replace_netrw = 0
 " }}}
 
-" for some reason it gets disabled, after a recent PlugUpdte of mine.
+" for some reason it gets disabled, after a recent PlugUpdate of mine.
 " Maybe vim-fish has something to do with it..
 syntax on
