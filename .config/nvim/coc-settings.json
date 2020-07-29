@@ -103,12 +103,16 @@
             "filetypes": [
                 "vim"
             ]
+        },
+        "asm-lsp": {
+            "command": "asm-lsp",
+            "filetypes": [
+                "asm", "s", "S"
+            ]
         }
     },
-    // -------------------------------------------------------------------------
-    // python
-    // -------------------------------------------------------------------------
-    "python.pythonPath": "/usr/bin/python3",
+    // python --------------------------------------------------------------------------------------
+    "python.pythonPath": "/home/berger/.cache/pypoetry/virtualenvs/dataset-converter-ivAvLHQa-py3.6/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
@@ -119,12 +123,25 @@
         "py36"
     ],
     "python.autoUpdateLanguageServer": true,
+    "python.venvFolders": ["/home/berger/.cache/pypoetry/virtualenvs/"],
+    // yaml ----------------------------------------------------------------------------------------
     "yaml.format.singleQuote": false,
     "yaml.hover": true,
     "yaml.schemas": {
         "https://raw.githubusercontent.com/docker/compose/master/compose/config/config_schema_v2.0.json": "**/docker-compose*.yml"
     },
+    // shell ---------------------------------------------------------------------------------------
     "sh.enable": true,
+    // rust ----------------------------------------------------------------------------------------
     "rust-analyzer.checkOnSave.allTargets": true,
-    "rust-analyzer.checkOnSave.allFeatures": true
+    "rust-analyzer.checkOnSave.allFeatures": true,
+    // snippets ------------------------------------------------------------------------------------
+    "snippets.userSnippetsDirectory": "/home/berger/.vim/plugged/vim-snippets/snippets/",
+    "snippets.ultisnips.directories": ["UltiSnips", "/home/berger/.vim/plugged/vim-snippets/snippets/"],
+    "snippets.extends": {
+        "cpp": ["c"],
+        "javascriptreact": ["javascript"],
+        "typescript": ["javascript"],
+        "vimwiki": ["markdown", "liquid"]
+    }
 }

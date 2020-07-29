@@ -300,7 +300,7 @@ call plug#end()
 set background=dark
 set t_Co=256
 set termguicolors
-colorscheme PaperColor
+colorscheme base16-atelier-forest
 let g:PaperColor_Theme_Options = {
   \   'theme': {
   \     'default.dark': {
@@ -498,6 +498,15 @@ command! -nargs=? -range=% Space2Tab call IndentConvert(<line1>,<line2>,0,<q-arg
 command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,<q-args>)
 command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
 
+function! s:open_vim_snippets()
+    if empty(&filetype)
+        echoerr "No filetype selected"
+    else
+        execute "tabnew $HOME" . "/.vim/plugged/vim-snippets/snippets/" . &filetype . ".snippets"
+    end
+endfunction
+command! OpenVimSnippets call s:open_vim_snippets()
+
 " }}}
 " Rust configuration {{{
 let g:rustfmt_command = 'cargo +nightly fmt -- '
@@ -656,15 +665,11 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
-let g:airline_theme=&background " https://github.com/vim-airline/vim-airline/wiki/Screenshots
+let g:airline_theme="base16_atelierforest"
 let g:airline_highlighting_cache = 0
 let g:airline_focuslost_inactive = 1
 let g:airline#extensions#coc#enabled = 1
-
-" " highlight current tab
-" hi TabLineFill ctermfg=LightGreen ctermbg=DarkGreen
-" hi TabLine ctermfg=Black ctermbg=Green
-" hi TabLineSel ctermfg=LightBlue
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
@@ -739,6 +744,7 @@ let g:indentLine_enabled = 1
 " }}}
 " commentary.vim {{{
 " https://github.com/tpope/vim-commentary
+autocmd FileType asm setlocal commentstring=;\ %s
 " }}}
 " vim-eunoch {{{
 " helpers for UNIX
@@ -803,8 +809,6 @@ let g:racer_cmd = $HOME . '/.cargo/bin/racer'
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
 let g:racer_disable_errors = 0
-" }}}
-" nvim-chromatica - Switched to vim-lsp-cxx-highlight {{{
 " }}}
 " i3-vim-focus {{{
 " TODO - fix it
@@ -1073,6 +1077,14 @@ nnoremap <silent><nowait> <leader>op  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <leader>or  :<C-u>CocListResume<CR>
 
+" Use <C-l> for trigger snippet expand - TAB doesn't seem to work
+imap <C-l> <Plug>(coc-snippets-expand)
+
+
+" Use TAB for select text for visual placeholder of snippet.
+vmap <tab> <Plug>(coc-snippets-select)
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<S-Tab>'
 " }}}
 " {{{
 " open ranger when vim open a directory
