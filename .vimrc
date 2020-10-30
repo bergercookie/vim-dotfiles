@@ -10,7 +10,6 @@
 "  plugins in use.
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " Basic configuration {{{
 " Very basic configuration {{{
 set cursorline
@@ -251,8 +250,10 @@ Plug 'rbgrouleff/bclose.vim'
 Plug 'https://github.com/francoiscabrol/ranger.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'https://github.com/jamessan/vim-gnupg/'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Or build from source code by using yarn: https://yarnpkg.com
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'https://github.com/bfrg/vim-cpp-modern'
 " real-plug-end
 
 
@@ -348,8 +349,10 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " Show the current filename
-nnoremap <leader>2 :echo @%<CR>
-vnoremap <leader>2 :echo @%<CR>
+nnoremap <leader>2   :echo @%<CR>
+vnoremap <leader>2   :echo @%<CR>
+nnoremap <leader>22  :let @+=expand("%")<CR>
+vnoremap <leader>22  :let @+=expand("%")<CR>
 
 " Convert slashes to backslashes for Windows.
 " http://vim.wikia.com/wiki/VimTip600
@@ -522,6 +525,25 @@ autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . 
 set tags+=./tags;,tags;/
 " ctags configuration {{{
 
+" ctags support for XML
+let g:tagbar_type_xml = {
+	\ 'ctagstype' : 'XML',
+	\ 'kinds' : [
+		\ 't:tagname'
+	\ ],
+	\ 'sort' : 0
+\ }
+
+" ctags support for Launchfiles
+let g:tagbar_type_launch = {
+	\ 'ctagstype' : 'Launch',
+	\ 'kinds' : [
+		\ 'n:name'
+	\ ],
+	\ 'sort' : 0
+\ }
+
+
 " ctags support for ansible
 let g:tagbar_type_ansible = {
 	\ 'ctagstype' : 'ansible',
@@ -638,6 +660,10 @@ map <leader>rt :Dispatch ctags -R --fields=+liaS --tag-relative . <CR>
 nnoremap <C-]> g<C-]>
 " }}}
 " Plugins configuration {{{
+" ranger.vim {{{
+" open ranger when vim open a directory
+let g:ranger_replace_netrw = 0
+" }}}
 " clang_format {{{
 let g:clang_format#command = "/usr/bin/clang-format-3.8"
 let g:clang_format#detect_style_file = 1
@@ -777,7 +803,6 @@ nnoremap <Leader><Leader>m :Make! -C build <CR>
 " Show the glog results in the quickfix window by :copen after glog
 " }}}
 " vim-matchup {{{
-
 let g:matchup_transmute_enabled = 1
 let g:matchup_matchparen_status_offscreen = 0
 let g:matchup_delim_stopline = 1500 " generally
@@ -1080,17 +1105,16 @@ nnoremap <silent><nowait> <leader>or  :<C-u>CocListResume<CR>
 " Use <C-l> for trigger snippet expand - TAB doesn't seem to work
 imap <C-l> <Plug>(coc-snippets-expand)
 
-
 " Use TAB for select text for visual placeholder of snippet.
 vmap <tab> <Plug>(coc-snippets-select)
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<S-Tab>'
 " }}}
-" {{{
-" open ranger when vim open a directory
-let g:ranger_replace_netrw = 0
+" Edit tldr files {{{
+" to expand do not use `<space>` but use `/` instead!
+cabbr tldrl tabnew ~/.cache/albert/tldr_pages/tldr/pages/linux
+cabbr tldrc tabnew ~/.cache/albert/tldr_pages/tldr/pages/common
 " }}}
-
 " for some reason it gets disabled, after a recent PlugUpdate of mine.
 " Maybe vim-fish has something to do with it..
 syntax on
