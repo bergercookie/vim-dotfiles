@@ -254,6 +254,7 @@ Plug 'https://github.com/jamessan/vim-gnupg/'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'https://github.com/bfrg/vim-cpp-modern'
+Plug 'https://github.com/sukima/xmledit'
 " real-plug-end
 
 
@@ -292,7 +293,7 @@ Plug 'https://github.com/bergercookie/vim-deb-preview'
 " }}}
 " }}}
 
-"" Automatically executes filetype plugin indent on and syntax enable. You can
+" Automatically executes filetype plugin indent on and syntax enable. You can
 " revert the settings after the call. e.g. filetype indent off, syntax off, etc
 call plug#end()
 " }}}
@@ -660,6 +661,10 @@ map <leader>rt :Dispatch ctags -R --fields=+liaS --tag-relative . <CR>
 nnoremap <C-]> g<C-]>
 " }}}
 " Plugins configuration {{{
+" xml-edit {{{
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax"
+" }}}
 " ranger.vim {{{
 " open ranger when vim open a directory
 let g:ranger_replace_netrw = 0
