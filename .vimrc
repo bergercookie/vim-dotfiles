@@ -157,8 +157,10 @@ endif
 " Enabled Plugins {{{
 call plug#begin()
 Plug 'junegunn/vim-plug'
-Plug 'https://github.com/ervandew/supertab'
 Plug 'https://github.com/tpope/vim-surround'
+" automatically change the ending (or starting) HTML tag when the starting (or
+" ending HTML tag is modified)
+Plug 'https://github.com/AndrewRadev/tagalong.vim'
 Plug 'https://github.com/tpope/vim-abolish'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/PeterRincker/vim-argumentative'
@@ -181,7 +183,6 @@ Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/szw/vim-maximizer.git'
 Plug 'https://github.com/pearofducks/ansible-vim'
 Plug 'https://github.com/davidbeckingsale/writegood.vim'
-Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/sudar/vim-arduino-snippets'
 Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/nickhutchinson/vim-cmake-syntax'
@@ -255,6 +256,8 @@ Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'https://github.com/bfrg/vim-cpp-modern'
 Plug 'https://github.com/sukima/xmledit'
+Plug 'https://github.com/junegunn/goyo.vim'
+Plug 'mattn/emmet-vim'
 " real-plug-end
 
 
@@ -310,6 +313,16 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
+
+function! ChangeLineColor()
+    highlight CursorLine guibg=#2c2460
+endfunction
+function! ChangeLineColor2()
+    highlight CursorLine guibg=#2c2421
+endfunction
+command! -bang CLC call ChangeLineColor()
+command! -bang CLCC call ChangeLineColor2()
+
 " }}}
 " Relative numbering {{{
 function! NumberToggle()
@@ -661,6 +674,26 @@ map <leader>rt :Dispatch ctags -R --fields=+liaS --tag-relative . <CR>
 nnoremap <C-]> g<C-]>
 " }}}
 " Plugins configuration {{{
+" tagalong.vim {{{
+" BUG: Doesn't update open tag when modifying closing one?
+let g:tagalong_filetypes = ['html', 'xml', 'jsx', 'eruby', 'ejs', 'eco', 'php', 'htmldjango', 'javascriptreact', 'typescriptreact']
+let g:tagalong_verbose = 1
+"}}}
+" surround.vim {{{
+"
+" FOR HTML
+"
+" To wrap the word with an HTML div tag, place your cursor over the word and
+" type ysiw<div id="some-id-to-be-added-to-the-starting-div-only"<CR>
+"
+" To change an existing HTML tag (to div):
+" type csttdiv id="..."<CR>
+"
+" }}}
+" emmet-vim {{{
+" Use C-y, to expand
+let g:user_emmet_install_global = 1
+" }}}
 " xml-edit {{{
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax"
@@ -922,7 +955,15 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 nnoremap <leader>tf :Files<CR>
-nnoremap <leader>tF :Files
+nnoremap <leader>tF :Files 
+
+" Search with ripgrep in a custom directory
+command! -bang -nargs=* Rgg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case ' . split(<q-args>, ' ')[0] . ' ' . split(<q-args>, ' ')[1], 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 
 nnoremap <leader>tt :Tags<CR>
 vnoremap <leader>tt :call fzf#vim#tags(GetVisualSelection())<CR>
@@ -931,7 +972,10 @@ nnoremap <leader>tb :Buffers<CR>
 nnoremap <leader>tw :Windows<CR>
 nnoremap <leader>th :History<CR>
 nnoremap <leader>t/ :History/<CR>
-nnoremap <leader>t: :History/<CR>
+nnoremap <leader>t: :History:<CR>
+
+" sacriligeous?
+nmap - :Windows<CR>
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -943,9 +987,6 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-
-nnoremap q: :History:<CR>
-nnoremap q/ :History/<CR>
 
 " Files [PATH] 	Files (similar to :FZF)
 " GFiles [OPTS] 	Git files (git ls-files)
@@ -984,6 +1025,8 @@ set path+=/usr/local/include,**
 ab wrt with regards to
 ab wRt with respect to
 ab teh the
+ab Javascript JavaScript
+ab Youtube YouTube
 " }}}
 " machine-local configuration {{{
 let g:local_vimrc = '~/.vimrc.local'
@@ -1005,9 +1048,19 @@ endif
 " These are node modules and are managed by coc itself instead of vim-plug
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
 "
+" Available CoC vim configuration:
+"
+"   https://github.com/neoclide/coc.nvim#example-vim-configuration
+"
 " For coc-browser:
+"
 "   Install browser extension first
 "   https://github.com/voldikss/browser-source-provider
+"
+" Instructions for debugging/tweaking tsserver:
+"
+"   https://github.com/neoclide/coc-tsserver
+"
 let g:coc_global_extensions = [
             \ "coc-docker",
             \ "coc-yaml",
@@ -1017,11 +1070,30 @@ let g:coc_global_extensions = [
             \ "coc-snippets",
             \ "coc-pyright",
             \ "coc-python",
-            \ "coc-json", "coc-css", "coc-java",
+            \ "coc-html",
+            \ "coc-json", "coc-css",
+            \ "coc-angular",
+            \ "coc-deno",
+            \ "coc-prettier",
+            \ "coc-eslint",
+            \ "coc-styled-components",
+            \ "coc-react-refactor",
+            \ "coc-java",
             \ "coc-markdownlint",
             \ "coc-rust-analyzer",
             \ "coc-sh",
             \]
+"}}}
+" coc-deno {{{
+" Use the following two commands on new projects
+"
+"   deno.cache: Cache Dependencies
+"   deno.initializeWorkspace: Initialize workspace configuration for Deno
+"
+" Also useful:
+"
+"   deno.status: Display language server status
+" }}}
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -1030,10 +1102,13 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 
 " GoTo code navigation.
+nmap <silent> gu <Plug>(coc-codeaction)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent><nowait> gI :<C-u>CocList -I symbols<cr>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>

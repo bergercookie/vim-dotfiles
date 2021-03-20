@@ -146,5 +146,10 @@
         "typescript": ["javascript"],
         "vimwiki": ["markdown", "liquid"]
     },
+    // tsserver ------------------------------------------------------------------------------------
+    "tsserver.log": "verbose",
+    "typescript.format.enable": true,
+    "javascript.format.enable": true,
+    "javascript.showUnused": true,
     "xml.java.home": "/usr/lib/jvm/"
 }
