@@ -137,7 +137,7 @@ let g:lasttab = 1
 nnoremap <Leader>t- :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 " }}}
-" vim-plug package manager {{{
+" Vim-plug package manager {{{
 
 " How to delete a plugin?
 "
@@ -258,6 +258,7 @@ Plug 'https://github.com/bfrg/vim-cpp-modern'
 Plug 'https://github.com/sukima/xmledit'
 Plug 'https://github.com/junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
+Plug 'https://github.com/SirVer/ultisnips'
 " real-plug-end
 
 
@@ -930,7 +931,7 @@ let g:taskwiki_sort_order="status+,pri+,end+,due+,pri-,project+"
 
 " }}}
 " }}}
-" fzf - fuzzy-finder {{{
+" Fzf - fuzzy-finder {{{
 " https://github.com/junegunn/fzf
 " https://github.com/junegunn/fzf.vim
 "
@@ -1014,7 +1015,12 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Filetypes 	File types
 
 " }}}
-" localvimrc {{{
+" Edit tldr files {{{
+" to expand do not use `<space>` but use `/` instead!
+cabbr tldrl tabnew ~/.cache/albert/tldr_pages/tldr/pages/linux
+cabbr tldrc tabnew ~/.cache/albert/tldr_pages/tldr/pages/common
+" }}}
+" Localvimrc {{{
 let g:localvimrc_persistent = 2
 let g:localvimrc_sandbox = 0
 " }}}
@@ -1028,7 +1034,7 @@ ab teh the
 ab Javascript JavaScript
 ab Youtube YouTube
 " }}}
-" machine-local configuration {{{
+" Machine-local configuration {{{
 let g:local_vimrc = '~/.vimrc.local'
 execute 'source ' . g:local_vimrc
 " }}}
@@ -1044,6 +1050,7 @@ if executable('rg')
     set grepformat=%f:%l:%c:%m
 endif
 " }}}
+" coc {{{
 " coc.nvim configuration and modules {{{
 " These are node modules and are managed by coc itself instead of vim-plug
 " see ~/.config/nvim/coc-settings.json file for the coc preferences
@@ -1069,9 +1076,9 @@ let g:coc_global_extensions = [
             \ "coc-browser",
             \ "coc-snippets",
             \ "coc-pyright",
-            \ "coc-python",
             \ "coc-html",
-            \ "coc-json", "coc-css",
+            \ "coc-json",
+            \ "coc-css",
             \ "coc-angular",
             \ "coc-deno",
             \ "coc-prettier",
@@ -1081,8 +1088,12 @@ let g:coc_global_extensions = [
             \ "coc-java",
             \ "coc-markdownlint",
             \ "coc-rust-analyzer",
+            \ "coc-marketplace",
+            \ "coc-emoji",
             \ "coc-sh",
+            \ "coc-xml"
             \]
+autocmd FileType json syntax match Comment +\/\/.\+$+
 "}}}
 " coc-deno {{{
 " Use the following two commands on new projects
@@ -1094,14 +1105,15 @@ let g:coc_global_extensions = [
 "
 "   deno.status: Display language server status
 " }}}
-
+" coc-pyright {{{
+" }}}
+" Navigate diagnostics {{{
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-
-" GoTo code navigation.
+" }}}
+" Go to code navigation {{{
 nmap <silent> gu <Plug>(coc-codeaction)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -1109,8 +1121,8 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent><nowait> gI :<C-u>CocList -I symbols<cr>
-
-" Use K to show documentation in preview window.
+" }}}
+" Use K to show documentation in preview window {{{
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -1121,6 +1133,8 @@ function! s:show_documentation()
   endif
 endfunction
 
+" }}}
+" coc - various settings {{{
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -1166,7 +1180,7 @@ omap ac <Plug>(coc-classobj-a)
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-" Mappings for CoCList
+" Mappings for CoCList {{{
 " Show all diagnostics.
 nnoremap <silent><nowait> <leader>od  :<C-u>CocList diagnostics<cr>
 " Show commands.
@@ -1184,16 +1198,13 @@ nnoremap <silent><nowait> <leader>or  :<C-u>CocListResume<CR>
 
 " Use <C-l> for trigger snippet expand - TAB doesn't seem to work
 imap <C-l> <Plug>(coc-snippets-expand)
+" }}}
 
 " Use TAB for select text for visual placeholder of snippet.
 vmap <tab> <Plug>(coc-snippets-select)
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<S-Tab>'
 " }}}
-" Edit tldr files {{{
-" to expand do not use `<space>` but use `/` instead!
-cabbr tldrl tabnew ~/.cache/albert/tldr_pages/tldr/pages/linux
-cabbr tldrc tabnew ~/.cache/albert/tldr_pages/tldr/pages/common
 " }}}
 " for some reason it gets disabled, after a recent PlugUpdate of mine.
 " Maybe vim-fish has something to do with it..

@@ -1,5 +1,7 @@
 {
-    "coc.preferences.extensionUpdateCheck": "never",
+    "coc.preferences.extensionUpdateCheck": "weekly",
+    "html.format.wrapLineLength": 100,
+    "html.format.enable": true,
     "languageserver": {
         "ccls": {
             "command": "ccls",
@@ -151,5 +153,6 @@
     "typescript.format.enable": true,
     "javascript.format.enable": true,
     "javascript.showUnused": true,
-    "xml.java.home": "/usr/lib/jvm/"
+    "xml.format.enabled": true,
+    "xml.java.home": "/usr/lib/jvm/java-1.11.0-openjdk-amd64/",
 }
