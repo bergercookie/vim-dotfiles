@@ -286,7 +286,7 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 " Plug 'https://github.com/kana/vim-textobj-help' " for :help pages
 " Plug 'https://github.com/bps/vim-textobj-python' " af/if, ac/ic TODO
 " }}}
-" own + maintained version's {{{
+" own + maintained versions {{{
 Plug 'ssh://git@github.com/bergercookie/vim-snippets'
 Plug 'ssh://git@github.com/bergercookie/vimduino-cli'
 Plug 'ssh://git@github.com/bergercookie/vim-debugstring'
@@ -392,7 +392,6 @@ function! MakeTmpFile()
 endfunc
 nnoremap <leader>mk :call MakeTmpFile()<CR>
 " }}}
-map <leader>uu :echoerr "Use gx"<CR>
 " fun: Who did this. {{{
 " function! WriteWhoDidThis()
 "     let l:name = "Nikos Koukis"
@@ -901,6 +900,10 @@ let g:vimwiki_list = [
             \ {'path': '$HOME/Documents/bergercookie.github.io/_posts',
             \  'auto_tags': 1,
             \  'auto_diary_index': 1,
+            \  'syntax': 'markdown', 'ext': '.md' },
+            \ {'path': '$HOME/sync/bulk/evernote-wiki',
+            \  'auto_tags': 1,
+            \  'auto_diary_index': 1,
             \  'syntax': 'markdown', 'ext': '.md' }]
 let g:vimwiki_folding=''
 let g:vimwiki_hl_headers = 1
@@ -909,12 +912,12 @@ let g:vimwiki_auto_header = 1
 let g:links_space_char = '_'
 let g:vimwiki_home='$HOME/sync/main/vimwiki'
 let g:vimwiki_global_ext=0
-command! -bang VimWikiFiles call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/sync/main/vimwiki $HOME/Documents/bergercookie.github.io/_posts' }, <bang>0))
+command! -bang VimWikiFiles call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/sync/main/vimwiki $HOME/Documents/bergercookie.github.io/_posts $HOME/sync/bulk/evernote-wiki' }, <bang>0))
 nnoremap <leader>vf :VimWikiFiles<CR>
 
 command! -bang -nargs=* VimWikiSearch
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case ' . shellescape(<q-args>) . ' $HOME/sync/main/vimwiki $HOME/Documents/bergercookie.github.io/_posts', 1,
+  \   'rg --column --line-number --no-heading --color=always --smart-case ' . shellescape(<q-args>) . ' $HOME/sync/main/vimwiki $HOME/Documents/bergercookie.github.io/_posts $HOME/sync/bulk/evernote-wiki', 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
@@ -1114,7 +1117,7 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " }}}
 " Go to code navigation {{{
-nmap <silent> gu <Plug>(coc-codeaction)
+nmap <silent> gA <Plug>(coc-codeaction)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
