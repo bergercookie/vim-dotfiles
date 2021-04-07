@@ -1117,7 +1117,8 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " }}}
 " Go to code navigation {{{
-nmap <silent> gA <Plug>(coc-codeaction)
+nmap <silent><nowait> gA :<C-u>CocAction<cr>
+vmap <silent><nowait> gA :<C-u>CocAction<cr>
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)

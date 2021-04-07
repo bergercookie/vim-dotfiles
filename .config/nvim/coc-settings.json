@@ -86,13 +86,14 @@
   },
   // python --------------------------------------------------------------------------------------
   // "python.pythonPath": "/home/berger/.cache/pypoetry/virtualenvs/dataset-converter-ivAvLHQa-py3.6/bin/python",
+  "python.analysis.autoImportCompletions": true,
   "python.pythonPath": "/usr/bin/python3",
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["-l", "95", "-t", "py36"],
-  "python.autoUpdateLanguageServer": true,
-  "python.venvFolders": ["/home/berger/.cache/pypoetry/virtualenvs/"],
+  "python.venvPath": ["/home/berger/.cache/pypoetry/virtualenvs"],
+  "pyright.organizeimports.provider": "isort",
   // yaml ----------------------------------------------------------------------------------------
   "yaml.format.enable": true,
   "yaml.format.singleQuote": false,

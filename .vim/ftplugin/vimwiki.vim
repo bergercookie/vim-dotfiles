@@ -25,9 +25,9 @@ function! MakeDiarySections(...)
         return
     endif
 
-    let l:headers = "= " . l:date_str . " =" .
+    let l:headers = "= " . l:date_str . " =\n" .
                   \ "== Personal items |" . " project.not:" . g:work_str . " due:" . l:date_str . " ==\n" .
-                  \ "== Work items | project:" . g:work_str . " due:" . l:date_str . " =="   
+                  \ "== Work items | project:" . g:work_str . " due:" . l:date_str . " =="
     put=l:headers
 endfunc
 " }}}
@@ -35,17 +35,16 @@ endfunc
 " Populate all the tasks you have done and those that are still pending from last week {{{
 function! PopulateWeeklyDone()
     let l:date_str = strftime('%Y-%m-%d')
-    let l:headers = "Week ending on " . strftime("%Y-%m-%d") . "\n" .
+    let l:headers = "=Week ending on " . strftime("%Y-%m-%d") . "=\n" .
                   \ "== Work items since " . l:date_str . " | project:" . g:work_str .
-                  \ " end.after:today-1wk status:completed ==\n" .
+                  \ " end.after:" . l:date_str . "-1wk status:completed ==\n" .
                   \ "== Undone items since " . l:date_str . " | project:" . g:work_str .
-                  \ " end.after:today-1wk status:pending ==\n" .
+                  \ " end.after:" . l:date_str . "-1wk due.before:" . l:date_str . "+1d status:pending ==\n" .
                   \ "== Personal items since " . l:date_str . " | project.not:" . g:work_str .
-                  \ " due.after:today-1wk status:completed ==\n" .
+                  \ " due.after:" . l:date_str . "-1wk due.before:" . l:date_str . "+1d status:completed ==\n" .
                   \ "== Undone items since " . l:date_str . " | project.not:" . g:work_str .
-                  \ " due.after:today-1wk status:pending ==\n"
+                  \ " due.after:" . l:date_str . "-1wk due.before:" . l:date_str . "+1d status:pending ==\n"
     put!=l:headers
-    execute 'edit<CR>'
 endfunc
 "}}}
 
