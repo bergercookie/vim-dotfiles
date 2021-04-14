@@ -259,6 +259,7 @@ Plug 'https://github.com/sukima/xmledit'
 Plug 'https://github.com/junegunn/goyo.vim'
 Plug 'mattn/emmet-vim'
 Plug 'https://github.com/SirVer/ultisnips'
+Plug 'https://github.com/aperezdc/vim-template'
 " real-plug-end
 
 
@@ -293,7 +294,6 @@ Plug 'ssh://git@github.com/bergercookie/vim-debugstring'
 Plug 'https://github.com/bergercookie/vim-log-syntax'
 Plug 'https://github.com/bergercookie/vim-deb-preview'
 " Plug 'ssh://git@github.com:bergercookie/vim-britishise'
-" Plug 'ssh://git@github.com:bergercookie/describe.nvim', {'do': 'UpdateRemotePlugins'}
 " }}}
 " }}}
 
@@ -541,124 +541,187 @@ set tags+=./tags;,tags;/
 
 " ctags support for XML
 let g:tagbar_type_xml = {
-	\ 'ctagstype' : 'XML',
-	\ 'kinds' : [
-		\ 't:tagname'
-	\ ],
-	\ 'sort' : 0
-\ }
+	        \ 'ctagstype' : 'XML',
+	        \ 'kinds' : [
+		    \ 't:tagname'
+	        \ ],
+	        \ 'sort' : 0
+            \ }
 
 " ctags support for Launchfiles
 let g:tagbar_type_launch = {
-	\ 'ctagstype' : 'Launch',
-	\ 'kinds' : [
-		\ 'n:name'
-	\ ],
-	\ 'sort' : 0
-\ }
+	        \ 'ctagstype' : 'Launch',
+	        \ 'kinds' : [
+		    \ 'n:name'
+	        \ ],
+	        \ 'sort' : 0
+            \ }
 
+let g:tagbar_type_typescript = {
+            \ 'ctagstype': 'typescript',
+            \ 'kinds': [
+            \ 'c:classes',
+            \ 'n:modules',
+            \ 'f:functions',
+            \ 'v:variables',
+            \ 'v:varlambdas',
+            \ 'm:members',
+            \ 'i:interfaces',
+            \ 'e:enums',
+            \ ]
+            \ }
+
+let g:tagbar_type_go = {
+            \ 'ctagstype': 'go',
+            \ 'kinds' : [
+            \'p:package',
+            \'f:function',
+            \'v:variables',
+            \'t:type',
+            \'c:const'
+            \]
+            \}
+
+let g:tagbar_type_json = {
+            \ 'ctagstype' : 'json',
+            \ 'kinds' : [
+            \ 'o:objects',
+            \ 'a:arrays',
+            \ 'n:numbers',
+            \ 's:strings',
+            \ 'b:booleans',
+            \ 'z:nulls'
+            \ ],
+            \ 'sro' : '.',
+            \ 'scope2kind': {
+            \ 'object': 'o',
+            \ 'array': 'a',
+            \ 'number': 'n',
+            \ 'string': 's',
+            \ 'boolean': 'b',
+            \ 'null': 'z'
+            \ },
+            \ 'kind2scope': {
+            \ 'o': 'object',
+            \ 'a': 'array',
+            \ 'n': 'number',
+            \ 's': 'string',
+            \ 'b': 'boolean',
+            \ 'z': 'null'
+            \ },
+            \ 'sort' : 0
+            \ }
 
 " ctags support for ansible
 let g:tagbar_type_ansible = {
-	\ 'ctagstype' : 'ansible',
-	\ 'kinds' : [
-		\ 't:tasks'
-	\ ],
-	\ 'sort' : 0
-\ }
+	        \ 'ctagstype' : 'ansible',
+	        \ 'kinds' : [
+		    \ 't:tasks'
+	        \ ],
+	        \ 'sort' : 0
+            \ }
+
+let g:tagbar_type_css = {
+            \ 'ctagstype' : 'Css',
+            \ 'kinds'     : [
+            \ 'c:classes',
+            \ 's:selectors',
+            \ 'i:identities'
+            \ ]
+            \ }
 
 " ctags support for haskell
 let g:tagbar_type_haskell = {
-    \ 'ctagsbin'  : 'hasktags',
-    \ 'ctagsargs' : '-x -c -o-',
-    \ 'kinds'     : [
-        \  'm:modules:0:1',
-        \  'd:data: 0:1',
-        \  'd_gadt: data gadt:0:1',
-        \  't:type names:0:1',
-        \  'nt:new types:0:1',
-        \  'c:classes:0:1',
-        \  'cons:constructors:1:1',
-        \  'c_gadt:constructor gadt:1:1',
-        \  'c_a:constructor accessors:1:1',
-        \  'ft:function types:1:1',
-        \  'fi:function implementations:0:1',
-        \  'o:others:0:1'
-    \ ],
-    \ 'sro'        : '.',
-    \ 'kind2scope' : {
-        \ 'm' : 'module',
-        \ 'c' : 'class',
-        \ 'd' : 'data',
-        \ 't' : 'type'
-    \ },
-    \ 'scope2kind' : {
-        \ 'module' : 'm',
-        \ 'class'  : 'c',
-        \ 'data'   : 'd',
-        \ 'type'   : 't'
-    \ }
-\ }
+            \ 'ctagsbin'  : 'hasktags',
+            \ 'ctagsargs' : '-x -c -o-',
+            \ 'kinds'     : [
+            \  'm:modules:0:1',
+            \  'd:data: 0:1',
+            \  'd_gadt: data gadt:0:1',
+            \  't:type names:0:1',
+            \  'nt:new types:0:1',
+            \  'c:classes:0:1',
+            \  'cons:constructors:1:1',
+            \  'c_gadt:constructor gadt:1:1',
+            \  'c_a:constructor accessors:1:1',
+            \  'ft:function types:1:1',
+            \  'fi:function implementations:0:1',
+            \  'o:others:0:1'
+            \ ],
+            \ 'sro'        : '.',
+            \ 'kind2scope' : {
+            \ 'm' : 'module',
+            \ 'c' : 'class',
+            \ 'd' : 'data',
+            \ 't' : 'type'
+            \ },
+            \ 'scope2kind' : {
+            \ 'module' : 'm',
+            \ 'class'  : 'c',
+            \ 'data'   : 'd',
+            \ 'type'   : 't'
+            \ }
+            \ }
 
 " ctags support for makefiles
 let g:tagbar_type_make = {
             \ 'kinds':[
-                \ 'm:macros',
-                \ 't:targets'
+            \ 'm:macros',
+            \ 't:targets'
             \ ]
-\}
+            \}
 
 " ctags support for markdown
 let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:Heading_L1',
-        \ 'i:Heading_L2',
-        \ 'k:Heading_L3'
-    \ ]
-\ }
+            \ 'ctagstype' : 'markdown',
+            \ 'kinds' : [
+            \ 'h:Heading_L1',
+            \ 'i:Heading_L2',
+            \ 'k:Heading_L3'
+            \ ]
+            \ }
 
 " ctags support for mediawiki
- let g:tagbar_type_mediawiki = {
-    \ 'ctagstype' : 'mediawiki',
-    \ 'kinds' : [
-        \'h:chapters',
-        \'s:sections',
-        \'u:subsections',
-        \'b:subsubsections',
-    \]
-    \}
+let g:tagbar_type_mediawiki = {
+            \ 'ctagstype' : 'mediawiki',
+            \ 'kinds' : [
+            \'h:chapters',
+            \'s:sections',
+            \'u:subsections',
+            \'b:subsubsections',
+            \]
+            \}
 
- " ctags support for rst
+" ctags support for rst
 let g:tagbar_type_rst = {
-    \ 'ctagstype': 'rst',
-    \ 'ctagsbin' : '~/dotfiles/tools/rst2ctags/rst2ctags.py',
-    \ 'ctagsargs' : '-f - --sort=yes',
-    \ 'kinds' : [
-        \ 's:sections',
-        \ 'i:images'
-    \ ],
-    \ 'sro' : '|',
-    \ 'kind2scope' : {
-        \ 's' : 'section',
-    \ },
-    \ 'sort': 0,
-\ }
+            \ 'ctagstype': 'rst',
+            \ 'ctagsbin' : '~/dotfiles/tools/rst2ctags/rst2ctags.py',
+            \ 'ctagsargs' : '-f - --sort=yes',
+            \ 'kinds' : [
+            \ 's:sections',
+            \ 'i:images'
+            \ ],
+            \ 'sro' : '|',
+            \ 'kind2scope' : {
+            \ 's' : 'section',
+            \ },
+            \ 'sort': 0,
+            \ }
 
 " ctags support for rust
 let g:tagbar_type_rust = {
-   \ 'ctagstype' : 'rust',
-   \ 'kinds' : [
-       \'T:types,type definitions',
-       \'f:functions,function definitions',
-       \'g:enum,enumeration names',
-       \'s:structure names',
-       \'m:modules,module names',
-       \'c:consts,static constants',
-       \'t:traits',
-       \'i:impls,trait implementations',
-   \]
-   \}
+            \ 'ctagstype' : 'rust',
+            \ 'kinds' : [
+            \'T:types,type definitions',
+            \'f:functions,function definitions',
+            \'g:enum,enumeration names',
+            \'s:structure names',
+            \'m:modules,module names',
+            \'c:consts,static constants',
+            \'t:traits',
+            \'i:impls,trait implementations',
+            \]
+            \}
 
 " Open tag in new tab
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
@@ -674,6 +737,9 @@ map <leader>rt :Dispatch ctags -R --fields=+liaS --tag-relative . <CR>
 nnoremap <C-]> g<C-]>
 " }}}
 " Plugins configuration {{{
+" vim-template {{{
+let g:templates_no_builtin_templates=1
+" }}}
 " tagalong.vim {{{
 " BUG: Doesn't update open tag when modifying closing one?
 let g:tagalong_filetypes = ['html', 'xml', 'jsx', 'eruby', 'ejs', 'eco', 'php', 'htmldjango', 'javascriptreact', 'typescriptreact']
@@ -896,21 +962,23 @@ nmap <Leader>vw <Plug>VimwikiIndex
 let g:vimwiki_list = [
             \ {'path': '$HOME/sync/main/vimwiki',
             \  'auto_tags': 1,
-            \  'auto_diary_index': 1},
+            \  'auto_diary_index': 1,
+            \  'links_space_char': '-'},
             \ {'path': '$HOME/Documents/bergercookie.github.io/_posts',
             \  'auto_tags': 1,
             \  'auto_diary_index': 1,
-            \  'syntax': 'markdown', 'ext': '.md' },
+            \  'links_space_char': '-',
+            \  'syntax': 'markdown',
+            \ 'ext': '.md' },
             \ {'path': '$HOME/sync/bulk/evernote-wiki',
             \  'auto_tags': 1,
             \  'auto_diary_index': 1,
-            \  'syntax': 'markdown', 'ext': '.md' }]
-let g:vimwiki_folding=''
+            \  'syntax': 'markdown',
+            \  'ext': '.md' }]
 let g:vimwiki_hl_headers = 1
 let g:vimwiki_use_mouse = 1
 let g:vimwiki_auto_header = 1
-let g:links_space_char = '_'
-let g:vimwiki_home='$HOME/sync/main/vimwiki'
+let g:vimwiki_home='$HOME/vimwiki'
 let g:vimwiki_global_ext=0
 command! -bang VimWikiFiles call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/sync/main/vimwiki $HOME/Documents/bergercookie.github.io/_posts $HOME/sync/bulk/evernote-wiki' }, <bang>0))
 nnoremap <leader>vf :VimWikiFiles<CR>
@@ -923,6 +991,7 @@ command! -bang -nargs=* VimWikiSearch
   \   <bang>0)
 nnoremap <leader>vs :VimWikiSearch<CR>
 
+nnoremap <leader>S :edit ~/vimwiki/scratchpad.wiki<CR>
 " }}}
 " vim-taskwarrior plugin configuration - Needed by taskwiki {{{
 " https://github.com/blindFS/vim-taskwarrior
@@ -979,7 +1048,7 @@ nnoremap <leader>t/ :History/<CR>
 nnoremap <leader>t: :History:<CR>
 
 " sacriligeous?
-nmap - :Windows<CR>
+nmap - :Rg<CR>
 
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
