@@ -219,7 +219,6 @@ Plug 'https://github.com/junegunn/vader.vim'
 Plug 'https://github.com/janko-m/vim-test'
 Plug 'https://github.com/andymass/vim-matchup'
 Plug 'https://github.com/vim-utils/vim-man', {'tag': 'v0.1.0'}
-Plug 'https://github.com/racer-rust/vim-racer'
 Plug 'https://github.com/tpope/vim-liquid'
 Plug 'arcticicestudio/nord-vim'
 Plug 'https://github.com/tpope/vim-rsi'
@@ -291,8 +290,8 @@ Plug 'https://github.com/jceb/vim-textobj-uri' " au/iu
 Plug 'ssh://git@github.com/bergercookie/vim-snippets'
 Plug 'ssh://git@github.com/bergercookie/vimduino-cli'
 Plug 'ssh://git@github.com/bergercookie/vim-debugstring'
-Plug 'https://github.com/bergercookie/vim-log-syntax'
-Plug 'https://github.com/bergercookie/vim-deb-preview'
+Plug 'ssh://git@github.com/bergercookie/vim-log-syntax'
+Plug 'ssh://git@github.com/bergercookie/vim-deb-preview'
 " Plug 'ssh://git@github.com:bergercookie/vim-britishise'
 " }}}
 " }}}
@@ -933,12 +932,6 @@ let g:debpreview_newdebfile_ext =".new"
 let g:vim_markdown_conceal = 0
 
 " }}}
-" vim-racer {{{
-let g:racer_cmd = $HOME . '/.cargo/bin/racer'
-let g:racer_experimental_completer = 1
-let g:racer_insert_paren = 1
-let g:racer_disable_errors = 0
-" }}}
 " i3-vim-focus {{{
 " TODO - fix it
 
@@ -1199,11 +1192,11 @@ nmap <silent><nowait> gI :<C-u>CocList -I symbols<cr>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h ' . expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
 endfunction
 
 " }}}
