@@ -1,1 +1,1 @@
-unmap <buffer> <Plug>VimwikiRemoveHeaderLevel
+silent! unmap <buffer> <Plug>VimwikiRemoveHeaderLevel

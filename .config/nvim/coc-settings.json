@@ -3,6 +3,8 @@
   "coc.preferences.extensionUpdateCheck": "weekly",
   "html.format.wrapLineLength": 100,
   "html.format.enable": true,
+  "cmake.formatter": "cmake-format",
+  "cmake.lsp.buildDirectory": "build",
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
@@ -21,14 +23,6 @@
         "highlight": {
           "lsRanges": true
         }
-      }
-    },
-    "cmake": {
-      "command": "cmake-language-server",
-      "filetypes": ["cmake"],
-      "rootPatterns": ["build/"],
-      "initializationOptions": {
-        "buildDirectory": "build"
       }
     },
     "rust": {
