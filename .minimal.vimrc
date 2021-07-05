@@ -147,6 +147,8 @@ endfunc
 nnoremap <leader>n :call NumberToggle()<cr>
 " }}}
 " Various handy remappings {{{
+" select all the content with C-a
+nnoremap <c-A> gg0vG$
 " source $MYVIMRC reloads the saved $MYVIMRC
 nnoremap <Leader>aa :source $MYVIMRC <CR>
 " Exit vim (wo saving)

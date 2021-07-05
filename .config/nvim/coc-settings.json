@@ -79,9 +79,7 @@
     }
   },
   // python --------------------------------------------------------------------------------------
-  // "python.pythonPath": "/home/berger/.cache/pypoetry/virtualenvs/dataset-converter-ivAvLHQa-py3.6/bin/python",
   "python.analysis.autoImportCompletions": true,
-  "python.pythonPath": "/usr/bin/python3",
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
   "python.formatting.provider": "black",

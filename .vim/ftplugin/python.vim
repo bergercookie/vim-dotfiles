@@ -6,6 +6,6 @@ let test#python#runner = 'pyunit'
 let test#python#pyunit#executable = 'python3 -m unittest'
 
 func! s:SetBreakpoint()
-    cal append('.', repeat(' ', strlen(matchstr(getline('.'), '^\s*'))) . 'import ipdb; ipdb.set_trace()')
+    cal append('.', repeat(' ', strlen(matchstr(getline('.'), '^\s*'))) . 'import pdb; pdb.set_trace()')
 endf
 map <buffer> <leader>dp :call <SID>SetBreakpoint()<CR>

@@ -1,3 +1,5 @@
 syntastic
 README.md
-.gitignore
+\.gitignore
+\.git
+\.gitmodules

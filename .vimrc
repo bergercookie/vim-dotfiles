@@ -144,6 +144,8 @@ Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/aperezdc/vim-template'
 Plug 'junkblocker/patchreview-vim'
 Plug 'codegram/vim-codereview'
+Plug 'udalov/kotlin-vim'
+Plug 'https://github.com/mattn/calendar-vim' " for integration with vimwiki
 " real-plug-end
 
 " vimwiki, taskwiki + dependencies
@@ -186,12 +188,9 @@ call plug#end()
 " }}}
 " Colorscheme Configuration {{{
 " See :Colors<CR> for previewing another colorscheme
-set background=dark
 set t_Co=256
 set termguicolors
-colorscheme base16-twilight
-colorscheme base16-atelier-forest
-" colorscheme base16-atelier-cave-light
+
 let g:PaperColor_Theme_Options = {
   \   'theme': {
   \     'default.dark': {
@@ -199,7 +198,6 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
-
 function! ChangeLineColor()
     highlight CursorLine guibg=#2c2460
 endfunction
@@ -375,7 +373,9 @@ let g:rustfmt_fail_silently = 0
 autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/,$RUST_SRC_PATH/rusty-tags.vi
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 " }}}
-" Tags configuration {{{
+" Tagbar/Tags configuration {{{
+let g:tagbar_ctags_bin = 'ctags-universal'
+
 set tags+=./tags;,tags;/
 " ctags configuration {{{
 
@@ -414,13 +414,13 @@ let g:tagbar_type_typescript = {
 let g:tagbar_type_go = {
             \ 'ctagstype': 'go',
             \ 'kinds' : [
-            \'p:package',
-            \'f:function',
-            \'v:variables',
-            \'t:type',
-            \'c:const'
-            \]
-            \}
+            \ 'p:package',
+            \ 'f:function',
+            \ 'v:variables',
+            \ 't:type',
+            \ 'c:const'
+            \ ]
+            \ }
 
 let g:tagbar_type_json = {
             \ 'ctagstype' : 'json',
@@ -462,7 +462,7 @@ let g:tagbar_type_ansible = {
             \ }
 
 let g:tagbar_type_css = {
-            \ 'ctagstype' : 'Css',
+            \ 'ctagstype' : 'css',
             \ 'kinds'     : [
             \ 'c:classes',
             \ 's:selectors',
@@ -475,18 +475,18 @@ let g:tagbar_type_haskell = {
             \ 'ctagsbin'  : 'hasktags',
             \ 'ctagsargs' : '-x -c -o-',
             \ 'kinds'     : [
-            \  'm:modules:0:1',
-            \  'd:data: 0:1',
-            \  'd_gadt: data gadt:0:1',
-            \  't:type names:0:1',
-            \  'nt:new types:0:1',
-            \  'c:classes:0:1',
-            \  'cons:constructors:1:1',
-            \  'c_gadt:constructor gadt:1:1',
-            \  'c_a:constructor accessors:1:1',
-            \  'ft:function types:1:1',
-            \  'fi:function implementations:0:1',
-            \  'o:others:0:1'
+            \ 'm:modules:0:1',
+            \ 'd:data: 0:1',
+            \ 'd_gadt: data gadt:0:1',
+            \ 't:type names:0:1',
+            \ 'nt:new types:0:1',
+            \ 'c:classes:0:1',
+            \ 'cons:constructors:1:1',
+            \ 'c_gadt:constructor gadt:1:1',
+            \ 'c_a:constructor accessors:1:1',
+            \ 'ft:function types:1:1',
+            \ 'fi:function implementations:0:1',
+            \ 'o:others:0:1'
             \ ],
             \ 'sro'        : '.',
             \ 'kind2scope' : {
@@ -525,12 +525,12 @@ let g:tagbar_type_markdown = {
 let g:tagbar_type_mediawiki = {
             \ 'ctagstype' : 'mediawiki',
             \ 'kinds' : [
-            \'h:chapters',
-            \'s:sections',
-            \'u:subsections',
-            \'b:subsubsections',
-            \]
-            \}
+            \ 'h:chapters',
+            \ 's:sections',
+            \ 'u:subsections',
+            \ 'b:subsubsections',
+            \ ]
+            \ }
 
 " ctags support for rst
 let g:tagbar_type_rst = {
@@ -552,16 +552,16 @@ let g:tagbar_type_rst = {
 let g:tagbar_type_rust = {
             \ 'ctagstype' : 'rust',
             \ 'kinds' : [
-            \'T:types,type definitions',
-            \'f:functions,function definitions',
-            \'g:enum,enumeration names',
-            \'s:structure names',
-            \'m:modules,module names',
-            \'c:consts,static constants',
-            \'t:traits',
-            \'i:impls,trait implementations',
-            \]
-            \}
+            \ 'T:types,type definitions',
+            \ 'f:functions,function definitions',
+            \ 'g:enum,enumeration names',
+            \ 's:structure names',
+            \ 'm:modules,module names',
+            \ 'c:consts,static constants',
+            \ 't:traits',
+            \ 'i:impls,trait implementations',
+            \ ]
+            \ }
 " }}}
 
 " Open tag in new tab
@@ -621,20 +621,23 @@ vnoremap <leader>bb :Tabularize /
 autocmd VimEnter * AddTabularPattern 1=    /^[^=]*\zs=
 autocmd VimEnter * AddTabularPattern 1==   /^[^=]*\zs=/r0c0l0
 " }}}
-" Statusline - Airline configuration at last {{{
+" Statusline - Airline configuration {{{
 set laststatus=2
-let g:airline#extensions#tabline#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#branch#enabled=1
-let g:airline_theme="base16_atelierforest"
-" let g:airline_theme="base16_atelier_cave_light"
-let g:airline_highlighting_cache = 0
-let g:airline_focuslost_inactive = 1
 let g:airline#extensions#coc#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#hunks#enabled=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
+
+let g:airline_focuslost_inactive = 1
+let g:airline_highlighting_cache = 0
+let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
@@ -791,7 +794,11 @@ let g:vimwiki_list = [
             \ {'path': '$HOME/sync/main/vimwiki',
             \  'auto_tags': 1,
             \  'auto_diary_index': 1,
-            \  'links_space_char': '-'  },
+            \  'auto_generate_links': 1,
+            \  'auto_generate_tags': 1,
+            \  'links_space_char': '-',
+            \  'exclude_files': ['**/.vim-template*']
+            \ },
             \ {'path':          '$HOME/Documents/knowledge/vimwiki',
             \  'template_path': '$HOME/Documents/knowledge/templates',
             \  'path_html':     '$HOME/Documents/knowledge/docs',
@@ -816,6 +823,8 @@ let g:vimwiki_use_mouse = 1
 let g:vimwiki_auto_header = 1
 let g:vimwiki_home='$HOME/vimwiki'
 let g:vimwiki_global_ext=0
+let g:vimwiki_folding="expr"
+let g:vimwiki_use_calendar = 1
 command! -bang VimWikiFiles call fzf#run(fzf#wrap({ 'source': 'fd . $HOME/sync/main/vimwiki $HOME/Documents/knowledge/vimwiki/ $HOME/Documents/bergercookie.github.io/_posts $HOME/sync/bulk/evernote-wiki' }, <bang>0))
 nnoremap <leader>vf :VimWikiFiles<CR>
 
@@ -830,6 +839,8 @@ nnoremap <leader>vs :VimWikiSearch<CR>
 nnoremap <leader>S :edit ~/vimwiki/scratchpad.wiki<CR>
 cabbr vwc :VimwikiColorize 
 cabbr current :VimwikiColorize bred<CR>
+
+cabbr know tabnew ~/Documents/knowledge/vimwiki/
 " }}}
 " vim-taskwarrior plugin configuration - Needed by taskwiki {{{
 " https://github.com/blindFS/vim-taskwarrior
@@ -996,6 +1007,7 @@ let g:coc_global_extensions = [
             \ "coc-styled-components",
             \ "coc-react-refactor",
             \ "coc-java",
+            \ "coc-kotlin",
             \ "coc-markdownlint",
             \ "coc-rust-analyzer",
             \ "coc-marketplace",
@@ -1116,6 +1128,36 @@ vmap <tab> <Plug>(coc-snippets-select)
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<S-Tab>'
 " }}}
+" }}}
+" Indentation - cpp {{{
+augroup indentation_for_cpp
+    autocmd!
+    " mrpt uses tabs for indentation
+    autocmd FileType cpp set tabstop=2
+    autocmd FileType cpp set shiftwidth=2 " use indents of X spaces
+    autocmd FileType cpp set preserveindent
+    autocmd FileType cpp set copyindent
+    autocmd FileType cpp set softtabstop=0
+    autocmd FileType cpp set autoindent " indent at the same level of the previous line
+    autocmd FileType cpp set expandtab
+    autocmd FileType cpp set textwidth=120
+    autocmd FileType cpp set colorcolumn=120
+augroup END
+" }}}
+" Colorscheme {{{
+function! DarkColorscheme()
+    set background=dark
+    colorscheme base16-atelier-forest
+    let g:airline_theme="base16_atelierforest"
+endfunction
+function! LightColorscheme()
+    set background=light
+    colorscheme base16-atelier-cave-light
+    let g:airline_theme="term_light"
+endfunction
+
+" call LightColorscheme()
+call DarkColorscheme()
 " }}}
 " for some reason it gets disabled, after a recent PlugUpdate of mine.
 " Maybe vim-fish has something to do with it..
