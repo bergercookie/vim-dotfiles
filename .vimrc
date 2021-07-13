@@ -1156,8 +1156,8 @@ function! LightColorscheme()
     let g:airline_theme="term_light"
 endfunction
 
-" call LightColorscheme()
-call DarkColorscheme()
+call LightColorscheme()
+" call DarkColorscheme()
 " }}}
 " for some reason it gets disabled, after a recent PlugUpdate of mine.
 " Maybe vim-fish has something to do with it..

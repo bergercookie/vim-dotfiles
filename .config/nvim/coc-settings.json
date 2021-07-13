@@ -1,6 +1,7 @@
 {
   "codeLens.enable": true,
   "coc.preferences.extensionUpdateCheck": "weekly",
+  "coc.preferences.jumpCommand": "tabe",
   "html.format.wrapLineLength": 100,
   "html.format.enable": true,
   "cmake.formatter": "cmake-format",
